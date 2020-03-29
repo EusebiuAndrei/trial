@@ -1,45 +1,81 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const config = require('./config/index');
-const User = require('./models/user');
 
-const app = express();
+const config = require('./config');
+const loaders = require('./loaders/index');
 
-app.use(express.json());
+// import Logger from './loaders/logger';
 
-app.get('/', function (req, res) {
-	res.send(req.body);
-	res.end();
-});
+async function startServer() {
+	const app = express();
 
-app.get('/users', async function (req, res) {
-	try {
-		const users = await User.find({});
+	/**
+	 * A little hack here
+	 * Import/Export can only be used in 'top-level code'
+	 * Well, at least in node 10 without babel and at the time of writing
+	 * So we are using good old require.
+	 **/
+	// await require('./loaders').default({ expressApp: app });
+	await loaders({ expressApp: app });
 
-		res.status(200).json(users);
-	} catch (error) {
-		res.status(400).json({ success: false, error });
-	}
-});
+	app.listen(config.port, (err) => {
+		if (err) {
+			// Logger.error(err);
+			process.exit(1);
+			return;
+		}
+		console.log(`Server listening on port: ${config.port}`);
+		// 	Logger.info(`
+		//   ################################################
+		//   🛡️  Server listening on port: ${config.port} 🛡️
+		//   ################################################
+		// `);
+	});
+}
+// sgfsd sfd fsdsrewv
+startServer();
 
-app.post('/users', async function (req, res) {
-	try {
-		const user = await User.create(req.body);
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const config = require('./config/index');
+// const User = require('./models/user');
 
-		res.status(201).json({ success: true, user });
-	} catch (error) {
-		res.status(400).json({ success: false, error });
-	}
-});
+// const app = express();
 
-mongoose.connect(
-	config.databaseURL,
-	{ useNewUrlParser: true, useUnifiedTopology: true },
-	function () {
-		console.log('DB up and running');
-	},
-);
+// app.use(express.json());
 
-app.listen(3000, function () {
-	console.log('Server running');
-});
+// app.get('/', function (req, res) {
+// 	res.send(req.body);
+// 	res.end();
+// });
+
+// app.get('/users', async function (req, res) {
+// 	try {
+// 		const users = await User.find({});
+
+// 		res.status(200).json(users);
+// 	} catch (error) {
+// 		res.status(400).json({ success: false, error });
+// 	}
+// });
+
+// app.post('/users', async function (req, res) {
+// 	try {
+// 		const user = await User.create(req.body);
+
+// 		res.status(201).json({ success: true, user });
+// 	} catch (error) {
+// 		res.status(400).json({ success: false, error });
+// 	}
+// });
+
+// mongoose.connect(
+// 	config.databaseURL,
+// 	{ useNewUrlParser: true, useUnifiedTopology: true },
+// 	function () {
+// 		console.log('DB up and running');
+// 	},
+// );
+
+// app.listen(3000, function () {
+// 	console.log('Server running');
+// });
