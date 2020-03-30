@@ -30,3 +30,9 @@ Also, you have to declare all your models somewhere else. And there is more.. A 
 If you think that you've already acquaired a good architecture, think twice babe :)))\
 What if you want to call a 3rd party service? I'll give you the easiest example eveer. When user registers, you want to send him an email, saying you thank him for using your AWESOME app.\
 How are you gonna do this? Well, you will 'create' an event, define a 'handler' for it, and when a user register, 'emit' that event\
+
+# Cron Jobs
+
+# Configuration and ENV variables
+
+# Loaders
