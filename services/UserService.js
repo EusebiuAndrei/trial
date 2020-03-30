@@ -8,7 +8,7 @@ class UserService {
 		try {
 			const users = await this.db.User.find({});
 
-			return { success: true, users };
+			return { success: true, data: { users } };
 		} catch (error) {
 			return { success: false, error };
 		}
