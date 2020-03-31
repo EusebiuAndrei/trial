@@ -44,3 +44,11 @@ This will be our secret, ok? NO ONE ELSE has to know it. 'env' variables are var
 # Loaders
 
 Have you ever worked on a the backend of an application? There are a lot of stuff that have to be loaded.. Believe, in this project, they are still few things.. When an app it's hosted somewhere, it run the app.js or index.js file in the root folder. And you don't like long and unorganised files, so we split it in more files which have a single responsibility. In our case it's one for mongoose, one for express, one for logger, and of course, an index :)))
+
+# Others
+
+!! don't use console.log\
+Log any information using the Logger module.
+We have Logger.info, Logger.warn and Logger.error that we'll provide us a ore intuitive output.\
+
+Enjoy coding :D
