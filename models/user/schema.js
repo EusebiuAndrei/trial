@@ -11,6 +11,13 @@ const userSchema = mongoose.Schema({
 		required: true,
 		min: 7,
 	},
+	tokens: [
+		{
+			token: {
+				type: String,
+			},
+		},
+	],
 });
 
 module.exports = userSchema;

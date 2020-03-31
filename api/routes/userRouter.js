@@ -1,11 +1,33 @@
 const { Router } = require('express');
 const { userService } = require('../../services/index');
+const { auth } = require('../middlewares/index');
 
 const router = Router();
 
 // Here we have all the controllers
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
 	const result = await userService.getAllUsers();
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.post('/register', async function (req, res) {
+	const result = await userService.register(req.body);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.post('/login', async function (req, res) {
+	const result = await userService.login(req.body);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.delete('/all', async (req, res) => {
+	const result = await userService.deleteAll();
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
