@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const methodOverride = require('method-override');
+const { isCelebrate } = require('celebrate');
 
 const apiRouter = require('../api');
 const config = require('../config');
@@ -35,4 +36,15 @@ module.exports = (app) => {
 	app.use(express.json());
 	// Load API routes
 	app.use(config.api.prefix, apiRouter);
+
+	// Let's handle the celebrate errors
+	// All the errors thrown by the validation of body, params etc.
+	app.use((err, req, res, next) => {
+		if (isCelebrate(err)) {
+			return res.status(400).json({
+				success: false,
+				err: { message: err.joi.message, meta: err.meta },
+			});
+		}
+	});
 };

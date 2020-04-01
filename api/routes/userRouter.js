@@ -1,6 +1,11 @@
 const { Router } = require('express');
+const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
+
+const Logger = require('../../loaders/logger');
+// validation schemas
+const { userValidationSchema } = require('../../models/index');
 
 const router = Router();
 
@@ -19,12 +24,18 @@ router.post('/register', async function (req, res) {
 	res.status(statusCode).json(result);
 });
 
-router.post('/login', async function (req, res) {
-	const result = await userService.login(req.body);
-	const statusCode = result.success ? 200 : 400;
+router.post(
+	'/login',
+	celebrate({
+		body: userValidationSchema,
+	}),
+	async function (req, res) {
+		const result = await userService.login(req.body);
+		const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
-});
+		res.status(statusCode).json(result);
+	},
+);
 
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();

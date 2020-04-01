@@ -14,7 +14,10 @@ class UserService {
 
 			return { success: true, data: { users } };
 		} catch (error) {
-			return { success: false, error };
+			return {
+				success: false,
+				error: { message: error.message },
+			};
 		}
 	}
 
@@ -29,7 +32,10 @@ class UserService {
 			return { success: true, data: { user } };
 		} catch (error) {
 			Logger.error(error);
-			return { success: false, error };
+			return {
+				success: false,
+				error: { message: error.message },
+			};
 		}
 	}
 
@@ -45,8 +51,10 @@ class UserService {
 
 			return { success: true, data: { user, token } };
 		} catch (error) {
-			Logger.error(error);
-			return { success: false, error };
+			return {
+				success: false,
+				error: { message: error.message },
+			};
 		}
 	}
 
@@ -66,7 +74,7 @@ class UserService {
 		} catch (error) {
 			return {
 				success: false,
-				error,
+				error: { message: error.message },
 			};
 		}
 	}
@@ -78,7 +86,10 @@ class UserService {
 			return { success: true, data: { users } };
 		} catch (error) {
 			Logger.error(error);
-			return { success: false, error };
+			return {
+				success: false,
+				error: { message: error.message },
+			};
 		}
 	}
 }
