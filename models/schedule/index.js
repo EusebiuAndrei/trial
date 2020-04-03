@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-const scheduleSchema = require('./schema');
+const schema = require('./schema');
 
 const decorateWithVirtuals = require('./virtuals');
 const statics = require('./statics');
 const methods = require('./methods');
 const decorateWithHooks = require('./hooks');
 
-decorateWithVirtuals(scheduleSchema);
-Object.assign(scheduleSchema.methods, methods);
-Object.assign(scheduleSchema.statics, statics);
-decorateWithHooks(scheduleSchema);
+decorateWithVirtuals(schema);
+Object.assign(schema.methods, methods);
+Object.assign(schema.statics, statics);
+decorateWithHooks(schema);
 
-const User = mongoose.model('User', scheduleSchema);
+const Schedule = mongoose.model('Schedule', schema);
 
-module.exports = User;
+module.exports = Schedule;
