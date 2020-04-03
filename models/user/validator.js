@@ -4,7 +4,7 @@ const { Joi } = require('celebrate');
 // // add joi-objectId to Joi
 // Joi.objectId = joiObjectId(Joi);
 
-const userSchema = Joi.object().keys({
+const schema = Joi.object().keys({
 	email: Joi.string()
 		.email()
 		.required()
@@ -19,4 +19,4 @@ const userSchema = Joi.object().keys({
 		),
 });
 
-module.exports = userSchema;
+module.exports = schema;
