@@ -10,7 +10,7 @@ const clientSchema = mongoose.Schema({
 		},
 	],
 	allergies: {
-		type: String,
+		type: [String],
 		required: false,
 	},
 	//i don't know for sure
