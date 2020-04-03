@@ -17,6 +17,13 @@ router.get('/', auth, async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/test', async (req, res) => {
+	const result = await userService.getTest();
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 router.post('/register', async function (req, res) {
 	const result = await userService.register(req.body);
 	const statusCode = result.success ? 201 : 400;

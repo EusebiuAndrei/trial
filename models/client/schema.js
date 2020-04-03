@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
-const menuSchema = require('../../menu/schema.js'); // to do
 
 const clientSchema = mongoose.Schema({
-	preferences: [
-		{
-			type: menuSchema.courses,
-			required: false,
-		},
-	],
+	preferences: [String],
 	allergies: {
 		type: [String],
 		required: false,
@@ -35,33 +29,12 @@ const clientSchema = mongoose.Schema({
 		type: Buffer,
 		required: false,
 	},
-	commandsHistory: [
-		{
-			command: {
-				idProvider: {
-					type: mongoose.Types.ObjectId,
-					required: true,
-				},
-				course: {
-					type: menuSchema.courses,
-					required: true,
-				},
-
-				price: {
-					type: Number,
-					required: true,
-				},
-				date: {
-					type: Date,
-					required: true,
-				},
-			},
-		},
-	],
+	commandsHistory: [String],
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: true,
 	},
+	money: { type: Number },
 });
 
 module.exports = clientSchema;
