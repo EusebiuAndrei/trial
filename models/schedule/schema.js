@@ -5,6 +5,16 @@ const scheduleSchema = mongoose.Schema({
 		{
 			day: {
 				type: String,
+				//zilele in romana sau engleza, daca romana, punem diacritice?
+				enum: [
+					'luni',
+					'marti',
+					'miercuri',
+					'joi',
+					'vineiri',
+					'sambata',
+					'duminica',
+				],
 				required: true,
 				lowercase: true,
 				trim: true,
