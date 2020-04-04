@@ -15,11 +15,9 @@ const menuSchema = mongoose.Schema({
 	},
 	ingredients: {
 		type: [String],
-		required: true,
 	},
 	allergenes: {
 		type: [String],
-		required: true,
 	},
 	idProvider: {
 		type: mongoose.Types.ObjectId,
