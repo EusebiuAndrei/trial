@@ -6,7 +6,7 @@ const menuSchema = mongoose.Schema({
 		required: true,
 	},
 	category: {
-		type: String,
+		type: [String],
 		required: true,
 	},
 	price: {
@@ -14,13 +14,11 @@ const menuSchema = mongoose.Schema({
 		required: true,
 	},
 	ingredients: {
-		type: String,
-		enum: [],
+		type: [String],
 		required: true,
 	},
 	allergenes: {
-		type: String,
-		enum: [],
+		type: [String],
 		required: true,
 	},
 	idProvider: {
