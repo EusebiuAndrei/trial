@@ -77,6 +77,23 @@ class UserService {
 		}
 	}
 
+	async viewProfile(user) {
+		const { _id } = user;
+		const userId = _id;
+		console.log(userId);
+		try {
+			const currentUser = await this.db.User.find({
+				userId: '5e87b028ed2e6d4073748270',
+			});
+			console.log(currentUser[0].details);
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async authorize(token) {
 		try {
 			const { _id } = jwt.verify(token, config.jwtSecret);
