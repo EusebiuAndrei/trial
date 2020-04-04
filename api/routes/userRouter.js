@@ -53,7 +53,6 @@ router.delete('/all', async (req, res) => {
 
 router.get('/profile', auth, async (req, res) => {
 	const { user } = req.data;
-	console.log(req.data);
 	const result = await userService.viewProfile(user[0]);
 	const statusCode = result.success ? 200 : 400;
 

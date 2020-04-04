@@ -78,14 +78,14 @@ class UserService {
 	}
 
 	async viewProfile(user) {
-		const { _id } = user;
-		const userId = _id;
-		console.log(userId);
 		try {
+			const { _id } = user;
+			const userId = _id;
 			const currentUser = await this.db.User.find({
-				userId: '5e87b028ed2e6d4073748270',
+				_id: userId,
 			});
-			console.log(currentUser[0].details);
+			const { details } = currentUser[0];
+			return { success: true, data: { details } };
 		} catch (error) {
 			return {
 				success: false,
