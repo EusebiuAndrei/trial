@@ -6,23 +6,12 @@ const clientSchema = mongoose.Schema({
 		type: [String],
 		required: false,
 	},
-	//we'll use google maps api
 	location: {
-		type: String,
-		required: false,
-		min: {
-			country: {
-				type: String,
-			},
-			city: {
-				type: String,
-			},
-			street: {
-				type: String,
-			},
-			number: {
-				type: Number,
-			},
+		latitude: {
+			type: Number,
+		},
+		longitude: {
+			type: Number,
 		},
 	},
 	avatar: {
@@ -34,7 +23,6 @@ const clientSchema = mongoose.Schema({
 		type: mongoose.Types.ObjectId,
 		required: true,
 	},
-	money: { type: Number },
 });
 
 module.exports = clientSchema;
