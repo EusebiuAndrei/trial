@@ -11,6 +11,6 @@ Object.assign(schema.methods, methods);
 Object.assign(schema.statics, statics);
 decorateWithHooks(schema);
 
-const Client = mongoose.model('Client', schema);
+const Menu = mongoose.model('Menu', schema);
 
-module.exports = Client;
+module.exports = Menu;
