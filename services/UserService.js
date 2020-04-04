@@ -98,6 +98,19 @@ class UserService {
 		}
 	}
 
+	confirmRegistration(payload) {
+		const { confirmed } = payload;
+		if (confirmed)
+			return { success: true, data: { token, user } };
+
+		const error = new Error('User not confirmed');
+		Logger.error(error);
+		return {
+			success: false,
+			error: { message: error.message },
+		};
+	}
+
 	async deleteAll() {
 		try {
 			const users = await this.db.User.deleteMany({});
