@@ -88,7 +88,9 @@ class UserService {
 			if (!user) {
 				throw new Error('Not authorized');
 			}
-
+			if (!this.isRegistrationConfirmed(user)) {
+				throw new Error('Not confirmed');
+			}
 			return { success: true, data: { token, user } };
 		} catch (error) {
 			return {
@@ -98,16 +100,9 @@ class UserService {
 		}
 	}
 
-	confirmRegistration(userData) {
-		const { confirmed } = userData;
-		if (confirmed) return { success: true };
-
-		const error = new Error('User not confirmed');
-		Logger.error(error);
-		return {
-			success: false,
-			error: { message: error.message },
-		};
+	isRegistrationConfirmed(userData) {
+		const { confirmed } = userData[0];
+		return confirmed;
 	}
 
 	async configureClient(userData) {

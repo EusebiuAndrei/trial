@@ -2,7 +2,6 @@ const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
-const { confirm } = require('../middlewares/index');
 
 const Logger = require('../../loaders/logger');
 // validation schemas
@@ -51,7 +50,7 @@ router.delete('/all', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post('/profile', auth, confirm, async (req, res) => {
+router.post('/profile', auth, async (req, res) => {
 	const result = await userService.configureUser(
 		req.data,
 		req.body,
