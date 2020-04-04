@@ -47,19 +47,19 @@ const providerSchema = mongoose.Schema({
 		required: true,
 	},
 
-	locationType: {
+	type: {
 		type: String,
 		enum: ['Restaurant', 'Canteen'],
 	},
 
 	CUI: {
-		type: Number,
+		type: String,
 		required: true,
 	},
 
 	specials: {
 		//specialitate
-		type: String,
+		type: [String],
 		required: false,
 	},
 

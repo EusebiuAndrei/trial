@@ -11,6 +11,6 @@ Object.assign(schema.methods, methods);
 Object.assign(schema.statics, statics);
 decorateWithHooks(schema);
 
-const Schedule = mongoose.model('Schedule', schema);
+const Provider = mongoose.model('Provider', schema);
 
-module.exports = Schedule;
+module.exports = Provider;
