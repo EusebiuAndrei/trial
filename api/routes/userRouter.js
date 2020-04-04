@@ -52,7 +52,10 @@ router.delete('/all', async (req, res) => {
 });
 
 router.post('/profile', auth, confirm, async (req, res) => {
-	const result = await userService.configureUser(req.data);
+	const result = await userService.configureUser(
+		req.data,
+		req.body,
+	);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);

@@ -98,10 +98,9 @@ class UserService {
 		}
 	}
 
-	confirmRegistration(payload) {
-		const { confirmed } = payload;
-		if (confirmed)
-			return { success: true, data: { token, user } };
+	confirmRegistration(userData) {
+		const { confirmed } = userData;
+		if (confirmed) return { success: true };
 
 		const error = new Error('User not confirmed');
 		Logger.error(error);
@@ -109,6 +108,55 @@ class UserService {
 			success: false,
 			error: { message: error.message },
 		};
+	}
+
+	async configureClient(userData) {
+		const { _id, payload } = userData;
+		const userId = _id;
+		const { preferences, allergies, location, avatar } = payload;
+		const clientData = {
+			preferences,
+			allergies,
+			location,
+			avatar,
+			userId,
+		};
+		const client = this.db.Client(clientData);
+		try {
+			await client.save();
+			return { success: true, data: { client } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async configureUser(userData, payload) {
+		const { user } = userData;
+		const { role, _id } = user[0];
+		try {
+			if (role === 'Client') {
+				const client = await this.configureClient({
+					_id,
+					payload,
+				});
+				return { success: true, data: { client } };
+			} else {
+				const provider = await this.configureProvider({
+					_id,
+					payload,
+				});
+				return { success: true, data: { provider } };
+			}
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async deleteAll() {
