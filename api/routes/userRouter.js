@@ -51,6 +51,13 @@ router.delete('/all', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/profile', auth, async (req, res) => {
+	const { user } = req.data;
+	const result = await userService.viewProfile(user[0]);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
 module.exports = router;
 
 // All the results must have the next format

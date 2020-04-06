@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema(
 		confirmed: {
 			type: Boolean,
 			required: true,
-			default: 'false',
+			default: 'true',
 		},
 		tokens: [
 			{
