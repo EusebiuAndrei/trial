@@ -15,19 +15,21 @@ const menuSchema = mongoose.Schema({
 				type: Number,
 				required: true,
 			},
+			image: {
+				type: Buffer,
+			},
 			ingredients: {
 				type: [String],
 			},
 			allergenes: {
 				type: [String],
 			},
-			
 		},
-		
 	],
 	idProvider: {
 		type: mongoose.Types.ObjectId,
 		require: true,
+	},
 });
 
 module.exports = menuSchema;
