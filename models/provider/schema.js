@@ -32,14 +32,6 @@ const providerSchema = mongoose.Schema({
 		type: Buffer,
 		required: false, // recomandat
 	},
-	menu: {
-		type: mongoose.Types.ObjectId,
-		required: true,
-	},
-	schedule: {
-		type: mongoose.Types.ObjectId,
-		required: true,
-	},
 	rating: {
 		type: Number,
 		required: true,
