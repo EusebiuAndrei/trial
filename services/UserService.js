@@ -116,10 +116,60 @@ class UserService {
 			avatar,
 			userId,
 		};
-		const client = this.db.Client(clientData);
+		const condition = { userId: _id };
+		const client = await this.db.Client.findOneAndUpdate(
+			condition,
+			clientData,
+		);
+
 		try {
 			await client.save();
 			return { success: true, data: { client } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async configureProvider(userData) {
+		const { _id, payload } = userData;
+		const userId = _id;
+		const {
+			location,
+			adress,
+			CUI,
+			type,
+			description,
+			images,
+			rating,
+			priceCategory,
+			specials,
+			tables,
+		} = payload;
+		const providerData = {
+			location,
+			adress,
+			CUI,
+			type,
+			description,
+			images,
+			rating,
+			priceCategory,
+			specials,
+			userId,
+			tables,
+		};
+		const condition = { userId: _id };
+		const provider = await this.db.Provider.findOneAndUpdate(
+			condition,
+			providerData,
+		);
+		try {
+			await provider.save();
+			return { success: true, data: { provider } };
 		} catch (error) {
 			Logger.error(error);
 			return {
