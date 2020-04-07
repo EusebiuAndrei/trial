@@ -8,10 +8,7 @@ const Logger = require('../../loaders/logger');
 const {
 	userValidationSchema,
 	clientValidationSchema,
-<<<<<<< HEAD
-=======
 	providerValidationSchema,
->>>>>>> e4888925435347abd0d553e081d766dc24848bd2
 } = require('../../models/index');
 
 const router = Router();
@@ -68,7 +65,7 @@ router.post(
 	auth,
 	(req, res, next) => {
 		return celebrate({
-			body: clientValidationSchema,
+			body: userValidationSchema,
 		}).call(this, req, res, next);
 	},
 	async (req, res) => {
