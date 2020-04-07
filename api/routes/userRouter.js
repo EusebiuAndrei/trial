@@ -2,12 +2,16 @@ const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
-
+const { dynamicCelebrate } = require('../middlewares/index');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const {
 	userValidationSchema,
 	clientValidationSchema,
+<<<<<<< HEAD
+=======
+	providerValidationSchema,
+>>>>>>> e4888925435347abd0d553e081d766dc24848bd2
 } = require('../../models/index');
 
 const router = Router();
@@ -27,12 +31,18 @@ router.get('/test', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post('/register', async function (req, res) {
-	const result = await userService.register(req.body);
-	const statusCode = result.success ? 201 : 400;
+router.post(
+	'/register',
+	celebrate({
+		body: userValidationSchema,
+	}),
+	async function (req, res) {
+		const result = await userService.register(req.body);
+		const statusCode = result.success ? 201 : 400;
 
-	res.status(statusCode).json(result);
-});
+		res.status(statusCode).json(result);
+	},
+);
 
 router.post(
 	'/login',

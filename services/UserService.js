@@ -116,10 +116,79 @@ class UserService {
 			avatar,
 			userId,
 		};
-		const client = this.db.Client(clientData);
+		for (let prop in clientData)
+			if (!clientData[prop]) delete clientData[prop];
+
+		const condition = { userId: _id };
+		const options = {
+			upsert: true,
+			new: true,
+			setDefaultsOnInsert: true,
+			useFindAndModify: false,
+		};
+
 		try {
+			const client = await this.db.Client.findOneAndUpdate(
+				condition,
+				clientData,
+				options,
+			);
 			await client.save();
 			return { success: true, data: { client } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async configureProvider(userData) {
+		const { _id, payload } = userData;
+		const userId = _id;
+		const {
+			location,
+			adress,
+			CUI,
+			type,
+			description,
+			images,
+			rating,
+			priceCategory,
+			specials,
+			tables,
+		} = payload;
+		const providerData = {
+			location,
+			adress,
+			CUI,
+			type,
+			description,
+			images,
+			rating,
+			priceCategory,
+			specials,
+			userId,
+			tables,
+		};
+		for (let prop in providerData)
+			if (!providerData[prop]) delete providerData[prop];
+		const condition = { userId: _id };
+		const options = {
+			upsert: true,
+			new: true,
+			setDefaultsOnInsert: true,
+			useFindAndModify: false,
+		};
+		try {
+			const provider = await this.db.Provider.findOneAndUpdate(
+				condition,
+				providerData,
+				options,
+			);
+			await provider.save();
+			return { success: true, data: { provider } };
 		} catch (error) {
 			Logger.error(error);
 			return {

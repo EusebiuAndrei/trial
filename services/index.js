@@ -1,5 +1,5 @@
 // Import all the users models
-const { User, Client } = require('../models/index');
+const { User, Client, Provider } = require('../models/index');
 
 // Import all the service constructors
 const UserService = require('./UserService');
@@ -9,6 +9,7 @@ const userService = new UserService({
 	db: {
 		User,
 		Client,
+		Provider,
 	},
 	services: {},
 });
