@@ -5,7 +5,10 @@ const { auth } = require('../middlewares/index');
 
 const Logger = require('../../loaders/logger');
 // validation schemas
-const { userValidationSchema } = require('../../models/index');
+const {
+	userValidationSchema,
+	clientValidationSchema,
+} = require('../../models/index');
 
 const router = Router();
 
@@ -50,15 +53,24 @@ router.delete('/all', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post('/profile', auth, async (req, res) => {
-	const result = await userService.configureUser(
-		req.data,
-		req.body,
-	);
-	const statusCode = result.success ? 200 : 400;
+router.post(
+	'/profile',
+	auth,
+	(req, res, next) => {
+		return celebrate({
+			body: clientValidationSchema,
+		}).call(this, req, res, next);
+	},
+	async (req, res) => {
+		const result = await userService.configureUser(
+			req.data,
+			req.body,
+		);
+		const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
-});
+		res.status(statusCode).json(result);
+	},
+);
 module.exports = router;
 
 // All the results must have the next format
