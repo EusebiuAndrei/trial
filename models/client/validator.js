@@ -4,19 +4,26 @@ const { Joi } = require('celebrate');
 // // add joi-objectId to Joi
 // Joi.objectId = joiObjectId(Joi);
 
-const schema = Joi.object().keys({
-	email: Joi.string()
-		.email()
-		.required()
-		.error(new Error('Email required')),
-	password: Joi.string()
-		.min(6)
-		.required()
-		.error(
-			new Error(
-				'Password must consist of minimum 6 characters',
-			),
-		),
-});
+schema = (firstChange) => {
+	if (firstChange)
+		return Joi.object().keys({
+			prefferences: Joi.array().items(Joi.string().required()),
+			allergies: Joi.string(),
+			location: Joi.object().keys({
+				latitude: Joi.number().min(-90).max(90).required(),
+				longitude: Joi.number().min(-180).max(180).required(),
+			}),
+			avatar: Joi.required(),
+		});
+	else
+		return Joi.object().keys({
+			prefferences: Joi.array().items(Joi.string()),
+			allergies: Joi.string(),
+			location: Joi.object().keys({
+				latitude: Joi.number().min(-90).max(90),
+				longitude: Joi.number().min(-180).max(180),
+			}),
+		});
+};
 
 module.exports = schema;
