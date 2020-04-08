@@ -4,26 +4,37 @@ const { Joi } = require('celebrate');
 // // add joi-objectId to Joi
 // Joi.objectId = joiObjectId(Joi);
 
-schema = (firstChange) => {
-	if (firstChange)
+const schema = (isFirstChange) => {
+	if (isFirstChange) {
 		return Joi.object().keys({
-			prefferences: Joi.array().items(Joi.string().required()),
+			preferences: Joi.string(),
 			allergies: Joi.string(),
-			location: Joi.object().keys({
-				latitude: Joi.number().min(-90).max(90).required(),
-				longitude: Joi.number().min(-180).max(180).required(),
-			}),
+			location: Joi.object()
+				.keys({
+					latitude: Joi.number()
+						.min(-90)
+						.max(90)
+						.required(),
+					longitude: Joi.number()
+						.min(-180)
+						.max(180)
+						.required(),
+				})
+				.required(),
 			avatar: Joi.required(),
 		});
-	else
+	}
+	if (!isFirstChange) {
 		return Joi.object().keys({
-			prefferences: Joi.array().items(Joi.string()),
-			allergies: Joi.string(),
+			preferences: Joi.string(),
+			allergies: Joi.array().items(Joi.string()),
 			location: Joi.object().keys({
 				latitude: Joi.number().min(-90).max(90),
 				longitude: Joi.number().min(-180).max(180),
 			}),
+			avatar: Joi.string(), // trebuie modificat
 		});
+	}
 };
 
 module.exports = schema;

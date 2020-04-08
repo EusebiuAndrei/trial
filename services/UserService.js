@@ -116,14 +116,13 @@ class UserService {
 			avatar,
 			userId,
 		};
-		for (let prop in clientData)
+		for (var prop in clientData) {
 			if (!clientData[prop]) delete clientData[prop];
-
+		}
 		const condition = { userId: _id };
 		const options = {
 			upsert: true,
 			new: true,
-			setDefaultsOnInsert: true,
 			useFindAndModify: false,
 		};
 
@@ -172,13 +171,13 @@ class UserService {
 			userId,
 			tables,
 		};
-		for (let prop in providerData)
+		for (var prop in providerData) {
 			if (!providerData[prop]) delete providerData[prop];
+		}
 		const condition = { userId: _id };
 		const options = {
 			upsert: true,
 			new: true,
-			setDefaultsOnInsert: true,
 			useFindAndModify: false,
 		};
 		try {
@@ -208,13 +207,12 @@ class UserService {
 					payload,
 				});
 				return { success: true, data: { client } };
-			} else {
-				const provider = await this.configureProvider({
-					_id,
-					payload,
-				});
-				return { success: true, data: { provider } };
 			}
+			const provider = await this.configureProvider({
+				_id,
+				payload,
+			});
+			return { success: true, data: { provider } };
 		} catch (error) {
 			return {
 				success: false,

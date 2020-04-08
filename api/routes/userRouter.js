@@ -5,11 +5,7 @@ const { auth } = require('../middlewares/index');
 const { dynamicCelebrate } = require('../middlewares/index');
 const Logger = require('../../loaders/logger');
 // validation schemas
-const {
-	userValidationSchema,
-	clientValidationSchema,
-	providerValidationSchema,
-} = require('../../models/index');
+const { userValidationSchema } = require('../../models/index');
 
 const router = Router();
 
@@ -63,10 +59,9 @@ router.delete('/all', async (req, res) => {
 router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 	const result = await userService.configureUser(
 		req.data,
-		req.body,
+		req.content,
 	);
 	const statusCode = result.success ? 200 : 400;
-
 	res.status(statusCode).json(result);
 });
 module.exports = router;
