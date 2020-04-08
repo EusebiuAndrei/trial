@@ -21,7 +21,9 @@ const schema = function (firstChange) {
 				'Medium',
 				'Expensive',
 			).required(),
-			specials: Joi.array().items(Joi.string().required()),
+			specials: Joi.array()
+				.items(Joi.string().required())
+				.required(),
 			tables: Joi.number().required(),
 		});
 	return Joi.object().keys({

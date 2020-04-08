@@ -7,8 +7,12 @@ const { Joi } = require('celebrate');
 const schema = (isFirstChange) => {
 	if (isFirstChange) {
 		return Joi.object().keys({
-			preferences: Joi.string(),
-			allergies: Joi.string(),
+			preferences: Joi.array()
+				.items(Joi.string().required())
+				.required(),
+			allergies: Joi.array()
+				.items(Joi.string().required())
+				.required(),
 			location: Joi.object()
 				.keys({
 					latitude: Joi.number()
@@ -26,7 +30,7 @@ const schema = (isFirstChange) => {
 	}
 	if (!isFirstChange) {
 		return Joi.object().keys({
-			preferences: Joi.string(),
+			preferences: Joi.array().items(Joi.string()),
 			allergies: Joi.array().items(Joi.string()),
 			location: Joi.object().keys({
 				latitude: Joi.number().min(-90).max(90),
