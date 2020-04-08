@@ -88,9 +88,9 @@ class UserService {
 			if (!user) {
 				throw new Error('Not authorized');
 			}
-			if (!this.isRegistrationConfirmed(user)) {
-				throw new Error('Not confirmed');
-			}
+			// if (!this.isRegistrationConfirmed(user)) {
+			// 	throw new Error('Not confirmed');
+			// }
 			return { success: true, data: { token, user } };
 		} catch (error) {
 			return {
