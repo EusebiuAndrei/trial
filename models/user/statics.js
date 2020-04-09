@@ -17,7 +17,19 @@ const findByCredentials = async function (email, password) {
 	return user;
 };
 
+const findByEmailToken = async function (emailToken){
+	const user = await this.findOne({emailToken});
+
+	if(!user){
+		throw new Error('Invalid email confirm session!');
+	} 
+
+	user.emailToken = "0";
+	await user.save();
+};
+
 module.exports = {
 	// Put them all here
 	findByCredentials,
+	findByEmailToken,
 };

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/index');
 const Logger = require('../loaders/logger');
 
+
 class UserService {
 	constructor({ db, services }) {
 		this.db = db;
@@ -45,10 +46,10 @@ class UserService {
 		const userData = { email, password };
 		const user = new this.db.User(userData);
 
-
 		try {
 			await user.save();
 			await user.generateEmailToken();
+			await this.services.sendEmailService.sendEmail(user.emailToken,user.email);
 
 			return { success: true, data: { user } };
 		} catch (error) {
@@ -68,6 +69,7 @@ class UserService {
 				email,
 				password,
 			);
+			const token = await user.generateAuthToken();
 
 			return { success: true, data: { user, token } };
 		} catch (error) {
@@ -80,8 +82,16 @@ class UserService {
 
 	async confirmEmail(payload){
 
-		Logger.warn(payload);
-		return {success:true , data:"nothing"}
+		try{
+			await this.db.User.findByEmailToken(payload);
+
+			return {success:true , data : "You've successfully confirmed your email!"};
+		} catch(error){
+			return {
+				succes:false,
+				error:{ message: error.message}
+			}
+		}
 	}
 
 	async authorize(token) {
