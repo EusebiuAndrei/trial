@@ -11,7 +11,7 @@ class UserService {
 	async getTest() {
 		try {
 			const client = await this.db.Client.find({
-				_id: '5e87b25a356bef450b818e8a',
+				_id: '5e8f52dddcdbbe3a702b4130',
 			});
 
 			const user = await this.db.User.find({
@@ -45,8 +45,10 @@ class UserService {
 		const userData = { email, password };
 		const user = new this.db.User(userData);
 
+
 		try {
 			await user.save();
+			await user.generateEmailToken();
 
 			return { success: true, data: { user } };
 		} catch (error) {
@@ -66,7 +68,6 @@ class UserService {
 				email,
 				password,
 			);
-			const token = await user.generateAuthToken();
 
 			return { success: true, data: { user, token } };
 		} catch (error) {
@@ -75,6 +76,12 @@ class UserService {
 				error: { message: error.message },
 			};
 		}
+	}
+
+	async confirmEmail(payload){
+
+		Logger.warn(payload);
+		return {success:true , data:"nothing"}
 	}
 
 	async authorize(token) {

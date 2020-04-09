@@ -31,6 +31,13 @@ router.post('/register', async function (req, res) {
 	res.status(statusCode).json(result);
 });
 
+router.post('/confirm:token', async(req,res)=>{
+	const result = await userService.confirmEmail(req.params.token);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 router.post(
 	'/login',
 	celebrate({

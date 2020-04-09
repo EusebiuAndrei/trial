@@ -15,6 +15,19 @@ const generateAuthToken = async function () {
 	return token;
 };
 
+const generateEmailToken = async function () {
+	const user = this;
+	const token = jwt.sign(
+		{ _id: user._id.toString() },
+		config.jwtSecret,
+	);
+
+	user.emailToken = token;
+	await user.save();
+
+	return token;
+};
+
 const toJSON = function () {
 	const user = this;
 	const userObject = user.toObject();
@@ -28,5 +41,6 @@ const toJSON = function () {
 module.exports = {
 	// Put them all here
 	generateAuthToken,
+	generateEmailToken,
 	toJSON,
 };
