@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const Logger = require('../../loaders/logger');
 
 // Create functions that will represent schema statics
 const findByCredentials = async function (email, password) {
@@ -12,6 +13,10 @@ const findByCredentials = async function (email, password) {
 
 	if (!isMatch) {
 		throw new Error('Unable to login');
+	}
+
+	if(user.emailToken != 0){
+		throw new Error('Account is not confirmed!');
 	}
 
 	return user;
