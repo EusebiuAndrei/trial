@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
-
+const {deleteAccount}=require('../controller/userController');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
@@ -16,6 +16,8 @@ router.get('/', auth, async (req, res) => {
 
 	res.status(statusCode).json(result);
 });
+
+router.delete('/',auth, deleteAccount);
 
 router.get('/test', async (req, res) => {
 	const result = await userService.getTest();
@@ -51,7 +53,7 @@ router.delete('/all', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-module.exports = router;
+module.exports = {"userRouter":router};
 
 // All the results must have the next format
 // { success: false, error } - if an error was thrown

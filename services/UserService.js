@@ -111,6 +111,22 @@ class UserService {
 			};
 		}
 	}
+
+	///TODO: functie care sterge user dupa criteriul dat
+	/*async deleteById(_email) {
+		try {
+			const users = await this.db.User.deleteMany({email ==_email});
+
+			return { success: true, data: { users } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+	*/
 }
 
 module.exports = UserService;
