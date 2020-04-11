@@ -77,6 +77,29 @@ class UserService {
 		}
 	}
 
+	async logout(payload) {
+		const { email, password } = payload;
+
+		try {
+			const user = await this.db.User.findByCredentials(
+				email,
+				password,
+			);
+			user.token = 0;
+			const afterLogoutToken = user.token;
+
+			return {
+				success: true,
+				data: { user, afterLogoutToken },
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async authorize(token) {
 		try {
 			const { _id } = jwt.verify(token, config.jwtSecret);
