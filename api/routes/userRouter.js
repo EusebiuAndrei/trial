@@ -11,6 +11,7 @@ const router = Router();
 
 // Here we have all the controllers
 router.get('/', auth, async (req, res) => {
+	Logger.info(JSON.stringify(req.data, null, 2));
 	const result = await userService.getAllUsers();
 	const statusCode = result.success ? 200 : 400;
 

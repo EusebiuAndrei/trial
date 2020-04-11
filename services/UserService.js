@@ -105,114 +105,30 @@ class UserService {
 		return confirmed;
 	}
 
-	async configureClient(userData) {
-		const { _id, payload } = userData;
-		const userId = _id;
-		const { preferences, allergies, location, avatar } = payload;
-		const clientData = {
-			preferences,
-			allergies,
-			location,
-			avatar,
-			userId,
-		};
-		for (var prop in clientData) {
-			if (!clientData[prop]) delete clientData[prop];
-		}
-		const condition = { userId: _id };
-		const options = {
-			upsert: true,
-			new: true,
-			useFindAndModify: false,
-		};
-
-		try {
-			const client = await this.db.Client.findOneAndUpdate(
-				condition,
-				clientData,
-				options,
-			);
-			await client.save();
-			return { success: true, data: { client } };
-		} catch (error) {
-			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
-	async configureProvider(userData) {
-		const { _id, payload } = userData;
-		const userId = _id;
-		const {
-			location,
-			adress,
-			CUI,
-			type,
-			description,
-			images,
-			rating,
-			priceCategory,
-			specials,
-			tables,
-		} = payload;
-		const providerData = {
-			location,
-			adress,
-			CUI,
-			type,
-			description,
-			images,
-			rating,
-			priceCategory,
-			specials,
-			userId,
-			tables,
-		};
-		for (var prop in providerData) {
-			if (!providerData[prop]) delete providerData[prop];
-		}
-		const condition = { userId: _id };
-		const options = {
-			upsert: true,
-			new: true,
-			useFindAndModify: false,
-		};
-		try {
-			const provider = await this.db.Provider.findOneAndUpdate(
-				condition,
-				providerData,
-				options,
-			);
-			await provider.save();
-			return { success: true, data: { provider } };
-		} catch (error) {
-			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
 	async configureUser(userData, payload) {
 		const { user } = userData;
-		const { role, _id } = user[0];
+		const { role, _id: userId } = user[0];
 		try {
-			if (role === 'Client') {
-				const client = await this.configureClient({
-					_id,
-					payload,
-				});
-				return { success: true, data: { client } };
-			}
-			const provider = await this.configureProvider({
-				_id,
-				payload,
+			const data = { ...payload, userId };
+			const condition = { userId };
+			const options = {
+				upsert: true,
+				new: true,
+				useFindAndModify: false,
+			};
+
+			const userDetails = await this.db[role].findOneAndUpdate(
+				condition,
+				data,
+				options,
+			);
+
+			const userNow = await this.db.User.findOne({
+				_id: userId,
 			});
-			return { success: true, data: { provider } };
+			Logger.info(JSON.stringify(userNow, null, 2));
+
+			return { success: true, data: { userDetails } };
 		} catch (error) {
 			return {
 				success: false,
