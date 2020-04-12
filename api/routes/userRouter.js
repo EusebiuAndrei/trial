@@ -17,7 +17,7 @@ router.post(
 		const result = imageService.uploadImage(req);
 		const statusCode = result.success ? 200 : 400;
 		//cum fac rost de filename?
-		res.status(statusCode).json({ name: result.filename });
+		res.status(statusCode).json(result);
 	},
 );
 
