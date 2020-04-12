@@ -8,18 +8,9 @@ class ImageService {
 	async uploadImage(req) {
 		try {
 			const imagePath = './public/images';
-			const fileUpload = new Resize(imagePath);
-			if (!req.file) {
-				return {
-					success: false,
-					error: 'Please provide an image!',
-				};
-			}
+			const fileUpload = await new Resize(imagePath);
 			const filename = await fileUpload.save(req.file.buffer);
-			return {
-				succes: true,
-				name: filename,
-			};
+			return { success: true, data: { filename } };
 		} catch (error) {
 			return {
 				success: false,

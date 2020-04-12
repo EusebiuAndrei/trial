@@ -14,9 +14,9 @@ router.post(
 	'/uploadSingle',
 	upload.single('image'),
 	async (req, res) => {
-		const result = imageService.uploadImage(req);
+		const result = await imageService.uploadImage(req);
 		const statusCode = result.success ? 200 : 400;
-		//cum fac rost de filename?
+		console.log(result);
 		res.status(statusCode).json(result);
 	},
 );
@@ -25,10 +25,11 @@ router.post(
 	'/uploadMultiple',
 	upload.array('image', 2),
 	async (req, res) => {
-		const result = imageService.uploadImage(req);
+		console.log(req.file);
+		const result = await imageService.uploadImage(req);
 		const statusCode = result.success ? 200 : 400;
-		//cum fac rost de filename?
-		res.status(statusCode).json({ name: result.filename });
+		console.log(result);
+		res.status(statusCode).json(result);
 	},
 );
 
