@@ -15,28 +15,26 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
 	//reject a file
-
 	if (file.mimetype === 'image/png') {
-		sharp(file).resize(300, 300, {
-			fit: sharp.fit.inside,
-			withoutEnlargement: true,
-		});
 		cb(null, true);
 	} else if (file.mimetype === 'image/jpeg') {
-		sharp(file).resize(300, 300, {
-			fit: sharp.fit.inside,
-			withoutEnlargement: true,
-		});
 		cb(null, true);
 	} else if (file.mimetype === 'image/jpg') {
-		sharp(file).resize(300, 300, {
-			fit: sharp.fit.inside,
-			withoutEnlargement: true,
-		});
 		cb(null, true);
 	} else {
 		cb(null, false);
 	}
+};
+
+const resize = (req, res, next) => {
+	sharp(req.file.path)
+		.resize({
+			width: 300,
+			height: 300,
+			fit: sharp.fit.inside,
+			withoutEnlargement: true,
+		})
+		.toFile(req.file);
 };
 
 const convert = (req, res, next) => {
@@ -59,6 +57,7 @@ class ImageService {
 			storage: storage,
 			limits: { fileSize: 1024 * 1024 * 3 },
 			fileFilter: fileFilter,
+			resize: resize,
 			convert: convert,
 		});
 

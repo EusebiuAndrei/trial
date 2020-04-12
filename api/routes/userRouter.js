@@ -3,9 +3,9 @@ const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
 const { imageService } = require('../../services/index');
-
+const sharp = require('sharp');
 const upload = imageService.uploadImg();
-
+const uuid = require('uuid');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
@@ -21,8 +21,18 @@ router.post(
 			res.status(401).json({
 				error: 'Please provide an image',
 			});
+		} else {
+			await sharp(req.file.path)
+				.resize({
+					width: 300,
+					height: 300,
+					fit: sharp.fit.inside,
+					withoutEnlargement: true,
+				})
+				.toFile('./public/images/' + uuid.v4() + '.png');
 		}
-		return res.status(200).json({ name: req.filename });
+
+		return res.status(200).json({ name: req.file });
 	},
 );
 
