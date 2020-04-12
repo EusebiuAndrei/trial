@@ -1,60 +1,43 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
+const Resize = require('../../services/Resize');
 const { userService } = require('../../services/index');
 const { auth, upload } = require('../middlewares/index');
-const { imageService } = require('../../services/index');
-const sharp = require('sharp');
-//const upload = imageService.uploadImg();
-const uuid = require('uuid');
+const { imageService } = require('../../services/ImageService');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-const path = require('path');
-
-router.post('/upload', upload.single('image'), async (req, res) => {
-	const imagePath = path.join(__dirname, '/public/images');
-	const fileUpload = new Resize(imagePath);
-	if (!req.file) {
-		res.status(401).json({ error: 'Please provide an image' });
-	}
-	const filename = await fileUpload.save(req.file.buffer);
-	return res.status(200).json({ name: filename });
-});
-
-//image routs here we've made the tests.
 router.post(
 	'/uploadSingle',
 	upload.single('image'),
 	async (req, res) => {
-		if (!req.file) {
-			res.status(401).json({
-				error: 'Please provide an image',
-			});
-		} else {
-			await sharp(req.file.path)
-				.resize({
-					width: 300,
-					height: 300,
-					fit: sharp.fit.inside,
-					withoutEnlargement: true,
-				})
-				.toFile('./public/images/' + uuid.v4() + '.png');
-		}
+		const result = imageService.uploadImage(req);
+		const statusCode = result.success ? 200 : 400;
 
-		return res.status(200).json({ name: req.file });
+		res.status(statusCode).json(result);
 	},
 );
 
 router.post(
 	'/uploadMultiple',
-	upload.array('image', 2),
-	async (req, res, next) => {
-		console.log(req.file);
+	upload.array('image', 10),
+	async (req, res) => {
+		const imagePath = './public/images';
+		const fileUpload = new Resize(imagePath);
+		if (!req.file) {
+			res.status(401).json({
+				error: 'Please provide an image',
+			});
+		} else {
+			const filename = await fileUpload.save(req.file.buffer);
+			return res.status(200).json({ name: filename });
+		}
 	},
 );
+
 // Here we have all the controllers
 router.get('/', auth, async (req, res) => {
 	const result = await userService.getAllUsers();
