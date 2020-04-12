@@ -1,5 +1,6 @@
-const uuid = require('uuid');
 const Jimp = require('jimp');
+const sharp = require('sharp');
+const uuid = require('uuid');
 
 const multer = require('multer');
 
@@ -14,53 +15,54 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
 	//reject a file
+
 	if (file.mimetype === 'image/png') {
+		sharp(file).resize(300, 300, {
+			fit: sharp.fit.inside,
+			withoutEnlargement: true,
+		});
 		cb(null, true);
 	} else if (file.mimetype === 'image/jpeg') {
-		// Jimp.read(file, function (err, image) {
-		// 	if (err) {
-		// 		console.log(err);
-		// 	} else {
-		// 		image.write(file.originalname + '.png');
-		// 	}
-		// });
+		sharp(file).resize(300, 300, {
+			fit: sharp.fit.inside,
+			withoutEnlargement: true,
+		});
 		cb(null, true);
 	} else if (file.mimetype === 'image/jpg') {
-		// Jimp.read(file, function (err, image) {
-		// 	if (err) {
-		// 		console.log(err);
-		// 	} else {
-		// 		image.write(file.originalname + '.png');
-		// 	}
-		// });
+		sharp(file).resize(300, 300, {
+			fit: sharp.fit.inside,
+			withoutEnlargement: true,
+		});
 		cb(null, true);
 	} else {
 		cb(null, false);
 	}
 };
 
-const upload = multer({
-	storage: storage,
-	limits: { fileSize: 1024 * 1024 * 3 },
-	fileFilter: fileFilter,
-});
+const convert = (req, res, next) => {
+	Jimp.read(req.filename, function (err, image) {
+		if (err) {
+			console.log(err);
+		} else {
+			image.write(req.filename);
+		}
+	});
+};
 
 class ImageService {
 	constructor({ services }) {
 		this.services = services;
 	}
 
-	uploadImg(req) {
-		try {
-			this.upload.single(req);
+	uploadImg() {
+		const upload = multer({
+			storage: storage,
+			limits: { fileSize: 1024 * 1024 * 3 },
+			fileFilter: fileFilter,
+			convert: convert,
+		});
 
-			return { message: upload.originalname };
-		} catch (error) {
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
+		return upload;
 	}
 }
 
