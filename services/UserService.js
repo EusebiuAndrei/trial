@@ -111,6 +111,22 @@ class UserService {
 			};
 		}
 	}
+
+	async deleteOne(req)
+	{
+		try {
+			const users = await this.db.User.deleteOne({ _id:_id});
+            
+			return { success: true, data: { users } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
 }
 
 module.exports = UserService;
+

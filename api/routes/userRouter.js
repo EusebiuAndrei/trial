@@ -17,6 +17,7 @@ router.get('/', auth, async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+
 router.get('/test', async (req, res) => {
 	const result = await userService.getTest();
 	const statusCode = result.success ? 200 : 400;
@@ -46,6 +47,14 @@ router.post(
 
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.delete('/one', auth, async (req, res) => {
+	const result = await userService.deleteOne(req.data);
+
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
