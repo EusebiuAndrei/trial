@@ -21,15 +21,20 @@ class ImageService {
 
 	async uploadMultipleImages(files) {
 		try {
+			const uploadedImages = [];
 			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			files.forEach(async (buffers) => {
 				const filename = await fileUpload.save(
 					buffers.buffer,
 				);
-				console.log(filename); //filenames to be saved
+				await uploadedImages.push(filename);
 			});
-			return { success: true, name: 'filename' };
+			console.log(uploadedImages);
+			return {
+				success: true,
+				name: JSON.stringify(uploadedImages),
+			};
 		} catch (error) {
 			return {
 				success: false,
