@@ -1,9 +1,9 @@
 async function deleteAccount(req, res) 
 {
-	const result = await userService.getAllUsers();
-	const statusCode = result.success ? 200 : 400;
+	var userId=req.data.user.id
+	var json=await deleteById(userId)
 
-	res.status(statusCode).json(result);
-};
+	res.status(statusCode).json(json)
+}
 
 modules.exports=deleteAccount
