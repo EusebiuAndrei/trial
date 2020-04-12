@@ -5,9 +5,8 @@ class ImageService {
 		this.services = services;
 	}
 
-	async uploadImage(payload) {
+	async uploadImage(req) {
 		try {
-			const req = payload;
 			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			if (!req.file) {

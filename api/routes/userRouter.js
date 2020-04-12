@@ -3,7 +3,7 @@ const { celebrate } = require('celebrate');
 const Resize = require('../../services/Resize');
 const { userService } = require('../../services/index');
 const { auth, upload } = require('../middlewares/index');
-const { imageService } = require('../../services/ImageService');
+const { imageService } = require('../../services/index');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
@@ -16,25 +16,19 @@ router.post(
 	async (req, res) => {
 		const result = imageService.uploadImage(req);
 		const statusCode = result.success ? 200 : 400;
-
-		res.status(statusCode).json(result);
+		//cum fac rost de filename?
+		res.status(statusCode).json({ name: result.filename });
 	},
 );
 
 router.post(
 	'/uploadMultiple',
-	upload.array('image', 10),
+	upload.array('image', 2),
 	async (req, res) => {
-		const imagePath = './public/images';
-		const fileUpload = new Resize(imagePath);
-		if (!req.file) {
-			res.status(401).json({
-				error: 'Please provide an image',
-			});
-		} else {
-			const filename = await fileUpload.save(req.file.buffer);
-			return res.status(200).json({ name: filename });
-		}
+		const result = imageService.uploadImage(req);
+		const statusCode = result.success ? 200 : 400;
+		//cum fac rost de filename?
+		res.status(statusCode).json({ name: result.filename });
 	},
 );
 
