@@ -111,10 +111,10 @@ class UserService {
 			};
 		}
 	}
-	async deleteById(_id)
+	async deleteUserById()
 	{
 		try {
-			const users = await this.db.User.deleteMany({ id:_id});
+			const users = await this.db.User.deleteOne({ id:_id});
 
 			return { success: true, data: { users } };
 		} catch (error) {
@@ -125,7 +125,6 @@ class UserService {
 			};
 		}
 	}
-
 }
 
 module.exports = UserService;
