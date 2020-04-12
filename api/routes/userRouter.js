@@ -45,7 +45,7 @@ router.post(
 );
 
 router.post('/logout', auth, async function (req, res) {
-	const result = await userService.logout(req.body);
+	const result = await userService.logout(req.data);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);

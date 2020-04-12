@@ -78,7 +78,10 @@ class UserService {
 	}
 
 	async logout(payload) {
+		const { token, _id } = payload;
 		const { email, password } = payload;
+
+		// {'tokens.token': token}
 
 		try {
 			const user = await this.db.User.findByCredentials(
@@ -87,7 +90,6 @@ class UserService {
 			);
 			user.token = 0;
 			const afterLogoutToken = user.token;
-
 			return {
 				success: true,
 				data: { user, afterLogoutToken },
