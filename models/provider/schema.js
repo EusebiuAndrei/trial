@@ -54,6 +54,14 @@ const providerSchema = mongoose.Schema({
 		type: Number,
 		required: true,
 	},
+	menuId: {
+		type: mongoose.Types.ObjectId,
+		required: false,
+	},
+	scheduleId: {
+		type: mongoose.Types.ObjectId,
+		require: false,
+	},
 });
 
 module.exports = providerSchema;

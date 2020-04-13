@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/index');
 const Logger = require('../loaders/logger');
+const { menuService, scheduleService } = require('./index');
 
 class UserService {
 	constructor({ db, services }) {
@@ -109,19 +110,48 @@ class UserService {
 		const { user } = userData;
 		const { role, _id: userId } = user[0];
 		try {
+			const { menu, schedule } = payload;
+			delete payload['menu'];
+			delete payload['schedule'];
+
 			const data = { ...payload, userId };
+
 			const condition = { userId };
 			const options = {
 				upsert: true,
 				new: true,
 				useFindAndModify: false,
 			};
-
-			const userDetails = await this.db[role].findOneAndUpdate(
+			let userDetails = await this.db[role].findOneAndUpdate(
 				condition,
 				data,
 				options,
 			);
+
+			if (role === 'Provider') {
+				let outsideData = {};
+				if (menu) {
+					const menuProvider = await this.services.menuService.create(
+						menu,
+						userDetails._id,
+					);
+					const { _id: menuId } = menuProvider.data;
+					outsideData = { menuId };
+				}
+				if (schedule) {
+					const scheduleProvider = await this.services.scheduleService.create(
+						schedule,
+						userDetails._id,
+					);
+					const { _id: scheduleId } = scheduleProvider.data;
+					outsideData += { scheduleId };
+				}
+				userDetails = await this.db[role].findOneAndUpdate(
+					condition,
+					outsideData,
+					options,
+				);
+			}
 
 			const userNow = await this.db.User.findOne({
 				_id: userId,

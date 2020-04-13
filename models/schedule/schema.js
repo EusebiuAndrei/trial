@@ -32,7 +32,7 @@ const scheduleSchema = mongoose.Schema({
 			},
 		},
 	],
-	idProvider: {
+	providerId: {
 		type: mongoose.Types.ObjectId,
 		require: true,
 	},

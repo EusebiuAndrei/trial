@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema(
 		role: {
 			type: String,
 			enum: ['Client', 'Provider'],
-			default: 'Client',
+			default: 'Provider',
 		},
 		emailToken: {
 			type: String,
