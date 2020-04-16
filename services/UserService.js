@@ -140,23 +140,13 @@ class UserService {
 				}
 				if (schedule) {
 					const scheduleProvider = await this.services.scheduleService.create(
-						schedule,
+						{ schedule },
 						userDetails._id,
 					);
 					const { _id: scheduleId } = scheduleProvider.data;
 					outsideData += { scheduleId };
 				}
-				userDetails = await this.db[role].findOneAndUpdate(
-					condition,
-					outsideData,
-					options,
-				);
 			}
-
-			const userNow = await this.db.User.findOne({
-				_id: userId,
-			});
-			Logger.info(JSON.stringify(userNow, null, 2));
 
 			return { success: true, data: { userDetails } };
 		} catch (error) {

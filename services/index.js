@@ -31,6 +31,7 @@ const userService = new UserService({
 		User,
 		Client,
 		Provider,
+		Menu,
 	},
 	services: { menuService, scheduleService },
 });

@@ -8,6 +8,7 @@ class MenuService {
 
 	async create(payload, providerId) {
 		const menuData = { ...payload, providerId };
+		//Logger.info(JSON.stringify(menuData, null, 2));
 		const condition = { providerId };
 		const options = {
 			upsert: true,
@@ -20,7 +21,7 @@ class MenuService {
 			options,
 		);
 		try {
-			Logger.info(JSON.stringify(menu, null, 2));
+			//Logger.info(JSON.stringify(menu, null, 2));
 			return { success: true, data: menu };
 		} catch (error) {
 			Logger.error(error);
