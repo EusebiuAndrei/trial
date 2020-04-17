@@ -156,7 +156,6 @@ class UserService {
 			const userNow = await this.db.User.findOne({
 				_id: userId,
 			});
-			Logger.info(JSON.stringify(userNow, null, 2));
 
 			return { success: true, data: { userDetails } };
 		} catch (error) {

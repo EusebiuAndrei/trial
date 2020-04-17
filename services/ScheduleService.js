@@ -14,7 +14,7 @@ class ScheduleService {
 			new: true,
 			useFindAndModify: false,
 		};
-		const schedule = await this.db.Menu.findOneAndUpdate(
+		const schedule = await this.db.Schedule.findOneAndUpdate(
 			condition,
 			scheduleData,
 			options,
