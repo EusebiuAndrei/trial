@@ -1,20 +1,23 @@
 const nodemailer = require('nodemailer');
+
 const Logger = require('../loaders/logger');
 
 class SendEmailService {
+
     constructor(){
 
     }
-    async sendEmail(emailToken,email){
+
+    async sendConfirmEmail(emailToken,email){
         
         var auth = {
             type: 'oauth2',
             user: 'cozmacatalin33@gmail.com',
             clientId: '240398453424-pgn2b6upbtqpqgas47t55aai542bmtd9.apps.googleusercontent.com',
             clientSecret: 'Jxf8WeNko0wF6rsyaMhXAgf_',
-            refreshToken: '1//043ZcOJBeGmA8CgYIARAAGAQSNwF-L9Ir4slKlYxHG7kVguqExt96ocoi1hURMiTmuX9FoTLP2bZWXI6HCvdidwGIsdMpHfV4OAk',
-            accessToken: 'ya29.a0Ae4lvC1Ryh5qU_QKsDQOk8s-00t93hz3rkClPCn8SD6YD-rREs11WDigY5iLvaSH5_eDSLhxuaXrxQ4MHri0omr6A4aXeT1_-PyeQ2EAQxnCJ0r99DPephKqfGATmCkvs8PD27CYaK9zwjzz6f22Sl6uq7FECsxp0XM',
-            authorizationCode: '4/ygFLyP_iRXCIq51eFnkFJvpDcIU0E-LOO4-0MdBNN2YRylvKPXz0Y7139D8YC9EZJk7-9sOKUCD801emVjRRUrE'
+            refreshToken: '1//041nQRiX4Ml7WCgYIARAAGAQSNwF-L9IrOenzINB48KJF2kzpCQpyRBXdy15BjpZQe8DvlTL7H5IDEFKueP3QWMEPgjrTSYV2ClQ',
+            accessToken: 'ya29.a0Ae4lvC2Z7ofd2HTXxyK8Ni0R9FeGnDuNR55chthr2AuMHSCSijEMMmqnGf_Kuw_Vy6A2ClglBnkqJCeea7w7uHyNEpI2t9TCicPKVgOOSUKuofsVDjWQRsGGsv6AmP7xHXIjRv3AF-qXYwitpxE472fZYSAnWtyPruQ',
+            authorizationCode: '4/ywGYK2YA-4pe6waM5s-qgRYNHuqE0n9_E_x7l5NMP7JgpaysvvMRiOvJ8eILJlXSitn24EeyyYQWtMqJ3yc3acY'
         };
 
         var mailOptions = {
@@ -32,13 +35,42 @@ class SendEmailService {
         transporter.sendMail(mailOptions, (err, res) => {
             if (err) {
                 return console.log(err);
-               //return console.log("n-am reusit");
             } else {
                 console.log(JSON.stringify(res));
-                //return console.log("am reusit");
             }
         });
+    }
 
+    async sendNewPassword(password,email){
+        var auth = {
+            type: 'oauth2',
+            user: 'cozmacatalin33@gmail.com',
+            clientId: '240398453424-pgn2b6upbtqpqgas47t55aai542bmtd9.apps.googleusercontent.com',
+            clientSecret: 'Jxf8WeNko0wF6rsyaMhXAgf_',
+            refreshToken: '1//041nQRiX4Ml7WCgYIARAAGAQSNwF-L9IrOenzINB48KJF2kzpCQpyRBXdy15BjpZQe8DvlTL7H5IDEFKueP3QWMEPgjrTSYV2ClQ',
+            accessToken: 'ya29.a0Ae4lvC2Z7ofd2HTXxyK8Ni0R9FeGnDuNR55chthr2AuMHSCSijEMMmqnGf_Kuw_Vy6A2ClglBnkqJCeea7w7uHyNEpI2t9TCicPKVgOOSUKuofsVDjWQRsGGsv6AmP7xHXIjRv3AF-qXYwitpxE472fZYSAnWtyPruQ',
+            authorizationCode: '4/ywGYK2YA-4pe6waM5s-qgRYNHuqE0n9_E_x7l5NMP7JgpaysvvMRiOvJ8eILJlXSitn24EeyyYQWtMqJ3yc3acY'
+        };
+
+        var mailOptions = {
+            from: 'cozmacatalin33@gmail.com',
+            to: email,
+            subject: 'Salutare din partea echipei accounts',
+            html: '<h1>Parola noua este</h1> </br> <p>'+password+'</p>'
+        };
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: auth,
+        });
+
+        transporter.sendMail(mailOptions, (err, res) => {
+            if (err) {
+                return console.log(err);
+            } else {
+                console.log(JSON.stringify(res));
+                        }
+        });
     }
 }
 

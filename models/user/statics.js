@@ -33,8 +33,30 @@ const findByEmailToken = async function (emailToken){
 	await user.save();
 };
 
+const findByEmail = async function (email){
+	const user = await this.findOne({email});
+
+	if(!user){
+		throw new Error('Invalid email!');
+	} 
+	
+	return user;
+};
+
+const findByToken = async function (tokens){
+	const user = await this.findOne({tokens});
+
+	if(!user){
+		throw new Error('Nu esti logat!');
+	} 
+	
+	return user;
+};
+
 module.exports = {
 	// Put them all here
 	findByCredentials,
 	findByEmailToken,
+	findByEmail,
+	findByToken
 };
