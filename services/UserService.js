@@ -66,9 +66,8 @@ class UserService {
 				email,
 				password,
 			);
-			const token = await user.generateAuthToken();
-
-			return { success: true, data: { user, token } };
+			await user.generateAuthToken();
+			return { success: true, data: { user } };
 		} catch (error) {
 			return {
 				success: false,
@@ -77,23 +76,20 @@ class UserService {
 		}
 	}
 
-	async logout(payload) {
-		const { token, _id } = payload;
-		const { email, password } = payload;
-
-		// {'tokens.token': token}
-
+	async logout(token) {
 		try {
-			const user = await this.db.User.findByCredentials(
-				email,
-				password,
+			await this.db.User.updateOne(
+				{
+					'tokens.token': token,
+				},
+				{
+					$set: {
+						'tokens.$.token': 0,
+					},
+				},
 			);
-			user.token = 0;
-			const afterLogoutToken = user.token;
-			return {
-				success: true,
-				data: { user, afterLogoutToken },
-			};
+
+			return { succes: true, data: 'Logged out successfully.' };
 		} catch (error) {
 			return {
 				success: false,
