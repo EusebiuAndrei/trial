@@ -31,6 +31,7 @@ const userService = new UserService({
 		User,
 		Client,
 		Provider,
+		Menu,
 	},
 	services: { menuService, scheduleService },
 });
@@ -38,4 +39,6 @@ const userService = new UserService({
 // Export the service object
 module.exports = {
 	userService,
+	menuService,
+	scheduleService,
 };
