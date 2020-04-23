@@ -101,31 +101,6 @@ class UserService {
 		}
 	}
 
-	async logout(token) {
-		try {
-			await this.db.User.updateOne(
-				{
-					'tokens.token': token,
-				},
-				{
-					$set: {
-						'tokens.$.token': 0,
-					},
-				},
-			);
-
-			return {
-				success: true,
-				data: 'Logged out successfully.',
-			};
-		} catch (error) {
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
 	async authorize(token) {
 		try {
 			const { _id } = jwt.verify(token, config.jwtSecret);
