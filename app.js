@@ -5,6 +5,7 @@ const loaders = require('./loaders/index');
 
 const Logger = require('./loaders/logger');
 
+express.static('public');
 async function startServer() {
 	const app = express();
 	await loaders({ expressApp: app });

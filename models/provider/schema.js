@@ -30,7 +30,7 @@ const providerSchema = mongoose.Schema(
 			required: false, // recomandat
 		},
 		images: {
-			type: Buffer,
+			type: [String],
 			required: false, // recomandat
 		},
 		rating: {

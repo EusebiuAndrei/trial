@@ -15,7 +15,7 @@ const clientSchema = mongoose.Schema({
 		},
 	},
 	avatar: {
-		type: Buffer,
+		type: String,
 		required: false,
 	},
 	commandsHistory: [String],
