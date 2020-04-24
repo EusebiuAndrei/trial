@@ -8,6 +8,7 @@ const {
 } = require('../models/index');
 
 // Import all the service constructors
+const SendEmailService = require('./SendEmailService');
 const UserService = require('./UserService');
 const MenuService = require('./MenuService');
 const ScheduleService = require('./ScheduleService');
@@ -26,6 +27,7 @@ const scheduleService = new ScheduleService({
 	},
 	services: {},
 });
+const sendEmailService = new SendEmailService();
 
 const userService = new UserService({
 	db: {
@@ -34,7 +36,7 @@ const userService = new UserService({
 		Provider,
 		Menu,
 	},
-	services: { menuService, scheduleService },
+	services: { menuService, scheduleService, sendEmailService },
 });
 
 const imageService = new ImageService({

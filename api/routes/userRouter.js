@@ -66,6 +66,27 @@ router.post(
 	},
 );
 
+router.post('/lostpassword', async function (req, res) {
+	const result = await userService.lostPassword(req.body);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.post('/changepassword', async function (req, res) {
+	const result = await userService.changePassword(req.body);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.get('/confirm:token', async(req,res)=>{
+	const result = await userService.confirmEmail(req.params.token);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 router.post(
 	'/login',
 	celebrate({
