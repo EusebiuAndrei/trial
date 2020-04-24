@@ -99,6 +99,13 @@ router.post(
 	},
 );
 
+router.post('/logout', auth, async (req, res) => {
+	const token = req.header('Authorization').replace('Bearer ', '');
+	const result = await userService.logout(token);
+	const statusCode = result.success ? 200 : 400;
+	res.status(statusCode).json(result);
+});
+
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
 	const statusCode = result.success ? 200 : 400;

@@ -103,9 +103,33 @@ class UserService {
 				email,
 				password,
 			);
-			const token = await user.generateAuthToken();
+			await user.generateAuthToken();
+			return { success: true, data: { user } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
 
-			return { success: true, data: { user, token } };
+	async logout(token) {
+		try {
+			await this.db.User.updateOne(
+				{
+					'tokens.token': token,
+				},
+				{
+					$set: {
+						'tokens.$.token': 0,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data: 'Logged out successfully.',
+			};
 		} catch (error) {
 			return {
 				success: false,
