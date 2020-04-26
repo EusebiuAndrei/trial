@@ -40,3 +40,35 @@
 .MuiCard-root + .MuiCard-root {
 	margin-left: 1em !important;
 }
+
+.providerForm{
+	margin: 20%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: auto;
+	width: auto;
+}
+
+.formElementProvider{
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	flex-grow: 1;
+	margin: 3px solid black;
+}
+
+.providerCardHeader{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.cardTitle{
+	flex:3;
+	align-items: flex-start;
+}
+
+.cardEdit{
+	flex:none;
+}
