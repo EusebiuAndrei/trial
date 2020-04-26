@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Profile from './components/Profile';
-import Register from './components/Register';
+import Authorization from './components/Authorization';
 
 function App() {
 	return (
 		<div className="App">
 			<Profile></Profile>
-			<Register></Register>
+			<Authorization></Authorization>
 		</div>
 	);
 }

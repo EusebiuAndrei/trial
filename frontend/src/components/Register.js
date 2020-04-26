@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+const formWidth = {
+	width: '60%',
+	margin: 'auto',
+};
+
 class Register extends Component {
 	render() {
 		return (
-			<div>
+			<div style={formWidth}>
 				<Form>
-					<Form.Group>
-						<Form.Text>
-							<h1>Register Form</h1>
-						</Form.Text>
-					</Form.Group>
+					<h2>Register Form</h2>
 					<Form.Group controlId="formBasicEmail">
 						<Form.Label>Email address</Form.Label>
 						<Form.Control
