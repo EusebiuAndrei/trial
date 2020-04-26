@@ -28,7 +28,7 @@ const User = ({ data }) => {
         <Container>
           <Card>
             <Card.Header className="providerCardHeader">
-              <h5 className="cardTitle">Detaliile userului</h5>
+              <h5 className="cardTitle">Detaliile user-ului</h5>
               <Button
                 className="cardEdit"
                 variant="primary"

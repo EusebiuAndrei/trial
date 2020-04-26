@@ -30,6 +30,7 @@ class Profile extends Component {
 
   render() {
     return (
+      //trimit data=this.state la User
       <div>
         <User data={this.state}></User>
         {this.state.role === "Client" ? (
