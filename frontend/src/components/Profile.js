@@ -24,7 +24,8 @@ class Profile extends Component {
 		return (
 			<div>
 				<User />
-				{this.state.role === 'Client' ? (
+				{
+				this.state.role === 'Client' ? (
 					<Client data={this.state.details}></Client>
 				) : (
 					<Provider data={this.state.details}></Provider>
