@@ -89,7 +89,7 @@ const Provider = ({ data }) => {
 					<img
 						alt={value}
 						className="providerImage"
-						src={require(`../public/${image}`)}
+						src={require(`../assets/${image}`)}
 					/>
 				</Carousel.Item>,
 			);
