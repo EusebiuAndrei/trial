@@ -80,7 +80,7 @@ router.post('/changepassword', async function (req, res) {
 	res.status(statusCode).json(result);
 });
 
-router.get('/confirm:token', async(req,res)=>{
+router.get('/confirm:token', async (req, res) => {
 	const result = await userService.confirmEmail(req.params.token);
 	const statusCode = result.success ? 201 : 400;
 
@@ -100,7 +100,7 @@ router.post(
 );
 
 router.post('/logout', auth, async (req, res) => {
-	const token = req.header('Authorization').replace('Bearer ', '');
+	const { token } = req.data;
 	const result = await userService.logout(token);
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);

@@ -3,7 +3,6 @@ const config = require('../config/index');
 const Logger = require('../loaders/logger');
 const { menuService, scheduleService } = require('./index');
 
-
 class UserService {
 	constructor({ db, services }) {
 		this.db = db;
@@ -50,7 +49,10 @@ class UserService {
 		try {
 			await user.save();
 			await user.generateEmailToken();
-			await this.services.sendEmailService.sendConfirmEmail(user.emailToken,user.email);
+			await this.services.sendEmailService.sendConfirmEmail(
+				user.emailToken,
+				user.email,
+			);
 
 			return { success: true, data: { user } };
 		} catch (error) {
@@ -62,15 +64,20 @@ class UserService {
 		}
 	}
 
-	
 	async lostPassword(payload) {
 		const { email } = payload;
 		try {
 			const user = await this.db.User.findByEmail(email);
 			const password = await user.generateNewPassword();
-			await this.services.sendEmailService.sendNewPassword(password,user.email);
+			await this.services.sendEmailService.sendNewPassword(
+				password,
+				user.email,
+			);
 
-			return { success: true, message: "O parola noua a fost trimisa pe email!" };
+			return {
+				success: true,
+				message: 'O parola noua a fost trimisa pe email!',
+			};
 		} catch (error) {
 			Logger.error(error);
 			return {
@@ -81,11 +88,23 @@ class UserService {
 	}
 
 	async changePassword(payload) {
-		const { email , currentPass , newPass , confirmNewPass} = payload;
+		const {
+			email,
+			currentPass,
+			newPass,
+			confirmNewPass,
+		} = payload;
 		try {
 			const user = await this.db.User.findByEmail(email);
-		    await user.changePassword(currentPass, newPass , confirmNewPass);
-			return { success: true, message: "Parola a fost schimbata!" };
+			await user.changePassword(
+				currentPass,
+				newPass,
+				confirmNewPass,
+			);
+			return {
+				success: true,
+				message: 'Parola a fost schimbata!',
+			};
 		} catch (error) {
 			Logger.error(error);
 			return {
@@ -104,7 +123,7 @@ class UserService {
 				password,
 			);
 			await user.generateAuthToken();
-			return { success: true, data: { user } };
+			return { success: true, user };
 		} catch (error) {
 			return {
 				success: false,
@@ -138,17 +157,19 @@ class UserService {
 		}
 	}
 
-	async confirmEmail(payload){
-
-		try{
+	async confirmEmail(payload) {
+		try {
 			await this.db.User.findByEmailToken(payload);
 
-			return {success:true , data : "You've successfully confirmed your email!"};
-		} catch(error){
 			return {
-				succes:false,
-				error:{ message: error.message}
-			}
+				success: true,
+				data: "You've successfully confirmed your email!",
+			};
+		} catch (error) {
+			return {
+				succes: false,
+				error: { message: error.message },
+			};
 		}
 	}
 
