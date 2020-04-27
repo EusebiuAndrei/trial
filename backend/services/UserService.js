@@ -28,6 +28,19 @@ class UserService {
 		}
 	}
 
+	async getUserById(id) {
+		try {
+			const user = await this.db.User.findOne({ _id: id });
+
+			return { success: true, data: { user } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async getAllUsers() {
 		try {
 			const users = await this.db.User.find({});
@@ -122,8 +135,8 @@ class UserService {
 				email,
 				password,
 			);
-			await user.generateAuthToken();
-			return { success: true, user };
+			const token = await user.generateAuthToken();
+			return { success: true, token, user };
 		} catch (error) {
 			return {
 				success: false,

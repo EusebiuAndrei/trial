@@ -15,41 +15,41 @@ const findByCredentials = async function (email, password) {
 		throw new Error('Unable to login');
 	}
 
-	if(user.emailToken != 0){
-		throw new Error('Account is not confirmed!');
+	// if(user.emailToken != 0){
+	// 	throw new Error('Account is not confirmed!');
+	// }
+
+	return user;
+};
+
+const findByEmailToken = async function (emailToken) {
+	const user = await this.findOne({ emailToken });
+
+	if (!user) {
+		throw new Error('Invalid email confirm session!');
+	}
+
+	user.emailToken = '0';
+	await user.save();
+};
+
+const findByEmail = async function (email) {
+	const user = await this.findOne({ email });
+
+	if (!user) {
+		throw new Error('Invalid email!');
 	}
 
 	return user;
 };
 
-const findByEmailToken = async function (emailToken){
-	const user = await this.findOne({emailToken});
+const findByToken = async function (tokens) {
+	const user = await this.findOne({ tokens });
 
-	if(!user){
-		throw new Error('Invalid email confirm session!');
-	} 
-
-	user.emailToken = "0";
-	await user.save();
-};
-
-const findByEmail = async function (email){
-	const user = await this.findOne({email});
-
-	if(!user){
-		throw new Error('Invalid email!');
-	} 
-	
-	return user;
-};
-
-const findByToken = async function (tokens){
-	const user = await this.findOne({tokens});
-
-	if(!user){
+	if (!user) {
 		throw new Error('Nu esti logat!');
-	} 
-	
+	}
+
 	return user;
 };
 
@@ -58,5 +58,5 @@ module.exports = {
 	findByCredentials,
 	findByEmailToken,
 	findByEmail,
-	findByToken
+	findByToken,
 };

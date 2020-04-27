@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import * as api from '../api';
 
 const formWidth = {
 	width: '60%',
@@ -7,6 +8,19 @@ const formWidth = {
 };
 
 const Login = () => {
+	useEffect(() => {
+		const apiCall = async () => {
+			const {
+				success,
+				user,
+				errorMessage,
+			} = await api.getUser();
+
+			console.log(success, user, errorMessage);
+		};
+		apiCall();
+	}, []);
+
 	return (
 		<div style={formWidth}>
 			<Form>
