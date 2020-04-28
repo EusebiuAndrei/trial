@@ -27,13 +27,13 @@ class Navigation extends React.Component {
         });
     };
 
-  render(){
-      return(
-        this.props.logged === true ? 
-        <NavigationLogged width={this.state.width} height={this.state.height}/> : 
-        <NavigationNotLogged width={this.state.width} height={this.state.height}/>
-      );
-  }
+    render(){
+        return(
+            this.props.logged === true ? 
+            <NavigationLogged width={this.state.width} height={this.state.height}/> : 
+            <NavigationNotLogged width={this.state.width} height={this.state.height}/>
+        );
+    }
 }
 
 export default Navigation;

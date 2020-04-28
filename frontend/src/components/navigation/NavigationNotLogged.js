@@ -23,6 +23,7 @@ class NavigationNotLogged extends React.Component {
              {/* Seteaza ruta initiala a router-ului */}
 
             <div style={{width:this.props.width, height:this.props.height}}>
+                <p>Am width : {this.props.width} si height : {this.props.height}</p>
                 <ListGroup horizontal>
                     <ListGroup.Item><Link to="/">Home</Link></ListGroup.Item>
                     <ListGroup.Item><Link to="/login">Login</Link></ListGroup.Item>

@@ -16,21 +16,26 @@ class NavigationLogged extends React.Component {
   render(){
     return (
         <Router>
-            <Redirect to="/profile"/> 
-            {/* Seteaza ruta initiala a router-ului */}
 
-            <ListGroup horizontal>
-                <ListGroup.Item><Link to="/profile">Profile</Link></ListGroup.Item>
-            </ListGroup>
-    
-    
-            <Switch>
+            <div style={{width:this.props.width, height:this.props.height}}>
+                <p>Am width : {this.props.width} si height : {this.props.height}</p>
+                <Redirect to="/profile"/> 
+                {/* Seteaza ruta initiala a router-ului */}
 
-              <Route exact path="/profile">
-                <Profile />
-              </Route>
+                <ListGroup horizontal>
+                    <ListGroup.Item><Link to="/profile">Profile</Link></ListGroup.Item>
+                </ListGroup>
+        
+        
+                <Switch>
 
-            </Switch>
+                <Route exact path="/profile">
+                    <Profile />
+                </Route>
+
+                </Switch>
+            </div>
+
         </Router>
       );
   }

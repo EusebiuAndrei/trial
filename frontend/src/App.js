@@ -7,6 +7,9 @@ function App() {
   return (
     <div className="App">
       <Navigation logged={false}/>
+
+      {/* Daca vrei sa accesezi router logged schimba true->false pe viitor va fi optiune daca are un token valid*/}
+
     </div>
   );
 }
