@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import { setAuthorizationToken } from '../helpers/auth';
 
 const login = async (email, password) => {
 	try {
@@ -15,7 +16,6 @@ const login = async (email, password) => {
 		});
 
 		localStorage.setItem('userToken', token);
-		console.log(jwt.decode(token));
 
 		return { success: true, user };
 	} catch (error) {
@@ -27,7 +27,7 @@ const getUser = async () => {
 	try {
 		const token = localStorage.getItem('userToken');
 		const { _id } = jwt.decode(token);
-		console.log(`http://localhost:4000/api/users/${_id}`);
+		setAuthorizationToken(token);
 
 		const {
 			data: {
@@ -44,4 +44,24 @@ const getUser = async () => {
 	}
 };
 
-export { login, getUser };
+const getAllUsers = async () => {
+	try {
+		const token = localStorage.getItem('userToken');
+		setAuthorizationToken(token);
+
+		const {
+			data: {
+				data: { users },
+			},
+		} = await axios({
+			method: 'get',
+			url: `http://localhost:4000/api/users/`,
+		});
+
+		return { success: true, users };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+export { login, getUser, getAllUsers };

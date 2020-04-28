@@ -12,11 +12,11 @@ const Login = () => {
 		const apiCall = async () => {
 			const {
 				success,
-				user,
+				users,
 				errorMessage,
-			} = await api.getUser();
+			} = await api.getAllUsers();
 
-			console.log(success, user, errorMessage);
+			console.log(success, users, errorMessage);
 		};
 		apiCall();
 	}, []);
