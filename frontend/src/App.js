@@ -6,7 +6,7 @@ import Navigation from './components/navigation/Navigation';
 function App() {
   return (
     <div className="App">
-      <Navigation logged={true}/>
+      <Navigation logged={false}/>
     </div>
   );
 }

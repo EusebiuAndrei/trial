@@ -23,7 +23,6 @@ class NavigationLogged extends React.Component {
                 <ListGroup.Item><Link to="/profile">Profile</Link></ListGroup.Item>
             </ListGroup>
     
-            <hr />
     
             <Switch>
 

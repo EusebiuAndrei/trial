@@ -19,32 +19,33 @@ class NavigationNotLogged extends React.Component {
     return (
         <Router>
 
-            <Redirect to="/"/> 
+            <Redirect to="/login"/> 
              {/* Seteaza ruta initiala a router-ului */}
 
-            <ListGroup horizontal>
-                <ListGroup.Item><Link to="/">Home</Link></ListGroup.Item>
-                <ListGroup.Item><Link to="/login">Login</Link></ListGroup.Item>
-                <ListGroup.Item><Link to="/register">Register</Link></ListGroup.Item>
-            </ListGroup>
-    
-            <hr />
-    
-            <Switch>
+            <div style={{width:this.props.width, height:this.props.height}}>
+                <ListGroup horizontal>
+                    <ListGroup.Item><Link to="/">Home</Link></ListGroup.Item>
+                    <ListGroup.Item><Link to="/login">Login</Link></ListGroup.Item>
+                    <ListGroup.Item><Link to="/register">Register</Link></ListGroup.Item>
+                </ListGroup>
+        
+        
+                <Switch>
 
-              <Route exact path="/">
-                <Home />
-              </Route>
+                <Route exact path="/">
+                    <Home />
+                </Route>
 
-              <Route path="/login">
-                <Login />
-              </Route>
+                <Route path="/login">
+                    <Login />
+                </Route>
 
-              <Route path="/register">
-                <Register />
-              </Route>
+                <Route path="/register">
+                    <Register />
+                </Route>
 
-            </Switch>
+                </Switch>
+            </div>
         </Router>
       );
   }
