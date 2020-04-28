@@ -23,6 +23,25 @@ const login = async (email, password) => {
 	}
 };
 
+const logout = async()=>{
+	const token = '';
+	try {
+		const  {success, data} = await axios({
+			method: 'post',
+			url: 'http://localhost:4000/api/users/logout',
+			data: {
+				token,
+			},
+		});
+
+		localStorage.setItem('userToken', '');
+		
+		return {success, data };
+	} catch(e){
+		return {success: false, errorMessage: e.message};
+	}
+}
+
 const getUser = async () => {
 	try {
 		const token = localStorage.getItem('userToken');
@@ -64,4 +83,4 @@ const getAllUsers = async () => {
 	}
 };
 
-export { login, getUser, getAllUsers };
+export { login, logout, getUser, getAllUsers };
