@@ -1,14 +1,12 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Profile from "./components/Profile";
-import Authorization from "./components/Authorization";
+import Navigation from './components/navigation/Navigation';
 
 function App() {
   return (
     <div className="App">
-      <Profile></Profile>
-      <Authorization></Authorization>
+      <Navigation logged={true}/>
     </div>
   );
 }
