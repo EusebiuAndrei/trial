@@ -64,11 +64,11 @@ const getAllUsers = async () => {
   }
 };
 
-const uploadMultiple = async (buffer) => {
+const uploadMultiple = async (buffers) => {
   try {
-    // const token = localStorage.getItem("userToken");
-    // const { _id } = jwt.decode(token);
-    // setAuthorizationToken(token);
+    const token = localStorage.getItem("userToken");
+    const { _id } = jwt.decode(token);
+    setAuthorizationToken(token);
 
     const {
       data: { name },
@@ -76,7 +76,7 @@ const uploadMultiple = async (buffer) => {
       method: "post",
       url: `http://localhost:4000/api/users/uploadMultiple`,
       data: {
-        buffer,
+        buffers,
       },
     });
 

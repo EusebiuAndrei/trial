@@ -10,7 +10,7 @@ const formWidth = {
 const Login = () => {
   useEffect(() => {
     const apiCall = async () => {
-      const { success, users, errorMessage } = await api.uploadMultiple();
+      const { success, users, errorMessage } = await api.getAllUsers();
 
       console.log(success, users, errorMessage);
     };
