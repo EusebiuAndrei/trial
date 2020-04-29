@@ -23,6 +23,31 @@ const login = async (email, password) => {
 	}
 };
 
+
+const register = async (username,role,email, password) => {
+	try {
+		const {
+			data: { user},
+		} = await axios({
+			method: 'post',
+			url: 'http://localhost:4000/api/users/register',
+			data: {
+				email,
+				username,
+				password,
+				role,
+
+			},
+		});
+
+		//localStorage.setItem('userToken', token);
+
+		return { success: true, user };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
 const getUser = async () => {
 	try {
 		const token = localStorage.getItem('userToken');
@@ -64,4 +89,4 @@ const getAllUsers = async () => {
 	}
 };
 
-export { login, getUser, getAllUsers };
+export { login, getUser, getAllUsers, register };
