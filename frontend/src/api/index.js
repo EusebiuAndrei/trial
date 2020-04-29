@@ -64,23 +64,23 @@ const getAllUsers = async () => {
   }
 };
 
-const uploadMultiple = async () => {
+const uploadMultiple = async (buffer) => {
   try {
-    const token = localStorage.getItem("userToken");
-    const { _id } = jwt.decode(token);
-    setAuthorizationToken(token);
+    // const token = localStorage.getItem("userToken");
+    // const { _id } = jwt.decode(token);
+    // setAuthorizationToken(token);
 
     const {
-      data: { images },
+      data: { name },
     } = await axios({
       method: "post",
-      url: `http://localhost:4000/api/users/uploadMultiple/${_id}`,
+      url: `http://localhost:4000/api/users/uploadMultiple`,
       data: {
-        images,
+        buffer,
       },
     });
 
-    return { success: true, user };
+    return { success: true, name };
   } catch (error) {
     return { success: false, errorMessage: error.message };
   }

@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
-const Resize = require('../../services/Resize');
 const { userService } = require('../../services/index');
 const { dynamicCelebrate } = require('../middlewares/index');
 const { auth, upload } = require('../middlewares/index');
@@ -17,6 +16,7 @@ router.post(
 	async (req, res) => {
 		const result = await imageService.uploadOneImage(
 			req.file.buffer,
+			req.headers.host,
 		);
 		const statusCode = result.success ? 200 : 400;
 		console.log(result);
@@ -30,6 +30,7 @@ router.post(
 	async (req, res) => {
 		const result = await imageService.uploadMultipleImages(
 			req.files,
+			req.headers.host,
 		);
 		const statusCode = result.success ? 200 : 400;
 		console.log(result);
