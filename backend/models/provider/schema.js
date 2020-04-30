@@ -3,13 +3,11 @@ const mongoose = require('mongoose');
 const providerSchema = mongoose.Schema(
 	{
 		location: {
-			location: {
-				latitude: {
-					type: Number,
-				},
-				longitude: {
-					type: Number,
-				},
+			latitude: {
+				type: Number,
+			},
+			longitude: {
+				type: Number,
 			},
 			adress: {
 				type: String,
