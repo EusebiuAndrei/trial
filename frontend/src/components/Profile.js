@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import User from './User';
 import Client from './Client';
 import Provider from './Provider';
+import {Button} from 'react-bootstrap';
+import UploadImage from './ImageUpload';
+
+var base64Img = require('base64-img');
+
 
 class Profile extends Component {
 	// state = {
@@ -45,6 +50,7 @@ class Profile extends Component {
 	render() {
 		return (
 			<div>
+			<UploadImage/>
 				<User data={this.state}></User>
 				{this.state.role === 'Client' ? (
 					<Client data={this.state.details}></Client>
