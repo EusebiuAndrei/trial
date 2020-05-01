@@ -54,6 +54,19 @@ class UserService {
 		}
 	}
 
+	async getAllProviders() {
+		try {
+			const providers = await this.db.Provider.find({});
+
+			return { succes: true, data: { providers } };
+		} catch (error) {
+			return {
+				succes: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async register(payload) {
 		const { email, password } = payload;
 		const userData = { email, password };

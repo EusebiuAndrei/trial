@@ -11,31 +11,34 @@ const { userValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-const path = require("path");
-const multer = require("multer");
+const path = require('path');
+const multer = require('multer');
 
 const storage = multer.diskStorage({
-   destination: "./uploads/",
-   filename: function(req, file, cb){
-      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
-   }
+	destination: './uploads/',
+	filename: function (req, file, cb) {
+		cb(
+			null,
+			'IMAGE-' + Date.now() + path.extname(file.originalname),
+		);
+	},
 });
 
 const myUpload = multer({
-   storage: storage,
-   limits:{fileSize: 1000000},
-}).single("myImage");
+	storage: storage,
+	limits: { fileSize: 1000000 },
+}).single('myImage');
 
 router.post('/uploadCozma', function (req, res) {
-    myUpload(req, res, function (err) {
-        console.log("Request ---", req.body);
-        console.log("Request file ---", req.file);
+	myUpload(req, res, function (err) {
+		console.log('Request ---', req.body);
+		console.log('Request file ---', req.file);
 
-		if(!err) {
-            return res.send(200).end();
-        }
-    })
-})
+		if (!err) {
+			return res.send(200).end();
+		}
+	});
+});
 
 router.post(
 	'/uploadSingle',
@@ -67,6 +70,14 @@ router.post(
 router.get('/', auth, async (req, res) => {
 	Logger.info(JSON.stringify(req.data, null, 2));
 	const result = await userService.getAllUsers();
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.get('/providers', auth, async (req, res) => {
+	Logger.info(JSON.stringify(req.data, null, 2));
+	const result = await userService.getAllProviders();
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
@@ -127,7 +138,7 @@ router.post(
 		body: userValidationSchema,
 	}),
 	async function (req, res) {
-		console.log("salut");
+		console.log('salut');
 		const result = await userService.login(req.body);
 		const statusCode = result.success ? 200 : 400;
 		res.status(statusCode).json(result);
