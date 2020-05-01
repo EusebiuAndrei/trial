@@ -58,10 +58,10 @@ class UserService {
 		try {
 			const providers = await this.db.Provider.find({});
 
-			return { succes: true, data: { providers } };
+			return { success: true, data: { providers } };
 		} catch (error) {
 			return {
-				succes: false,
+				success: false,
 				error: { message: error.message },
 			};
 		}
