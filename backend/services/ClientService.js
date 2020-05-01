@@ -4,7 +4,7 @@ class ClientService {
 		this.services = services;
 	}
 
-	async getClients() {
+	async getClient() {
 		try {
 			const clients = await this.db.User.find(
 				{ role: 'Client' ,  },
@@ -29,4 +29,4 @@ class ClientService {
 	}
 }
 
-module.exports = ClientService;
+module.exports = ClientService
