@@ -1,8 +1,5 @@
 const { Router } = require('express');
 const { menuService } = require('../../services/index');
-const Logger = require('../../loaders/logger');
-
-const { menuValidationSchema } = require('../../models/index');
 
 const router = Router();
 
@@ -12,4 +9,13 @@ router.get('/', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/:idProvider/:idCourse', async (req, res) => {
+	const { idProvider, idCourse } = req.params;
+	const result = await menuService.getCourse({
+		idProvider,
+		idCourse,
+	});
+	const statusCode = result.success ? 200 : 400;
+	res.status(statusCode).json(result);
+});
 module.exports = router;

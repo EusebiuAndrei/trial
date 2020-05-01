@@ -9,16 +9,23 @@ class ClientService {
 			const clients = await this.db.User.find(
 				{ role: 'Client' },
 				{
-					_id: 0,
+					id: 0,
 					__v: 0,
 					password: 0,
-					role: 0,
 					emailToken: 0,
 					confirmed: 0,
 					tokens: 0,
 				},
 			);
 
+			clients.forEach(function (elem) {
+				elem.role = undefined;
+				if (elem.details != null) {
+					elem.details.__v = undefined;
+					elem.details._id = undefined;
+					elem.details.userId = undefined;
+				}
+			});
 			return { success: true, data: { clients } };
 		} catch (error) {
 			return {

@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
-	const result = await client.getClient(userId);
+	const result = await clientService.getClient(userId);
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
