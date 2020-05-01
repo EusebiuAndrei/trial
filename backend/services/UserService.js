@@ -41,6 +41,36 @@ class UserService {
 		}
 	}
 
+	async getBySpecials(special) {
+		try {
+			const providers = await this.db.Provider.findByTags(
+				special,
+			);
+
+			return { success: true, data: { providers } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async getProviderById(id) {
+		try {
+			const provider = await this.db.Provider.findOne({
+				_id: id,
+			});
+
+			return { success: true, data: { provider } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async getAllUsers() {
 		try {
 			const users = await this.db.User.find({});

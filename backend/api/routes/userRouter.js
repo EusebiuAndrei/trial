@@ -83,6 +83,27 @@ router.get('/providers', auth, async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/providers/specials', async (req, res) => {
+	let tags = req.query.special;
+	if (!tags) {
+		tags = [];
+	} else if (!Array.isArray(tags)) {
+		tags = [tags];
+	}
+	const result = await userService.getBySpecials(tags);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.get('/providers/:providerId', async (req, res) => {
+	const { providerId } = req.params;
+	const result = await userService.getProviderById(providerId);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
 	const result = await userService.getUserById(userId);
