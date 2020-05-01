@@ -84,13 +84,14 @@ router.get('/providers', auth, async (req, res) => {
 });
 
 router.get('/providers/specials', async (req, res) => {
+	const limit = req.query.limit;
 	let tags = req.query.special;
 	if (!tags) {
 		tags = [];
 	} else if (!Array.isArray(tags)) {
 		tags = [tags];
 	}
-	const result = await userService.getBySpecials(tags);
+	const result = await userService.getBySpecials(limit, tags);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);

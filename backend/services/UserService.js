@@ -41,9 +41,10 @@ class UserService {
 		}
 	}
 
-	async getBySpecials(special) {
+	async getBySpecials(limit, special) {
 		try {
 			const providers = await this.db.Provider.findByTags(
+				limit,
 				special,
 			);
 
