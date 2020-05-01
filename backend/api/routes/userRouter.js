@@ -8,9 +8,7 @@ const { imageService } = require('../../services/index');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
-
 const router = Router();
-
 const path = require("path");
 const multer = require("multer");
 

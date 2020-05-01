@@ -18,7 +18,6 @@ class NavigationLogged extends React.Component {
         <Router>
 
             <div style={{width:this.props.width, height:this.props.height}}>
-                <p>Am width : {this.props.width} si height : {this.props.height}</p>
                 <Redirect to="/profile"/> 
                 {/* Seteaza ruta initiala a router-ului */}
 

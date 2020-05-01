@@ -64,4 +64,27 @@ const getAllUsers = async () => {
 	}
 };
 
-export { login, getUser, getAllUsers };
+
+const uploadPhoto = async (file) => {
+	try {
+		const formData = new FormData();
+		formData.append('myImage',file);
+		
+		const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post("http://localhost:4000/api/users/uploadCozma",formData,config)
+            .then((response) => {
+                alert("The file is successfully uploaded");
+            }).catch((error) => {
+        });
+
+		return { success: true };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+}
+
+export { login, getUser, getAllUsers, uploadPhoto };

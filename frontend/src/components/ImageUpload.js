@@ -1,5 +1,6 @@
 import React from 'react'
-const axios = require("axios");
+import * as api from '../api';
+import {Form} from 'react-bootstrap';
 
 class UploadImage extends React.Component {
 
@@ -11,21 +12,12 @@ class UploadImage extends React.Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
+
     onFormSubmit(e){
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('myImage',this.state.file);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        axios.post("http://localhost:5000/api/users/uploadCozma",formData,config)
-            .then((response) => {
-                alert("The file is successfully uploaded");
-            }).catch((error) => {
-        });
+        api.uploadPhoto(this.state.file);
     }
+
     onChange(e) {
         this.setState({file:e.target.files[0]});
     }
@@ -33,9 +25,9 @@ class UploadImage extends React.Component {
     render() {
         return (
             <form onSubmit={this.onFormSubmit}>
-                <h1>File Upload</h1>
+                <p>Upload a photo</p>
                 <input type="file" name="myImage" onChange= {this.onChange} />
-                <button type="submit">Upload</button>
+                <button type="submit" class="btn btn-outline-primary">Upload</button>
             </form>
         )
     }

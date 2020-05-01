@@ -22,12 +22,21 @@ class NavigationNotLogged extends React.Component {
             <Redirect to="/login"/> 
              {/* Seteaza ruta initiala a router-ului */}
 
-            <div style={{width:this.props.width, height:this.props.height}}>
-                <p>Am width : {this.props.width} si height : {this.props.height}</p>
-                <ListGroup horizontal>
-                    <ListGroup.Item><Link to="/">Home</Link></ListGroup.Item>
-                    <ListGroup.Item><Link to="/login">Login</Link></ListGroup.Item>
-                    <ListGroup.Item><Link to="/register">Register</Link></ListGroup.Item>
+            <div style={{width:this.props.width, height:this.props.height,backgroundColor:'#FBF3E6'}}>
+                <ListGroup horizontal style={{height:'7%',width:this.props.width,justifyContent:'flex-end',display:'flex'}}>
+
+                    <ListGroup.Item style={{backgroundColor:'#FBF3E6',borderWidth:0}}>
+                        <Link to="/" style={{color:'#D9054F',fontWeight:'bold'}}>Home</Link>
+                    </ListGroup.Item>
+
+                    <ListGroup.Item style={{backgroundColor:'#FBF3E6',borderWidth:0}}>
+                        <Link to="/login" style={{color:'#D9054F',fontWeight:'bold'}}>Login</Link>
+                    </ListGroup.Item>
+
+                    <ListGroup.Item style={{backgroundColor:'#FBF3E6',borderWidth:0}}>
+                        <Link to="/register" style={{color:'#D9054F',fontWeight:'bold'}}>Register</Link>
+                    </ListGroup.Item>
+
                 </ListGroup>
         
         
