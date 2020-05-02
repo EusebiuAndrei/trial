@@ -148,7 +148,7 @@ class Login extends React.Component{
 						<Link to="/register" style={{color:'#858585',fontSize:11,marginTop:'5%'}}>Don't have an account? Create one</Link>
 
 						{
-							this.state.loading === true ? <Spinner animation="border" variant="danger" style={{marginTop:'5%'}} /> : <p></p>
+							this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>
 						}
 
 						{
