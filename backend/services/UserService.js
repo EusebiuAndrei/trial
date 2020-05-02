@@ -127,6 +127,37 @@ class UserService {
 		}
 	}
 
+	async addCommandById(userId, payload) {
+		const { commandId } = payload;
+		try {
+			await this.db.User.updateOne(
+				{
+					_id: userId,
+				},
+				{
+					$push: {
+						commandsHistory: commandId,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data:
+					'Command ' +
+					commandId +
+					' added succesfully to client ' +
+					userId +
+					"'s history.",
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async login(payload) {
 		const { email, password } = payload;
 
