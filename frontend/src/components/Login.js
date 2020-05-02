@@ -24,6 +24,7 @@ class Login extends React.Component{
 		this.state ={
 			email:"",
 			password:"",
+			alert:"",
 		}
 
 		this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -45,7 +46,7 @@ class Login extends React.Component{
 		  	</Alert>
 		} else {
 			let answer = api.login(this.state.email,this.state.password);
-			console.log(answer)
+		//	console.log(answer)
 		}
 	}
 
@@ -59,7 +60,7 @@ class Login extends React.Component{
 	render(){
 		return (
 			<div style={{width:'100%',height:'93%',flexDirection:'row',display:'flex'}}>
-	
+
 				<div style={{width:'40%',height:'100%',alignItems:'center',justifyContent:'center',display:'flex'}}>
 					<div className="shadow p-3 mb-5 bg-white rounded" style={{width:'70%',height:'90%',alignItems:'center',justifyContent:'cemter',display:'flex',flexDirection:'column',borderRadius:15}}>
 						<p style={{fontSize:25,fontWeight:'bold',marginTop:'15%',marginBottom:'10%'}}>Log in to your account</p>

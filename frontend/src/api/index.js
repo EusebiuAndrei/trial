@@ -75,7 +75,7 @@ const uploadPhoto = async (file) => {
                 'content-type': 'multipart/form-data'
             }
         };
-        axios.post("http://localhost:4000/api/users/uploadCozma",formData,config)
+        await axios.post("http://localhost:4000/api/users/uploadCozma",formData,config)
             .then((response) => {
                 alert("The file is successfully uploaded");
             }).catch((error) => {
