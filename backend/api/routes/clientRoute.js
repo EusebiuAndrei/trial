@@ -9,9 +9,9 @@ router.get('/', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/:userId', async (req, res) => {
-	const { userId } = req.params;
-	const result = await clientService.getClient(userId);
+router.get('/:idClient', async (req, res) => {
+	const { idClient } = req.params;
+	const result = await clientService.getClientbyId(idClient);
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });

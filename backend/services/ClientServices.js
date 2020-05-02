@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 class ClientService {
 	constructor({ db, services }) {
 		this.db = db;
@@ -27,6 +29,38 @@ class ClientService {
 				}
 			});
 			return { success: true, data: { clients } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async getClientbyId(idClient) {
+		try {
+			const client = await this.db.User.findOne(
+				{
+					role: 'Client',
+					_id: mongoose.Types.ObjectId(idClient),
+				},
+				{
+					id: 0,
+					__v: 0,
+					password: 0,
+					emailToken: 0,
+					confirmed: 0,
+					tokens: 0,
+				},
+			);
+			client.role = undefined;
+			if (client.details) {
+				client.details['__v'] = undefined;
+				client.details['_id'] = undefined;
+				client.details['userId'] = undefined;
+			}
+
+			return { success: true, data: { client } };
 		} catch (error) {
 			return {
 				success: false,
