@@ -1,3 +1,4 @@
+const path = require('path');
 const Resize = require('./Resize');
 
 class ImageService {
@@ -5,12 +6,18 @@ class ImageService {
 		this.services = services;
 	}
 
-	async uploadOneImage(buffer) {
+	async uploadOneImage(buffer, hostname) {
 		try {
 			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
-			return { success: true, name: { filename } };
+			const newPath = path.join(
+				hostname,
+				'public',
+				'images',
+				filename,
+			);
+			return { success: true, name: { newPath } };
 		} catch (error) {
 			return {
 				success: false,
@@ -19,17 +26,23 @@ class ImageService {
 		}
 	}
 
-	async uploadMultipleImages(files) {
+	async uploadMultipleImages(files, hostname) {
 		try {
 			const uploadedImages = [];
 			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
-			files.forEach(async (buffers) => {
+			for (const buffers of files) {
 				const filename = await fileUpload.save(
 					buffers.buffer,
 				);
-				await uploadedImages.push(filename);
-			});
+				const newPath = path.join(
+					hostname,
+					'public',
+					'images',
+					filename,
+				);
+				await uploadedImages.push(newPath);
+			}
 			console.log(uploadedImages);
 			return {
 				success: true,

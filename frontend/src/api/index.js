@@ -64,27 +64,53 @@ const getAllUsers = async () => {
 	}
 };
 
-
 const uploadPhoto = async (file) => {
 	try {
 		const formData = new FormData();
-		formData.append('myImage',file);
-		
+		formData.append('myImage', file);
+
 		const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        await axios.post("http://localhost:4000/api/users/uploadCozma",formData,config)
-            .then((response) => {
-                alert("The file is successfully uploaded");
-            }).catch((error) => {
-        });
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+		await axios
+			.post(
+				'http://localhost:4000/api/users/uploadCozma',
+				formData,
+				config,
+			)
+			.then((response) => {
+				alert('The file is successfully uploaded');
+			})
+			.catch((error) => {});
 
 		return { success: true };
 	} catch (error) {
 		return { success: false, errorMessage: error.message };
 	}
-}
+};
 
-export { login, getUser, getAllUsers, uploadPhoto };
+const uploadMultiple = async (buffers) => {
+	try {
+		const token = localStorage.getItem('userToken');
+		const { _id } = jwt.decode(token);
+		setAuthorizationToken(token);
+
+		const {
+			data: { name },
+		} = await axios({
+			method: 'post',
+			url: `http://localhost:4000/api/users/uploadMultiple`,
+			data: {
+				buffers,
+			},
+		});
+
+		return { success: true, name };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+export { login, getUser, getAllUsers, uploadPhoto, uploadMultiple };
