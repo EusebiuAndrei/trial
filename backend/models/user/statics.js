@@ -53,10 +53,23 @@ const findByToken = async function (tokens) {
 	return user;
 };
 
+const findByTags = async function (limit, tags) {
+	let filter = {};
+	if (tags.length) {
+		filter = { details: { specials: { $all: tags } } };
+	}
+	const query = this.find({ role: 'Provider' }, { filter });
+	query.setOptions({ limit });
+	//console.log(query.getOptions());
+
+	return query.exec();
+};
+
 module.exports = {
 	// Put them all here
 	findByCredentials,
 	findByEmailToken,
 	findByEmail,
 	findByToken,
+	findByTags,
 };

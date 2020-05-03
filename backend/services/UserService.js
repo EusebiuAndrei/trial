@@ -43,7 +43,7 @@ class UserService {
 
 	async getBySpecials(limit, special) {
 		try {
-			const providers = await this.db.Provider.findByTags(
+			const providers = await this.db.User.findByTags(
 				limit,
 				special,
 			);
@@ -59,7 +59,8 @@ class UserService {
 
 	async getProviderById(id) {
 		try {
-			const provider = await this.db.Provider.findOne({
+			const provider = await this.db.User.findOne({
+				role: 'Provider',
 				_id: id,
 			});
 
@@ -87,7 +88,9 @@ class UserService {
 
 	async getAllProviders() {
 		try {
-			const providers = await this.db.Provider.find({});
+			const providers = await this.db.User.find({
+				role: 'Provider',
+			});
 
 			return { success: true, data: { providers } };
 		} catch (error) {

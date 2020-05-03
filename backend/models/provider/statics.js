@@ -5,10 +5,8 @@ const findByTags = async function (limit, tags) {
 		filter = { specials: { $all: tags } };
 	}
 	const query = this.find(filter);
-
-	// if (limit) {
-	// 	query.limit(limit);
-	// }
+	query.setOptions({ limit });
+	//console.log(query.getOptions());
 
 	return query.exec();
 };
