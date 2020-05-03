@@ -1,9 +1,27 @@
 const Logger = require('../loaders/logger');
+const mongoose = require('mongoose');
 
 class MenuService {
 	constructor({ db, services }) {
 		this.db = db;
 		this.services = services;
+	}
+
+	async getCourse(courseData) {
+		const { idProvider, idCourse } = courseData;
+		try {
+			const course = await this.db.Menu.findOne({
+				idProvider: mongoose.Types.ObjectId(idProvider),
+				'courses._id': mongoose.Types.ObjectId(idCourse),
+			});
+			return { success: true, data: course };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async create(payload, providerId) {
@@ -14,12 +32,13 @@ class MenuService {
 			new: true,
 			useFindAndModify: false,
 		};
-		const menu = await this.db.Menu.findOneAndUpdate(
-			condition,
-			menuData,
-			options,
-		);
+
 		try {
+			const menu = await this.db.Menu.findOneAndUpdate(
+				condition,
+				menuData,
+				options,
+			);
 			return { success: true, data: menu };
 		} catch (error) {
 			Logger.error(error);

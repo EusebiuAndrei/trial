@@ -1,21 +1,19 @@
 const { Router } = require('express');
-const { menuService } = require('../../services/index');
+const { clientService } = require('../../services/index.js');
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-	const result = await menuService.getMenus(req.query);
+	const result = await clientService.getClients(req.query);
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
 
-router.get('/:idProvider/:idCourse', async (req, res) => {
-	const { idProvider, idCourse } = req.params;
-	const result = await menuService.getCourse({
-		idProvider,
-		idCourse,
-	});
+router.get('/:idClient', async (req, res) => {
+	const { idClient } = req.params;
+	const result = await clientService.getClientbyId(idClient);
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
+
 module.exports = router;
