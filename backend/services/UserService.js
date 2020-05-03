@@ -130,9 +130,9 @@ class UserService {
 	async addCommandById(userId, payload) {
 		const { commandId } = payload;
 		try {
-			await this.db.User.updateOne(
+			await this.db.Client.updateOne(
 				{
-					_id: userId,
+					userId: userId,
 				},
 				{
 					$push: {
