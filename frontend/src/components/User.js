@@ -103,81 +103,63 @@ const User = ({ data }) => {
       );
   };
   return (
-    <div className = "user_profile">
-      <div>
-        {data.role === "Provider" ? (
-          <Carousel onSelect={handleSelect}>{listPhotos()}</Carousel>
-        ) : (
-          <div>{avatarExist()}</div>
-        )}
+    <div className="main_div_profile">
+      <div className="user_profile">
+        <div>
+          {data.role === "Provider" ? (
+            <Carousel onSelect={handleSelect}>{listPhotos()}</Carousel>
+          ) : (
+            <div>{avatarExist()}</div>
+          )}
+        </div>
+        <div className="email_profile">
+          <p>
+            <small>{data.email}</small>
+          </p>
+        </div>
+        <div className="username_profile">
+          <p>
+            <strong>{data.name}</strong>
+          </p>
+        </div>
+        <div>
+          {data.role == "Client" ? (
+            <ListGroup className="menu_profile">
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link" onClick={handleOpenProfile}>
+                  {" "}
+                  Profile{" "}
+                </Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link" onClick={handleOpenAccountSettings}>
+                  {" "}
+                  Account Settings{" "}
+                </Link>
+              </ListGroup.Item>
+            </ListGroup>
+          ) : (
+            <ListGroup className="menu_profile">
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link" onClick={handleOpenProfile}>
+                  Profile
+                </Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link">Menu</Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link">Schedule</Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link">Account Settings</Link>
+              </ListGroup.Item>
+            </ListGroup>
+          )}
+        </div>
       </div>
-      <div className ="email_profile">
-        <p>
-          <small>{data.email}</small>
-        </p>
-      </div>
-      <div className="username_profile">
-        <p>
-          <strong>{data.name}</strong>
-        </p>
-      </div>
-      <div>
-        {data.role == "Client" ? (
-          <ListGroup className="menu_profile">
-            <ListGroup.Item className="menu_element_profile">
-              <Link className = "menu_link" onclick={handleOpenAccountSettings} to="/profile"> Profile </Link>
-            </ListGroup.Item>
-            <ListGroup.Item
-              className="menu_element_profile">
-              <Link className = "menu_link"> Account Settings </Link>
-            </ListGroup.Item>
-          </ListGroup>
-        ) : (
-          <ListGroup className="menu_profile">
-            <ListGroup.Item className="menu_element_profile">
-              <Link className = "menu_link" onclick={handleOpenAccountSettings} to="/profile">Profile</Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="menu_element_profile">
-              <Link className = "menu_link" >Menu</Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="menu_element_profile">
-              <Link to="\profile" className = "menu_link">Schedule</Link>
-            </ListGroup.Item>
-            <ListGroup.Item
-              className="menuProfile"
-              style={{
-                border: "0",
-                borderTop: "solid 0.5px #e6e6e6",
-                textAlign: "left",
-                alignSelf: "flex-start",
-
-                width: "100%",
-              }}
-            >
-              <Link to="\profile" style={{ color: "grey", fontWeight: "bold" }}>
-                Account Settings
-              </Link>
-            </ListGroup.Item>
-          </ListGroup>
-        )}
-      </div>
-     </div> 
-      <div>
       {openProfile ? (
-        <div
-          style={{
-            marginLeft: "5%",
-            marginRight: "5%",
-            width: "80%",
-            height: "100%",
-            backgroundColor: "#F8F8F8",
-            boxShadow: "64px 10px 106px -51px rgba(0,0,0,0.49)",
-            borderRadius: "10px 10px 10px 10px",
-            alignContent: "center",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <div className="profile_form">
           {data.role === "Client" ? (
             <Client data={data.details}></Client>
           ) : (
@@ -187,7 +169,7 @@ const User = ({ data }) => {
       ) : (
         <p>BUNA</p>
       )}
-      </div>
+    </div>
   );
 };
 
