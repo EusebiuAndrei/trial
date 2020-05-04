@@ -1,4 +1,5 @@
 const Resize = require('./Resize');
+const imagePath = './public/images';
 
 class ImageService {
 	constructor({ services }) {
@@ -7,7 +8,6 @@ class ImageService {
 
 	async uploadOneImage(buffer) {
 		try {
-			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
 			return { success: true, name: { filename } };
@@ -22,7 +22,6 @@ class ImageService {
 	async uploadMultipleImages(files) {
 		try {
 			const uploadedImages = [];
-			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			files.forEach(async (buffers) => {
 				const filename = await fileUpload.save(
@@ -30,7 +29,6 @@ class ImageService {
 				);
 				await uploadedImages.push(filename);
 			});
-			console.log(uploadedImages);
 			return {
 				success: true,
 				name: JSON.stringify(uploadedImages),
