@@ -54,18 +54,23 @@ const Client = ({ data }) => {
 
   return (
     <div>
+      <div style={{ textAlign: "left", padding: "10px" }}>
+        <h2
+          style={{
+            padding: "20px",
+            fontFamily: "Impact, Charcoal, sans-serif",
+            fontSize: "31px",
+            letterSpacing: "1.6px",
+            wordSpacing: "2px",
+            fontWeight: "normal",
+            fontVariant: "normal",
+            color: "grey",
+          }}
+        >
+          PROFILE
+        </h2>
+      </div>
       <Form className="providerForm">
-        <Card>
-          <Card.Header className="providerCardHeader">
-            <h5 className="cardTitle">Profile Picture</h5>
-          </Card.Header>
-          <Card.Body>
-            <Col xs={0} md={0}>
-              <Image src={ProfileImg} width="171" height="180" roundedCircle />
-            </Col>
-          </Card.Body>
-        </Card>
-
         <Card>
           <Card.Header className="providerCardHeader">
             <h5 className="cardTitle">Address</h5>

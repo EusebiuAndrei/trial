@@ -1,360 +1,333 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
-	Button,
-	InputGroup,
-	FormControl,
-	Alert,
-	Popover,
-	OverlayTrigger,
-	Spinner,
-} from 'react-bootstrap';
-import * as api from '../api';
-import { Link } from 'react-router-dom';
+  Button,
+  InputGroup,
+  FormControl,
+  Alert,
+  Popover,
+  OverlayTrigger,
+  Spinner,
+} from "react-bootstrap";
+import * as api from "../api";
+import { Link } from "react-router-dom";
 
-import { IoIosMail, IoIosLock, IoLogoFacebook } from 'react-icons/io';
+import { IoIosMail, IoIosLock, IoLogoFacebook } from "react-icons/io";
 
 const popover = (
-	<Popover id="popover-basic">
-		<Popover.Title as="h3">Popover right</Popover.Title>
-		<Popover.Content>
-			And here's some <strong>amazing</strong> content. It's
-			very engaging. right?
-		</Popover.Content>
-	</Popover>
+  <Popover id="popover-basic">
+    <Popover.Title as="h3">Popover right</Popover.Title>
+    <Popover.Content>
+      And here's some <strong>amazing</strong> content. It's very engaging.
+      right?
+    </Popover.Content>
+  </Popover>
 );
 
 class Login extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			password: '',
-			alert: '',
-			success: '',
-			userData: {},
-			loading: false,
-			error: '',
-			fieldsError: '',
-		};
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: "",
+      alert: "",
+      success: "",
+      userData: {},
+      loading: false,
+      error: "",
+      fieldsError: "",
+    };
 
-		this.handleChangeEmail = this.handleChangeEmail.bind(this);
-		this.handleChangePassword = this.handleChangePassword.bind(
-			this,
-		);
-		this.handleLoginClick = this.handleLoginClick.bind(this);
-	}
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+  }
 
-	async handleLoginClick() {
-		console.log(JSON.stringify(this.state, null, '...'));
-		this.setState({ success: '' });
-		if (this.state.email === '') {
-			this.setState({ fieldsError: 'email' });
-		} else if (this.state.password === '') {
-			this.setState({ fieldsError: 'password' });
-		} else {
-			this.setState({ fieldsError: '' });
+  async handleLoginClick() {
+    console.log(JSON.stringify(this.state, null, "..."));
+    this.setState({ success: "" });
+    if (this.state.email === "") {
+      this.setState({ fieldsError: "email" });
+    } else if (this.state.password === "") {
+      this.setState({ fieldsError: "password" });
+    } else {
+      this.setState({ fieldsError: "" });
 
-			try {
-				this.setState({ loading: true });
-				let answer = await api.login(
-					this.state.email,
-					this.state.password,
-				);
-				if (answer.success === true) {
-					this.setState({
-						loading: false,
-						userData: answer.user,
-						success: true,
-					});
-				} else {
-					this.setState({
-						loading: false,
-						success: false,
-						error: answer.errorMessage,
-					});
-				}
-				console.log(answer);
-			} catch (err) {
-				console.log(err);
-				this.setState({
-					error: err,
-					loading: false,
-					success: false,
-				});
-			}
-		}
-	}
+      try {
+        this.setState({ loading: true });
+        let answer = await api.login(this.state.email, this.state.password);
+        if (answer.success === true) {
+          this.setState({
+            loading: false,
+            userData: answer.user,
+            success: true,
+          });
+        } else {
+          this.setState({
+            loading: false,
+            success: false,
+            error: answer.errorMessage,
+          });
+        }
+        console.log(answer);
+      } catch (err) {
+        console.log(err);
+        this.setState({
+          error: err,
+          loading: false,
+          success: false,
+        });
+      }
+    }
+  }
 
-	handleChangeEmail(event) {
-		this.setState({ email: event.target.value });
-	}
-	handleChangePassword(event) {
-		this.setState({ password: event.target.value });
-	}
+  handleChangeEmail(event) {
+    this.setState({ email: event.target.value });
+  }
+  handleChangePassword(event) {
+    this.setState({ password: event.target.value });
+  }
 
-	topInfoText = (success) => {
-		if (success === '') {
-			return <p></p>;
-		}
-		if (success === false) {
-			return (
-				<p style={{ color: '#F80505' }}>
-					Ops ! Error: {this.state.error}{' '}
-				</p>
-			);
-		}
-		if (success === true) {
-			return (
-				<p style={{ color: '#1FF01B' }}>
-					Te-ai logat cu succes !
-				</p>
-			);
-		}
-	};
+  topInfoText = (success) => {
+    if (success === "") {
+      return <p></p>;
+    }
+    if (success === false) {
+      return (
+        <p style={{ color: "#F80505" }}>Ops ! Error: {this.state.error} </p>
+      );
+    }
+    if (success === true) {
+      return <p style={{ color: "#1FF01B" }}>Te-ai logat cu succes !</p>;
+    }
+  };
 
-	fieldsError = (error) => {
-		if (error !== '') {
-			return (
-				<p style={{ color: '#F80505' }}>
-					Te rog completeaza campul {error} !
-				</p>
-			);
-		}
-	};
+  fieldsError = (error) => {
+    if (error !== "") {
+      return (
+        <p style={{ color: "#F80505" }}>Te rog completeaza campul {error} !</p>
+      );
+    }
+  };
 
-	render() {
-		return (
-			<div
-				style={{
-					width: '100%',
-					height: '93%',
-					flexDirection: 'row',
-					display: 'flex',
-				}}
-			>
-				<div
-					style={{
-						width: '40%',
-						height: '100%',
-						alignItems: 'center',
-						justifyContent: 'center',
-						display: 'flex',
-					}}
-				>
-					<div
-						className="shadow p-3 mb-5 bg-white rounded"
-						style={{
-							width: '70%',
-							height: '90%',
-							alignItems: 'center',
-							justifyContent: 'cemter',
-							display: 'flex',
-							flexDirection: 'column',
-							borderRadius: 15,
-						}}
-					>
-						<p
-							style={{
-								fontSize: 25,
-								fontWeight: 'bold',
-								marginTop: '15%',
-								marginBottom: '10%',
-							}}
-						>
-							Log in to your account
-						</p>
+  render() {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "93%",
+          flexDirection: "row",
+          display: "flex",
+        }}
+      >
+        <div
+          style={{
+            width: "40%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          <div
+            className="shadow p-3 mb-5 bg-white rounded"
+            style={{
+              width: "70%",
+              height: "90%",
+              alignItems: "center",
+              justifyContent: "cemter",
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: 15,
+            }}
+          >
+            <p
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+                marginTop: "15%",
+                marginBottom: "10%",
+              }}
+            >
+              Log in to your account
+            </p>
 
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								width: '65%',
-								marginBottom: '5%',
-							}}
-						>
-							<p
-								style={{
-									marginBottom: 0,
-									alignItems: 'flex-start',
-									display: 'flex',
-									fontWeight: '500',
-									paddingLeft: 2,
-								}}
-							>
-								Email address
-							</p>
-							<InputGroup
-								className="mb-3"
-								style={{
-									borderColor: '#D9054F',
-									width: '100%',
-									marginBottom: 0,
-									borderWidth: 0,
-								}}
-							>
-								<FormControl
-									placeholder="example@mail.com"
-									aria-label="Username"
-									aria-describedby="basic-addon1"
-									onChange={this.handleChangeEmail}
-								/>
-								<InputGroup.Prepend>
-									<InputGroup.Text
-										style={{
-											backgroundColor:
-												'#F9F9F9',
-											borderLeftWidth: 0,
-										}}
-										id="basic-addon1"
-									>
-										<IoIosMail
-											size={22}
-											color={'#D9054F'}
-										/>
-									</InputGroup.Text>
-								</InputGroup.Prepend>
-							</InputGroup>
-						</div>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								width: '65%',
-								marginBottom: '5%',
-							}}
-						>
-							<p
-								style={{
-									marginBottom: 0,
-									alignItems: 'flex-start',
-									display: 'flex',
-									fontWeight: '500',
-									paddingLeft: 2,
-								}}
-							>
-								Password
-							</p>
-							<InputGroup
-								className="mb-3"
-								style={{
-									width: '100%',
-									marginBottom: 0,
-									borderWidth: 0,
-								}}
-							>
-								<FormControl
-									placeholder="●●●●●●●●●"
-									aria-label="Username"
-									aria-describedby="basic-addon1"
-									type="password"
-									onChange={
-										this.handleChangePassword
-									}
-								/>
-								<InputGroup.Prepend>
-									<InputGroup.Text
-										style={{
-											backgroundColor:
-												'#F9F9F9',
-											borderLeftWidth: 0,
-											marginBottom: 0,
-										}}
-										id="basic-addon1"
-									>
-										<IoIosLock
-											size={22}
-											color={'#D9054F'}
-										/>
-									</InputGroup.Text>
-								</InputGroup.Prepend>
-							</InputGroup>
-						</div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "65%",
+                marginBottom: "5%",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: 0,
+                  alignItems: "flex-start",
+                  display: "flex",
+                  fontWeight: "500",
+                  paddingLeft: 2,
+                }}
+              >
+                Email address
+              </p>
+              <InputGroup
+                className="mb-3"
+                style={{
+                  borderColor: "#D9054F",
+                  width: "100%",
+                  marginBottom: 0,
+                  borderWidth: 0,
+                }}
+              >
+                <FormControl
+                  placeholder="example@mail.com"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  onChange={this.handleChangeEmail}
+                />
+                <InputGroup.Prepend>
+                  <InputGroup.Text
+                    style={{
+                      backgroundColor: "#F9F9F9",
+                      borderLeftWidth: 0,
+                    }}
+                    id="basic-addon1"
+                  >
+                    <IoIosMail size={22} color={"#D9054F"} />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+              </InputGroup>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "65%",
+                marginBottom: "5%",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: 0,
+                  alignItems: "flex-start",
+                  display: "flex",
+                  fontWeight: "500",
+                  paddingLeft: 2,
+                }}
+              >
+                Password
+              </p>
+              <InputGroup
+                className="mb-3"
+                style={{
+                  width: "100%",
+                  marginBottom: 0,
+                  borderWidth: 0,
+                }}
+              >
+                <FormControl
+                  placeholder="●●●●●●●●●"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  type="password"
+                  onChange={this.handleChangePassword}
+                />
+                <InputGroup.Prepend>
+                  <InputGroup.Text
+                    style={{
+                      backgroundColor: "#F9F9F9",
+                      borderLeftWidth: 0,
+                      marginBottom: 0,
+                    }}
+                    id="basic-addon1"
+                  >
+                    <IoIosLock size={22} color={"#D9054F"} />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+              </InputGroup>
+            </div>
 
-						<Button
-							variant="danger"
-							style={{
-								width: '60%',
-								height: '8%',
-								marginTop: '3%',
-								backgroundColor: '#D9054F',
-							}}
-							onClick={this.handleLoginClick}
-						>
-							Log in
-						</Button>
+            <Button
+              variant="danger"
+              style={{
+                width: "60%",
+                height: "8%",
+                marginTop: "3%",
+                backgroundColor: "#D9054F",
+              }}
+              onClick={this.handleLoginClick}
+            >
+              Log in
+            </Button>
 
-						<OverlayTrigger
-							trigger="click"
-							placement="right"
-							overlay={popover}
-						>
-							<Button
-								variant="outline-danger"
-								style={{
-									width: '60%',
-									height: '8%',
-									marginTop: '2%',
-									borderWidth: 1.5,
-									flexDirection: 'row',
-									display: 'flex',
-								}}
-							>
-								<IoLogoFacebook
-									size={25}
-									style={{
-										marginLeft: 10,
-										marginRight: 4,
-									}}
-									color={'#D9054F'}
-								/>
-								Log in with Facebook
-							</Button>
-						</OverlayTrigger>
+            <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+              <Button
+                variant="outline-danger"
+                style={{
+                  width: "60%",
+                  height: "8%",
+                  marginTop: "2%",
+                  borderWidth: 1.5,
+                  flexDirection: "row",
+                  display: "flex",
+                }}
+              >
+                <IoLogoFacebook
+                  size={25}
+                  style={{
+                    marginLeft: 10,
+                    marginRight: 4,
+                  }}
+                  color={"#D9054F"}
+                />
+                Log in with Facebook
+              </Button>
+            </OverlayTrigger>
 
-						<Link
-							to="/register"
-							style={{
-								color: '#858585',
-								fontSize: 11,
-								marginTop: '5%',
-							}}
-						>
-							Don't have an account? Create one
-						</Link>
+            <Link
+              to="/register"
+              style={{
+                color: "#858585",
+                fontSize: 11,
+                marginTop: "5%",
+              }}
+            >
+              Don't have an account? Create one
+            </Link>
 
-						{this.state.loading === true ? (
-							<Spinner
-								animation="grow"
-								variant="danger"
-								style={{ marginTop: '5%' }}
-							/>
-						) : (
-							<p></p>
-						)}
+            {this.state.loading === true ? (
+              <Spinner
+                animation="grow"
+                variant="danger"
+                style={{ marginTop: "5%" }}
+              />
+            ) : (
+              <p></p>
+            )}
 
-						{this.topInfoText(this.state.success)}
+            {this.topInfoText(this.state.success)}
 
-						{this.fieldsError(this.state.fieldsError)}
-					</div>
-				</div>
+            {this.fieldsError(this.state.fieldsError)}
+          </div>
+        </div>
 
-				<div
-					style={{
-						width: '60%',
-						height: '100%',
-						backgroundColor: 'blue',
-					}}
-				>
-					<img
-						src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg"
-						alt="Logo"
-						style={{ width: '100%', height: '100%' }}
-					/>
-					;
-				</div>
-			</div>
-		);
-	}
+        <div
+          style={{
+            width: "60%",
+            height: "100%",
+            backgroundColor: "blue",
+          }}
+        >
+          <img
+            src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg"
+            alt="Logo"
+            style={{ width: "100%", height: "100%" }}
+          />
+          ;
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Login;

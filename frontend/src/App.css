@@ -42,7 +42,6 @@
 }
 
 .providerForm{
-	margin: 20%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -69,6 +68,55 @@
 	align-items: flex-start;
 }
 
-.cardEdit{
-	flex:none;
+.menu_element_profile:hover{
+background-color: #fee6ef;
 }
+
+.menu_element_profile{
+	border: 0;
+	border-top: solid 0.5px #e6e6e6;
+	align-self: flex-start;
+	width: 100%;
+	text-align:left;
+}
+
+.menu_link{
+	align-self: flex-start;
+	color: grey;
+	font-weight: bold;
+}
+
+.main_div_profile{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	margin-top: 3%;
+}
+
+.user_profile{
+	width: 25%;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.email_profile{
+	align-self: center; 
+	color: grey; 
+}
+
+.username_profile{
+	align-self: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: grey;
+}
+
+.menu_profile{
+	width: 100%;
+	justify-content: flex-start;
+	display: flex;
+}
+
