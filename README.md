@@ -673,7 +673,7 @@ Get a specific course by its id.
 **URL parameter**:
 
 The ID of the course should be specified in the URL:  
-`.../api/menus/5eb16fdf4afbf654966cb68d`  
+`.../api/courses/5eb17a5c6f436666294bc421`  
 This ID should be the 24-character hex-string corresponding to the
 course `_id`, living under menu: {courses: [here is a course]}
 
@@ -683,10 +683,33 @@ course `_id`, living under menu: {courses: [here is a course]}
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/menus/5eb16fdf4afbf654966cb68d
+ `localhost:4000/api/courses/5eb17a5c6f436666294bc421
 
 **Returned data example**:
 
 ```JSON
-
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "5eb17a5c6f436666294bc421",
+            "category": [
+                "pasta"
+            ],
+            "price": 25,
+            "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg",
+            "ingredients": [
+                "onion",
+                "salami",
+                "tomatoes",
+                "eggs",
+                "cheese"
+            ],
+            "allergenes": [
+                "eggs",
+                "milk"
+            ]
+        }
+    ]
+}
 ```
