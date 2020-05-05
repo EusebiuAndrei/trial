@@ -75,36 +75,6 @@ router.get('/', auth, async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/providers', auth, async (req, res) => {
-	Logger.info(JSON.stringify(req.data, null, 2));
-	const result = await userService.getAllProviders();
-	const statusCode = result.success ? 200 : 400;
-
-	res.status(statusCode).json(result);
-});
-
-router.get('/providers/specials', async (req, res) => {
-	const limit = req.query.limit;
-	let tags = req.query.special;
-	if (!tags) {
-		tags = [];
-	} else if (!Array.isArray(tags)) {
-		tags = [tags];
-	}
-	const result = await userService.getBySpecials(limit, tags);
-	const statusCode = result.success ? 200 : 400;
-
-	res.status(statusCode).json(result);
-});
-
-router.get('/providers/:providerId', async (req, res) => {
-	const { providerId } = req.params;
-	const result = await userService.getProviderById(providerId);
-	const statusCode = result.success ? 200 : 400;
-
-	res.status(statusCode).json(result);
-});
-
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
 	const result = await userService.getUserById(userId);
@@ -189,6 +159,7 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
+
 module.exports = router;
 
 // All the results must have the next format
