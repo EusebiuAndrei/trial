@@ -25,7 +25,7 @@ Get the all the clients from the db.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:3000/api/clients
+ `localhost:4000/api/clients
 
 **Returned data example**:
 
@@ -90,7 +90,14 @@ Get the all the clients from the db.
 
 ### GET
 
-Get a specific client by its id. (id - _id from User collection actually)
+Get a specific client by its id.
+
+**URL parameter**:
+
+The ID of the client should be specified in the URL:  
+`.../api/clients/5eb16fdf4afbf654966cb68d`  
+This ID should be the 24-character hex-string corresponding to the
+User `_id`, NOT the Client `_id`
 
 **Return codes**:
 
@@ -396,7 +403,14 @@ Get the all the providers from the db.
 
 ### GET
 
-Get a specific provider by its id. (id - _id from User collection actually)
+Get a specific provider by its id.
+
+**URL parameter**:
+
+The ID of the provider should be specified in the URL:  
+`.../api/providers/5eb175094afbf654966cb690`  
+This ID should be the 24-character hex-string corresponding to the
+User `_id`, NOT the Provider `_id`
 
 **Return codes**:
 
@@ -404,7 +418,7 @@ Get a specific provider by its id. (id - _id from User collection actually)
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/providers/5eb16fdf4afbf654966cb68d
+ `localhost:4000/api/providers/5eb175094afbf654966cb690
 
 **Returned data example**:
 
@@ -507,11 +521,11 @@ Get a specific provider by its id. (id - _id from User collection actually)
 }
 ```
 
-## /api/reviews
+## /api/providers/specials
 
 ### GET
 
-Get the reviews for a provider, optionally filtering them.
+Get the all the providers with the corresponding tags aka specials.
 
 **Query parameters**:
 
@@ -524,136 +538,60 @@ Get the reviews for a provider, optionally filtering them.
 **Return codes**:
 
 -   200 - OK
--   404 - no reviews found for the given provider ID (or provider does
-    not exist)
+-   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:3000/api/reviews/?providerId=5ea42ffa9d79ef49f76669f2&orderBy=-score&skip=2&limit=2`
+ `localhost:4000/api/providers/specials
 
 **Returned data example**:
 
 ```JSON
-{
-    "success": true,
-    "data": {
-        "score": 5.5,
-        "reviews": [
-            {
-                "_id": "5eaad4b646eaba38437e1f18",
-                "reviewer": "Danny",
-                "score": 6,
-                "description": "I am not a robot.",
-                "timeCreated": "2020-04-30T13:37:58.552Z",
-                "timeModified": "2020-04-30T13:37:58.552Z",
-                "helpfulness": 0,
-                "__v": 0
-            },
-            {
-                "_id": "5ea431720596f84b44be104f",
-                "reviewer": "John Doe",
-                "score": 5,
-                "description": "Thanks, I hate it.",
-                "timeCreated": "2020-04-25T12:47:46.601Z",
-                "timeModified": "2020-04-25T12:47:46.601Z",
-                "__v": 0,
-                "helpfulness": -1
-            }
-        ]
-    }
-}
+
 ```
 
-### POST
+## /api/menus
 
-Create a new review.
+### GET
 
-**Body**:  
-A JSON object containing the following fields:
+Get the all the menus from the db.
 
--   providerId (required) - 24-character hexadecimal string
--   reviewerId (required) - 24-character hexadecimal string
--   score (required) - an integer, 1 to 10 (each point represents half
-    a star)
--   description - a string, 1 to 1000 characters
+**Return codes**:
 
-Additionally, no more than a single review for the same (provider,
-reviewer) pair is allowed to exist at the same time.
+-   200 - OK
+-   400 - There was a problem fetching data
 
-**Body example**:
+**Usage example**:  
+ `localhost:4000/api/menus
+
+**Returned data example**:
 
 ```JSON
-{
-	"providerId": "5ea42ffa9d79ef49f76669f2",
-	"reviewerId": "5eaaaf54a0ae0d65376de99d",
-	"score": "6",
-	"description": "They have decent eats."
-}
+
 ```
 
-The back-end will add equal `timeCreated` and `timeModified` to these
-properties, as well as a `helpfulness` score of `0`.
+## /api/menus/:courseId
 
-**Response codes**:
+### GET
 
--   201 - review succesfully created
--   400 - review body malformed, or duplicate review attempted
-
-**Returned data**:
-
-The `data` field in a successful response will contain a an `id`
-property with the string for the new review's `_id`.
-
-### PUT
-
-Replace the score and description of a given review, as well as update
-its `timeModified` property to the current time.
+Get a specific course by its id.
 
 **URL parameter**:
 
-The ID of the modified review should be specified in the URL:  
-`.../api/reviews/5ea431720596f84b44be104f`  
+The ID of the course should be specified in the URL:  
+`.../api/menus/5eb16fdf4afbf654966cb68d`  
 This ID should be the 24-character hex-string corresponding to the
-review's `_id`.
+course `_id`, living under menu: {courses: [here is a course]}
 
-**Body**:
+**Return codes**:
 
-A JSON object containing the following fields:
+-   200 - OK
+-   400 - There was a problem fetching data
 
--   score (required) - an integer, 1 to 10
--   description - string, 1 to 1000 characters
+**Usage example**:  
+ `localhost:4000/api/menus/5eb16fdf4afbf654966cb68d
 
-**Response codes**:
+**Returned data example**:
 
--   200 - the review body was succesfully replaced
--   404 - the review was not found
+```JSON
 
-**Returned data**: The `data` field in a successful response is an
-empty object.
-
-### PATCH
-
-Update a review's helpfulness score by -1 or +1.
-
-**URL parameter**:  
-
-The ID of the review should be specified in the URL:  
-`.../api/reviews/5ea431720596f84b44be104f`  
-This ID should be the 24-character hex-string corresponding to the review's
-`_id`.
-
-**Body**:  
-A JSON object object containing the following field:
-- delta (required) - either `-1`, or `1`
-
-**Response codes**:
-
--   200 - the review's helpfulness was successfully modified
--   404 - the review was not found
-
-## /api/providers
-
-#### This API route is deprecated. It will be removed when another module's API can take its role.
-
-**Usage examples**:
-- `GET .../api/providers/tag=cafe&tag=pizza` - returns a list of all providers with both "cafe" and "pizza" in their tag list.
-- `GET .../api/providers/some_id` - returns the provider with the given `_id`
+```
