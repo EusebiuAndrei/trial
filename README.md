@@ -541,12 +541,109 @@ Get the all the providers with the corresponding tags aka specials.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/providers/specials
+ `localhost:4000/api/providers/specials?special=pizza&special=pasta
 
 **Returned data example**:
 
 ```JSON
-
+{
+    "success": true,
+    "data": {
+        "providers": [
+            {
+                "role": "Provider",
+                "confirmed": true,
+                "_id": "5eb175094afbf654966cb690",
+                "name": "Gimmy Restaurant",
+                "email": "gimmy_restaurant@gmail.com",
+                "__v": 1,
+                "emailToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWIxNzUwOTRhZmJmNjU0OTY2Y2I2OTAiLCJpYXQiOjE1ODg2ODgxMzd9.Pea0iTISyAny4IEluMMcvZxrbODpTRheIjhy88yK4tg",
+                "details": {
+                    "location": {
+                        "latitude": 53.5,
+                        "longitude": 43.2
+                    },
+                    "images": [
+                        "https://d2fdt3nym3n14p.cloudfront.net/venue/1360/gallery/3022/conversions/sole8-big.jpg",
+                        "https://d2fdt3nym3n14p.cloudfront.net/venue/1360/gallery/3023/conversions/sole3-big.jpg"
+                    ],
+                    "specials": [
+                        "pizza",
+                        "pasta"
+                    ],
+                    "_id": "5eb17a5b251c5187bd97251a",
+                    "userId": "5eb175094afbf654966cb690",
+                    "CUI": "ER563KIDO34",
+                    "__v": 0,
+                    "description": "A place with good food and nice vibes.",
+                    "priceCategory": "Medium",
+                    "rating": 4.5,
+                    "tables": 14,
+                    "type": "Canteen",
+                    "menu": {
+                        "_id": "5eb17a5c251c5187bd97253d",
+                        "providerId": "5eb17a5b251c5187bd97251a",
+                        "__v": 0,
+                        "courses": [
+                            {
+                                "category": [
+                                    "pizza"
+                                ],
+                                "ingredients": [
+                                    "onion",
+                                    "salami",
+                                    "mushrooms",
+                                    "eggs",
+                                    "cheese"
+                                ],
+                                "allergenes": [
+                                    "eggs",
+                                    "milk"
+                                ],
+                                "_id": "5eb17a5c6f436666294bc420",
+                                "name": "house pizza",
+                                "price": 30,
+                                "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
+                            },
+                            {
+                                "category": [
+                                    "pasta"
+                                ],
+                                "ingredients": [
+                                    "onion",
+                                    "salami",
+                                    "tomatoes",
+                                    "eggs",
+                                    "cheese"
+                                ],
+                                "allergenes": [
+                                    "eggs",
+                                    "milk"
+                                ],
+                                "_id": "5eb17a5c6f436666294bc421",
+                                "name": "house pasta",
+                                "price": 25,
+                                "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
+                            }
+                        ]
+                    },
+                    "schedule": {
+                        "_id": "5eb17a5c251c5187bd972551",
+                        "providerId": "5eb17a5b251c5187bd97251a",
+                        "__v": 0,
+                        "schedule": [
+                            {
+                                "_id": "5eb17a5c6f436666294bc422"
+                            }
+                        ]
+                    },
+                    "id": "5eb17a5b251c5187bd97251a"
+                },
+                "id": "5eb175094afbf654966cb690"
+            }
+        ]
+    }
+}
 ```
 
 ## /api/menus
