@@ -25,9 +25,9 @@ router.get('/specials', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/:providerId', async (req, res) => {
-	const { providerId } = req.params;
-	const result = await providerService.getProviderById(providerId);
+router.get('/:userId', async (req, res) => {
+	const { userId } = req.params;
+	const result = await providerService.getProviderById(userId);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
