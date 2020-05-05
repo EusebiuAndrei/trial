@@ -67,8 +67,7 @@ router.post(
 );
 
 // Here we have all the controllers
-router.get('/', auth, async (req, res) => {
-	Logger.info(JSON.stringify(req.data, null, 2));
+router.get('/', async (req, res) => {
 	const result = await userService.getAllUsers();
 	const statusCode = result.success ? 200 : 400;
 
@@ -103,6 +102,25 @@ router.post(
 	},
 );
 
+router.post(
+	'/login',
+	celebrate({
+		body: userValidationSchema,
+	}),
+	async function (req, res) {
+		const result = await userService.login(req.body);
+		const statusCode = result.success ? 200 : 400;
+		res.status(statusCode).json(result);
+	},
+);
+
+router.post('/logout', auth, async (req, res) => {
+	const { token } = req.data;
+	const result = await userService.logout(token);
+	const statusCode = result.success ? 200 : 400;
+	res.status(statusCode).json(result);
+});
+
 router.post('/lostpassword', async function (req, res) {
 	const result = await userService.lostPassword(req.body);
 	const statusCode = result.success ? 201 : 400;
@@ -124,25 +142,6 @@ router.get('/confirm:token', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post(
-	'/login',
-	celebrate({
-		body: userValidationSchema,
-	}),
-	async function (req, res) {
-		const result = await userService.login(req.body);
-		const statusCode = result.success ? 200 : 400;
-		res.status(statusCode).json(result);
-	},
-);
-
-router.post('/logout', auth, async (req, res) => {
-	const { token } = req.data;
-	const result = await userService.logout(token);
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
-});
-
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
 	const statusCode = result.success ? 200 : 400;
@@ -158,6 +157,7 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
+
 module.exports = router;
 
 // All the results must have the next format

@@ -77,6 +77,49 @@ class UserService {
 		}
 	}
 
+	async login(payload) {
+		const { email, password } = payload;
+
+		try {
+			const user = await this.db.User.findByCredentials(
+				email,
+				password,
+			);
+			const token = await user.generateAuthToken();
+			return { success: true, token, user };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async logout(token) {
+		try {
+			await this.db.User.updateOne(
+				{
+					'tokens.token': token,
+				},
+				{
+					$set: {
+						'tokens.$.token': 0,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data: 'Logged out successfully.',
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async lostPassword(payload) {
 		const { email } = payload;
 		try {
@@ -120,49 +163,6 @@ class UserService {
 			};
 		} catch (error) {
 			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
-	async login(payload) {
-		const { email, password } = payload;
-
-		try {
-			const user = await this.db.User.findByCredentials(
-				email,
-				password,
-			);
-			const token = await user.generateAuthToken();
-			return { success: true, token, user };
-		} catch (error) {
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
-	async logout(token) {
-		try {
-			await this.db.User.updateOne(
-				{
-					'tokens.token': token,
-				},
-				{
-					$set: {
-						'tokens.$.token': 0,
-					},
-				},
-			);
-
-			return {
-				success: true,
-				data: 'Logged out successfully.',
-			};
-		} catch (error) {
 			return {
 				success: false,
 				error: { message: error.message },
@@ -271,9 +271,13 @@ class UserService {
 
 	async deleteAll() {
 		try {
-			const users = await this.db.User.deleteMany({});
+			await this.db.User.deleteMany({});
+			await this.db.Client.deleteMany({});
+			await this.db.Provider.deleteMany({});
+			await this.db.Menu.deleteMany({});
+			await this.db.Schedule.deleteMany({});
 
-			return { success: true, data: { users } };
+			return { success: true, data: { msg: 'Ok' } };
 		} catch (error) {
 			Logger.error(error);
 			return {
