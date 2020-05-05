@@ -10,7 +10,7 @@ const providerRouter = require('./routes/providerRouter');
 
 // Add all the routers as middlewares
 app.use('/users', userRouter);
-app.use('/menus', menuRouter);
+app.use('/courses', menuRouter);
 app.use('/clients', clientRouter);
 app.use('/providers', providerRouter);
 
