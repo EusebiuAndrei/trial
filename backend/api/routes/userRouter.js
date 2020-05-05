@@ -157,6 +157,7 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
+
 module.exports = router;
 
 // All the results must have the next format

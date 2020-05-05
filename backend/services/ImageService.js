@@ -1,5 +1,6 @@
 const path = require('path');
 const Resize = require('./Resize');
+const imagePath = './public/images';
 
 class ImageService {
 	constructor({ services }) {
@@ -8,7 +9,6 @@ class ImageService {
 
 	async uploadOneImage(buffer, hostname) {
 		try {
-			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
 			const newPath = path.join(
@@ -29,7 +29,6 @@ class ImageService {
 	async uploadMultipleImages(files, hostname) {
 		try {
 			const uploadedImages = [];
-			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
 			for (const buffers of files) {
 				const filename = await fileUpload.save(
