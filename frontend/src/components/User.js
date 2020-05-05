@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, Carousel, ListGroup } from "react-bootstrap";
 import Client from "./Client";
 import Provider from "./Provider";
+import AccountSettings from "./AccountSettings";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,9 +13,24 @@ import {
 
 const User = ({ data }) => {
   const [index, setIndex] = useState(0);
-
   const [openSetting, setOpenSettings] = useState(false);
   const [openProfile, setOpenProfile] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openSchedule, setOpenSchedule] = useState(false);
+
+  const handleOpenSchedule = () => {
+    setOpenMenu(false);
+    setOpenProfile(false);
+    setOpenSchedule(true);
+    setOpenSettings(false);
+  };
+
+  const handleOpenMenu = () => {
+    setOpenMenu(true);
+    setOpenProfile(false);
+    setOpenSchedule(false);
+    setOpenSettings(false);
+  };
 
   const handleOpenAccountSettings = () => {
     setOpenSettings(true);
@@ -123,7 +139,7 @@ const User = ({ data }) => {
           </p>
         </div>
         <div>
-          {data.role == "Client" ? (
+          {data.role === "Client" ? (
             <ListGroup className="menu_profile">
               <ListGroup.Item className="menu_element_profile">
                 <Link className="menu_link" onClick={handleOpenProfile}>
@@ -146,29 +162,40 @@ const User = ({ data }) => {
                 </Link>
               </ListGroup.Item>
               <ListGroup.Item className="menu_element_profile">
-                <Link className="menu_link">Menu</Link>
+                <Link className="menu_link" onClick={handleOpenMenu}>
+                  Menu
+                </Link>
               </ListGroup.Item>
               <ListGroup.Item className="menu_element_profile">
-                <Link className="menu_link">Schedule</Link>
+                <Link className="menu_link" onClick={handleOpenSchedule}>
+                  Schedule
+                </Link>
               </ListGroup.Item>
               <ListGroup.Item className="menu_element_profile">
-                <Link className="menu_link">Account Settings</Link>
+                <Link className="menu_link" onClick={handleOpenAccountSettings}>
+                  Account Settings
+                </Link>
               </ListGroup.Item>
             </ListGroup>
           )}
         </div>
       </div>
-      {openProfile ? (
-        <div className="profile_form">
-          {data.role === "Client" ? (
-            <Client data={data.details}></Client>
-          ) : (
-            <Provider data={data.details}></Provider>
-          )}
-        </div>
-      ) : (
-        <p>BUNA</p>
-      )}
+      <div className="profile_form">
+        {openProfile && data.role === "Client" && (
+          <Client data={data.details}></Client>
+        )}
+        {openSetting && data.role === "Client" && (
+          <AccountSettings data={(data.email, data.name)}></AccountSettings>
+        )}
+        {openSetting && data.role === "Provider" && (
+          <AccountSettings data={(data.email, data.name)}></AccountSettings>
+        )}
+        {openProfile && data.role === "Provider" && (
+          <Provider data={data.details}></Provider>
+        )}
+        {openMenu && data.role === "Provider" && <p>MENU</p>}
+        {openSchedule && data.role === "Provider" && <p>SCHEDULE</p>}
+      </div>
     </div>
   );
 };

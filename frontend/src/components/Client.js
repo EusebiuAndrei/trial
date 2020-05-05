@@ -96,7 +96,7 @@ const Client = ({ data }) => {
 
   return (
     <div>
-      <Form className="providerForm">
+      <Form className="client_form">
         <div className="profile_title">
           <h2>PROFILE</h2>
         </div>
@@ -141,75 +141,6 @@ const Client = ({ data }) => {
             </FormGroup>
           </div>
         </div>
-        <Card>
-          <Card.Header className="providerCardHeader">
-            <h5 className="cardTitle">Preferinte</h5>
-            <Button
-              className="cardEdit"
-              variant="primary"
-              onClick={handleEditPreferencesButton}
-            >
-              {!toInputPreferences && "Edit"}
-              {toInputPreferences && "Done"}
-            </Button>
-          </Card.Header>
-          <Card.Body>
-            <Container>
-              <Row className="cardRow" xs={17}>
-                <Form.Group className="formElementProvider" controlId="type">
-                  <Form.Label as={Col} xs={6}>
-                    <b>Preferences</b>
-                  </Form.Label>
-                  <ListGroup>
-                    {!toInputPreferences && listPreferences()}
-                    {toInputPreferences && (
-                      <FormControl
-                        type="text"
-                        placeholder="Preference"
-                        onChange={(e) => handleInput(e, "preferences")}
-                      ></FormControl>
-                    )}
-                  </ListGroup>
-                </Form.Group>
-              </Row>
-            </Container>
-          </Card.Body>
-        </Card>
-
-        <Card>
-          <Card.Header className="providerCardHeader">
-            <h5 className="cardTitle">Alergii</h5>
-            <Button
-              className="cardEdit"
-              variant="primary"
-              onClick={handleEditAllergiesButton}
-            >
-              {!toInputAllergies && "Edit"}
-              {toInputAllergies && "Done"}
-            </Button>
-          </Card.Header>
-          <Card.Body>
-            <Container>
-              <Row className="cardRow" xs={17}>
-                <Form.Group className="formElementProvider" controlId="type">
-                  <Form.Label as={Col} xs={6}>
-                    <b>Alergii</b>
-                  </Form.Label>
-                  <ListGroup>
-                    {!toInputAllergies && listAllergies()}
-                    {toInputAllergies && (
-                      <FormControl
-                        type="text"
-                        placeholder="Allergy Name"
-                        onChange={(e) => handleInput(e, "allergies")}
-                      ></FormControl>
-                    )}
-                  </ListGroup>
-                </Form.Group>
-              </Row>
-            </Container>
-          </Card.Body>
-        </Card>
       </Form>
     </div>
   );

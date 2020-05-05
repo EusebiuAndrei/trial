@@ -189,6 +189,14 @@ border-left:solid #D9054F;
 	color: grey;
 }
 
+.provider_adress{
+	padding-left: 20px;
+	letter-spacing: 1.6px;
+	word-spacing: 2px;
+	color: grey;
+	text-align: center;
+}
+
 .adress_profile_element{
 	display: flex;
 	flex-direction: row;

@@ -6,26 +6,93 @@ import Provider from "./Provider";
 import UploadImage from "./ImageUpload";
 
 class Profile extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   var userToken;
+  //   if (localStorage.getItem("userToken")) {
+  //     userToken = localStorage.getItem("userToken");
+  //     this.state = {
+  //       userToken,
+  //     };
+  //   }
+  //   console.log(this.state);
+  // }
+
   // state = {
-  //   email: "restaurantulRestaurant@gmail.com",
-  //   name: "Restaurant Restaurant",
+  //   email: "restaurant@gmail.com",
+  //   name: "User1",
   //   role: "Provider",
-  //   token: "",
   //   details: {
   //     location: {
-  //       latitude: "123",
-  //       longitude: "-189",
-  //       adress: "Mihail Kogalniceanu",
+  //       latitude: 89,
+  //       longitude: 178,
+  //       adress: "Strada Uzinei",
   //     },
-  //     CUI: "1242341353463563",
+  //     CUI: "RO123456789010",
   //     type: "Restaurant",
-  //     description:
-  //       "Un restaurant foarte frumos si foarte interesant as putea zice",
-  //     images: ["image1.jpg", "image2.jpg", "image3.jpg"],
-  //     rating: 5,
-  //     priceCategory: "Medium",
-  //     specials: ["Pizza", "Pasta", "Fish", "Parfais"],
-  //     tables: "6",
+  //     description: "Un restaurant foarte deosebit",
+  //     rating: 10,
+  //     priceCategory: "Affordable",
+  //     specials: ["Pasta", "Crepes", "Buritto", "Chilli con Carne"],
+  //     capacity: 100,
+  //     images: ["image1.jpg", "image2.jpg"],
+  //     menu: [
+  //       {
+  //         name: "Dovlecei prajiti de post",
+  //         category: "Post",
+  //         price: 19,
+  //         ingredients: ["dovlecei"],
+  //       },
+  //       {
+  //         name: "Bifteki de legume",
+  //         category: "Post",
+  //         price: 25,
+  //         ingredients: ["rosii", "cartofi"],
+  //       },
+  //       {
+  //         name: "Gyros pui",
+  //         category: "Greek",
+  //         price: 20,
+  //         ingredients: ["carne pui", "tzatziki", "ceapa", "rosie"],
+  //       },
+  //     ],
+  //     schedule: [
+  //       {
+  //         day: "luni",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "marti",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "miercuri",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "joi",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "vineri",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "sambata",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //       {
+  //         day: "duminica",
+  //         startHour: "10 am",
+  //         endHour: "5 pm",
+  //       },
+  //     ],
   //   },
   // };
   state = {

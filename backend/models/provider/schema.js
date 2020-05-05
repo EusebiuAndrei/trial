@@ -49,7 +49,7 @@ const providerSchema = mongoose.Schema(
 			type: mongoose.Types.ObjectId,
 			required: true,
 		},
-		tables: {
+		capacity: {
 			type: Number,
 			required: true,
 		},
