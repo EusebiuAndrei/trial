@@ -529,11 +529,10 @@ Get the all the providers with the corresponding tags aka specials.
 
 **Query parameters**:
 
--   providerId (required) - 24-character hexadecimal string
--   orderBy - `score`, `helpfulness`, `timeCreated`, prepended by a
-    `-` for a descending order, otherwise ascending
--   skip - number of reviews to skip
--   limit - number of reviews to fetch
+-   special - a provider tag(formerly named tag, now is special), can be multiple specials added
+-   orderBy - to be added tomorrow
+-   skip - to be added tomorrow
+-   limit - to be added tomorrow
 
 **Return codes**:
 
