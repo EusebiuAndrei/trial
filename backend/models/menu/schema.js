@@ -16,7 +16,7 @@ const menuSchema = mongoose.Schema({
 				required: true,
 			},
 			image: {
-				type: Buffer,
+				type: String,
 			},
 			ingredients: {
 				type: [String],

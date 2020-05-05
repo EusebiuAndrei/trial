@@ -11,7 +11,7 @@ const scheduleSchema = mongoose.Schema({
 					'marti',
 					'miercuri',
 					'joi',
-					'vineiri',
+					'vineri',
 					'sambata',
 					'duminica',
 				],
