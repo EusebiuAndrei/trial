@@ -8,12 +8,32 @@ class MenuService {
 	}
 
 	async getCourse(courseData) {
-		const { idProvider, idCourse } = courseData;
+		const { idCourse } = courseData;
 		try {
-			const course = await this.db.Menu.findOne({
-				idProvider: mongoose.Types.ObjectId(idProvider),
-				'courses._id': mongoose.Types.ObjectId(idCourse),
-			});
+			const course = await this.db.Menu.aggregate([
+				{
+					$unwind: '$courses',
+				},
+				{
+					$match: {
+						'courses._id': mongoose.Types.ObjectId(
+							idCourse,
+						),
+					},
+				},
+				{
+					$group: {
+						_id: '$courses._id',
+						category: { $first: '$courses.category' },
+						price: { $first: '$courses.price' },
+						image: { $first: '$courses.image' },
+						ingredients: {
+							$first: '$courses.ingredients',
+						},
+						allergenes: { $first: '$courses.allergenes' },
+					},
+				},
+			]);
 			return { success: true, data: course };
 		} catch (error) {
 			Logger.error(error);

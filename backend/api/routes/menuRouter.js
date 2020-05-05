@@ -9,10 +9,9 @@ router.get('/', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/:idProvider/:idCourse', async (req, res) => {
+router.get('/:idCourse', async (req, res) => {
 	const { idProvider, idCourse } = req.params;
 	const result = await menuService.getCourse({
-		idProvider,
 		idCourse,
 	});
 	const statusCode = result.success ? 200 : 400;
