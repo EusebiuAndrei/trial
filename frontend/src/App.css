@@ -99,8 +99,9 @@ border-left:solid #D9054F;
 }
 
 .main_div_profile{
-	width: 100%;
 	height: auto;
+    background-color: #FBF3E6;
+    width: 100%;
 	display: flex;
 	flex-direction: row;
 	margin-top: 3%;
@@ -138,8 +139,9 @@ border-left:solid #D9054F;
 
 .profile_form{
 	margin-left: 2%;
-	width: 60%;
-	height: 100%;
+	margin-bottom: 10%;
+	width: 55%;
+	height: auto;
 	background-color: white;
 	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
 	border-radius: 10px 10px 10px 10px;
@@ -173,6 +175,7 @@ border-left:solid #D9054F;
 .profile_element>h5{
 	padding: 20px;
 	padding-bottom: 0px;
+	padding-top: 10px;
 	font-family: Impact, Charcoal, sans-serif;
 	font-size: "31px";
 	letter-spacing: 1.6px;
@@ -184,8 +187,8 @@ border-left:solid #D9054F;
 
 .profile_explanations{
 	padding-left: 20px;
-	letter-spacing: 1.6px;
-	word-spacing: 2px;
+	letter-spacing: 1.3px;
+	word-spacing: 1.5px;
 	color: grey;
 }
 
@@ -223,4 +226,12 @@ border-left:solid #D9054F;
 
 .avertisment{
 	color: #D9054F;
+}
+
+.account_settings_elements{
+	text-align: left;
+	padding: 20px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
 }

@@ -48,7 +48,7 @@ const Provider = ({ data }) => {
     data.location.longitude ? data.location.longitude : 0
   );
   const [adress, setAdress] = useState(
-    data.location.adress ? data.location.adress : 0
+    data.location.adress ? data.location.adress : ""
   );
 
   const [succesLatitude, setSuccesLatitude] = useState(true);

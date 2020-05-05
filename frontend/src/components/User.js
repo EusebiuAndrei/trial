@@ -3,13 +3,7 @@ import { Image, Carousel, ListGroup } from "react-bootstrap";
 import Client from "./Client";
 import Provider from "./Provider";
 import AccountSettings from "./AccountSettings";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const User = ({ data }) => {
   const [index, setIndex] = useState(0);
@@ -33,11 +27,15 @@ const User = ({ data }) => {
   };
 
   const handleOpenAccountSettings = () => {
+    setOpenMenu(false);
+    setOpenSchedule(false);
     setOpenSettings(true);
     setOpenProfile(false);
   };
 
   const handleOpenProfile = () => {
+    setOpenMenu(false);
+    setOpenSchedule(false);
     setOpenProfile(true);
     setOpenSettings(false);
   };
@@ -48,7 +46,7 @@ const User = ({ data }) => {
 
   const listPhotos = () => {
     let photoList = [];
-    if (data.details.images != []) {
+    if (data.details.images !== []) {
       for (const [index, value] of data.details.images.entries()) {
         var image = value;
         photoList.push(
@@ -185,10 +183,10 @@ const User = ({ data }) => {
           <Client data={data.details}></Client>
         )}
         {openSetting && data.role === "Client" && (
-          <AccountSettings data={(data.email, data.name)}></AccountSettings>
+          <AccountSettings data={data}></AccountSettings>
         )}
         {openSetting && data.role === "Provider" && (
-          <AccountSettings data={(data.email, data.name)}></AccountSettings>
+          <AccountSettings data={data}></AccountSettings>
         )}
         {openProfile && data.role === "Provider" && (
           <Provider data={data.details}></Provider>
