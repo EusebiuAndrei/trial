@@ -37,12 +37,12 @@ class ClientService {
 		}
 	}
 
-	async getClientbyId(idClient) {
+	async getClientbyId(userId) {
 		try {
 			const client = await this.db.User.findOne(
 				{
 					role: 'Client',
-					_id: mongoose.Types.ObjectId(idClient),
+					_id: mongoose.Types.ObjectId(userId),
 				},
 				{
 					id: 0,
