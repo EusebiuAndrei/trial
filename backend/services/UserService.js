@@ -271,9 +271,13 @@ class UserService {
 
 	async deleteAll() {
 		try {
-			const users = await this.db.User.deleteMany({});
+			await this.db.User.deleteMany({});
+			await this.db.Client.deleteMany({});
+			await this.db.Provider.deleteMany({});
+			await this.db.Menu.deleteMany({});
+			await this.db.Schedule.deleteMany({});
 
-			return { success: true, data: { users } };
+			return { success: true, data: { msg: 'Ok' } };
 		} catch (error) {
 			Logger.error(error);
 			return {

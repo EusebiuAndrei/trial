@@ -43,6 +43,7 @@ const userService = new UserService({
 		Client,
 		Provider,
 		Menu,
+		Schedule,
 	},
 	services: { menuService, scheduleService, sendEmailService },
 });

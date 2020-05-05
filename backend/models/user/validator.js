@@ -17,6 +17,8 @@ const schema = Joi.object().keys({
 				'Password must consist of minimum 6 characters',
 			),
 		),
+	role: Joi.string().valid('Client', 'Provider').required(),
+	name: Joi.string().min(4).max(20).required(),
 });
 
 module.exports = schema;
