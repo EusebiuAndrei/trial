@@ -5,21 +5,26 @@ const Logger = require('../../loaders/logger');
 const router = Router();
 
 router.get('/', async (req, res) => {
-	const result = await providerService.getAllProviders();
+	const { limit, skip } = req.query;
+	const result = await providerService.getAllProviders(limit, skip);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
 });
 
 router.get('/specials', async (req, res) => {
-	const limit = req.query.limit;
+	const { limit, skip } = req.query;
 	let tags = req.query.special;
 	if (!tags) {
 		tags = [];
 	} else if (!Array.isArray(tags)) {
 		tags = [tags];
 	}
-	const result = await providerService.getBySpecials(limit, tags);
+	const result = await providerService.getBySpecials(
+		limit,
+		skip,
+		tags,
+	);
 	const statusCode = result.success ? 200 : 400;
 
 	res.status(statusCode).json(result);
