@@ -170,6 +170,37 @@ class UserService {
 		}
 	}
 
+	async addCommandById(userId, payload) {
+		const { commandId } = payload;
+		try {
+			await this.db.Client.updateOne(
+				{
+					userId: userId,
+				},
+				{
+					$push: {
+						commandsHistory: commandId,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data:
+					'Command ' +
+					commandId +
+					' added succesfully to client ' +
+					userId +
+					"'s history.",
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async confirmEmail(payload) {
 		try {
 			await this.db.User.findByEmailToken(payload);
