@@ -529,11 +529,10 @@ Get the all the providers with the corresponding tags aka specials.
 
 **Query parameters**:
 
--   providerId (required) - 24-character hexadecimal string
--   orderBy - `score`, `helpfulness`, `timeCreated`, prepended by a
-    `-` for a descending order, otherwise ascending
--   skip - number of reviews to skip
--   limit - number of reviews to fetch
+-   special - a provider tag(formerly named tag, now is special), can be multiple specials added
+-   orderBy - to be added tomorrow
+-   skip - to be added tomorrow
+-   limit - to be added tomorrow
 
 **Return codes**:
 
@@ -541,16 +540,113 @@ Get the all the providers with the corresponding tags aka specials.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/providers/specials
+ `localhost:4000/api/providers/specials?special=pizza&special=pasta
 
 **Returned data example**:
 
 ```JSON
-
+{
+    "success": true,
+    "data": {
+        "providers": [
+            {
+                "role": "Provider",
+                "confirmed": true,
+                "_id": "5eb175094afbf654966cb690",
+                "name": "Gimmy Restaurant",
+                "email": "gimmy_restaurant@gmail.com",
+                "__v": 1,
+                "emailToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWIxNzUwOTRhZmJmNjU0OTY2Y2I2OTAiLCJpYXQiOjE1ODg2ODgxMzd9.Pea0iTISyAny4IEluMMcvZxrbODpTRheIjhy88yK4tg",
+                "details": {
+                    "location": {
+                        "latitude": 53.5,
+                        "longitude": 43.2
+                    },
+                    "images": [
+                        "https://d2fdt3nym3n14p.cloudfront.net/venue/1360/gallery/3022/conversions/sole8-big.jpg",
+                        "https://d2fdt3nym3n14p.cloudfront.net/venue/1360/gallery/3023/conversions/sole3-big.jpg"
+                    ],
+                    "specials": [
+                        "pizza",
+                        "pasta"
+                    ],
+                    "_id": "5eb17a5b251c5187bd97251a",
+                    "userId": "5eb175094afbf654966cb690",
+                    "CUI": "ER563KIDO34",
+                    "__v": 0,
+                    "description": "A place with good food and nice vibes.",
+                    "priceCategory": "Medium",
+                    "rating": 4.5,
+                    "tables": 14,
+                    "type": "Canteen",
+                    "menu": {
+                        "_id": "5eb17a5c251c5187bd97253d",
+                        "providerId": "5eb17a5b251c5187bd97251a",
+                        "__v": 0,
+                        "courses": [
+                            {
+                                "category": [
+                                    "pizza"
+                                ],
+                                "ingredients": [
+                                    "onion",
+                                    "salami",
+                                    "mushrooms",
+                                    "eggs",
+                                    "cheese"
+                                ],
+                                "allergenes": [
+                                    "eggs",
+                                    "milk"
+                                ],
+                                "_id": "5eb17a5c6f436666294bc420",
+                                "name": "house pizza",
+                                "price": 30,
+                                "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
+                            },
+                            {
+                                "category": [
+                                    "pasta"
+                                ],
+                                "ingredients": [
+                                    "onion",
+                                    "salami",
+                                    "tomatoes",
+                                    "eggs",
+                                    "cheese"
+                                ],
+                                "allergenes": [
+                                    "eggs",
+                                    "milk"
+                                ],
+                                "_id": "5eb17a5c6f436666294bc421",
+                                "name": "house pasta",
+                                "price": 25,
+                                "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
+                            }
+                        ]
+                    },
+                    "schedule": {
+                        "_id": "5eb17a5c251c5187bd972551",
+                        "providerId": "5eb17a5b251c5187bd97251a",
+                        "__v": 0,
+                        "schedule": [
+                            {
+                                "_id": "5eb17a5c6f436666294bc422"
+                            }
+                        ]
+                    },
+                    "id": "5eb17a5b251c5187bd97251a"
+                },
+                "id": "5eb175094afbf654966cb690"
+            }
+        ]
+    }
+}
 ```
 
-## /api/menus
-
+## /api/courses
+-- to be added tomorrow
 ### GET
 
 Get the all the menus from the db.
@@ -561,124 +657,14 @@ Get the all the menus from the db.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/menus
+ `localhost:4000/api/courses
 
 **Returned data example**:
 
 ```JSON
-{
-    "success": true,
-    "data": {
-        "menus": [
-            {
-                "_id": "5eb17156251c5187bd95fff4",
-                "providerId": "5eb17156251c5187bd95ff83",
-                "__v": 0,
-                "courses": [
-                    {
-                        "category": [
-                            "Soup"
-                        ],
-                        "ingredients": [
-                            "porcini",
-                            "pancetta",
-                            "garlic"
-                        ],
-                        "allergenes": [
-                            "garlic"
-                        ],
-                        "_id": "5eb173d3d6fb9132c43218a2",
-                        "name": "Supa crema de porcini cu julien de pancetta",
-                        "price": 19,
-                        "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsavoriurbane.com%2Fsupa-crema-de-legume-reteta-simpla%2F&psig=AOvVaw0MMf0dit7e7lduDbiL1v6L&ust=1588773203502000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOi8x8XvnOkCFQAAAAAdAAAAABAD"
-                    },
-                    {
-                        "category": [
-                            "Post"
-                        ],
-                        "ingredients": [
-                            "rosii",
-                            "cartofi"
-                        ],
-                        "allergenes": [],
-                        "_id": "5eb173d3d6fb9132c43218a3",
-                        "name": "Bifteki de legume",
-                        "price": 25,
-                        "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpetrisorcatering.ro%2Fprodus%2Fbiftec-cu-legume-la-gratar%2F&psig=AOvVaw2TY0GzNrt922WnIceR-5om&ust=1588773245671000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzytnvnOkCFQAAAAAdAAAAABAD"
-                    },
-                    {
-                        "category": [
-                            "Greek"
-                        ],
-                        "ingredients": [
-                            "carne pui",
-                            "tzatziki",
-                            "ceapa",
-                            "rosie"
-                        ],
-                        "allergenes": [
-                            "gluten"
-                        ],
-                        "_id": "5eb173d3d6fb9132c43218a4",
-                        "name": "Gyros pui",
-                        "price": 20,
-                        "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.takeaway.com%2Fro%2Ffoodwiki%2Fgrecia%2Fgyros%2F&psig=AOvVaw1OC9z2REL3zAJcvSyPcQmz&ust=1588773312557000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjRu_nvnOkCFQAAAAAdAAAAABAD"
-                    }
-                ]
-            },
-            {
-                "_id": "5eb17a5c251c5187bd97253d",
-                "providerId": "5eb17a5b251c5187bd97251a",
-                "__v": 0,
-                "courses": [
-                    {
-                        "category": [
-                            "pizza"
-                        ],
-                        "ingredients": [
-                            "onion",
-                            "salami",
-                            "mushrooms",
-                            "eggs",
-                            "cheese"
-                        ],
-                        "allergenes": [
-                            "eggs",
-                            "milk"
-                        ],
-                        "_id": "5eb17a5c6f436666294bc420",
-                        "name": "house pizza",
-                        "price": 30,
-                        "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
-                    },
-                    {
-                        "category": [
-                            "pasta"
-                        ],
-                        "ingredients": [
-                            "onion",
-                            "salami",
-                            "tomatoes",
-                            "eggs",
-                            "cheese"
-                        ],
-                        "allergenes": [
-                            "eggs",
-                            "milk"
-                        ],
-                        "_id": "5eb17a5c6f436666294bc421",
-                        "name": "house pasta",
-                        "price": 25,
-                        "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
-                    }
-                ]
-            }
-        ]
-    }
-}
 ```
 
-## /api/menus/:courseId
+## /api/courses/:courseId
 
 ### GET
 
@@ -687,7 +673,7 @@ Get a specific course by its id.
 **URL parameter**:
 
 The ID of the course should be specified in the URL:  
-`.../api/menus/5eb16fdf4afbf654966cb68d`  
+`.../api/courses/5eb17a5c6f436666294bc421`  
 This ID should be the 24-character hex-string corresponding to the
 course `_id`, living under menu: {courses: [here is a course]}
 
@@ -697,10 +683,33 @@ course `_id`, living under menu: {courses: [here is a course]}
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/menus/5eb16fdf4afbf654966cb68d
+ `localhost:4000/api/courses/5eb17a5c6f436666294bc421
 
 **Returned data example**:
 
 ```JSON
-
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "5eb17a5c6f436666294bc421",
+            "category": [
+                "pasta"
+            ],
+            "price": 25,
+            "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg",
+            "ingredients": [
+                "onion",
+                "salami",
+                "tomatoes",
+                "eggs",
+                "cheese"
+            ],
+            "allergenes": [
+                "eggs",
+                "milk"
+            ]
+        }
+    ]
+}
 ```
