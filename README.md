@@ -143,6 +143,11 @@ User `_id`, NOT the Client `_id`
 
 ### GET
 
+**Query parameters**:
+
+-   special - a provider tag(formerly named tag, now is special), can be multiple specials added
+-   limit - a number that represents how many providers should be returned
+
 Get the all the providers from the db.
 
 **Return codes**:
@@ -530,9 +535,7 @@ Get the all the providers with the corresponding tags aka specials.
 **Query parameters**:
 
 -   special - a provider tag(formerly named tag, now is special), can be multiple specials added
--   orderBy - to be added tomorrow
--   skip - to be added tomorrow
--   limit - to be added tomorrow
+-   limit - a number that represents how many providers should be returned
 
 **Return codes**:
 
@@ -540,7 +543,7 @@ Get the all the providers with the corresponding tags aka specials.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/providers/specials?special=pizza&special=pasta
+ `localhost:4000/api/providers/specials?special=pizza&special=pasta&limit=1
 
 **Returned data example**:
 
@@ -646,29 +649,10 @@ Get the all the providers with the corresponding tags aka specials.
 ```
 
 ## /api/courses
--- to be added tomorrow
-### GET
-
-Get the all the menus from the db.
-
-**Return codes**:
-
--   200 - OK
--   400 - There was a problem fetching data
-
-**Usage example**:  
- `localhost:4000/api/courses
-
-**Returned data example**:
-
-```JSON
-```
-
-## /api/courses/:courseId
 
 ### GET
 
-Get a specific course by its id.
+Get the all the courses from the db.
 
 **Query paremeters**:
 
@@ -714,6 +698,49 @@ Get a specific course by its id.
             }
         ]
     }
+}
+```
+
+## /api/courses/:courseId
+
+### GET
+
+Get a specific course by its id.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:4000/api/courses/5eb17a5c6f436666294bc421
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "5eb17a5c6f436666294bc421",
+            "category": [
+                "pasta"
+            ],
+            "price": 25,
+            "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg",
+            "ingredients": [
+                "onion",
+                "salami",
+                "tomatoes",
+                "eggs",
+                "cheese"
+            ],
+            "allergenes": [
+                "eggs",
+                "milk"
+            ]
+        }
+    ]
 }
 ```
 
