@@ -24,6 +24,7 @@ class CourseService {
 				{
 					$group: {
 						_id: '$courses._id',
+						name: { $first: '$courses.name' },
 						category: { $first: '$courses.category' },
 						price: { $first: '$courses.price' },
 						image: { $first: '$courses.image' },
