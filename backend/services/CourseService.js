@@ -35,6 +35,8 @@ class CourseService {
 					},
 				},
 			]);
+
+			if (course.length === 0) throw new Error('Not found');
 			return { success: true, data: course };
 		} catch (error) {
 			Logger.error(error);
@@ -86,7 +88,12 @@ class CourseService {
 				.sort(function (a, b) {
 					return a[sortKey] - b[sortKey];
 				})
-				.slice(0, parseInt(limit));
+				.slice(
+					0,
+					parseInt(
+						limit ? limit : coursesIndividualy.length,
+					),
+				);
 			return { success: true, data: { coursesFiltred } };
 		} catch (error) {
 			return {

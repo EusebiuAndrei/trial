@@ -53,13 +53,14 @@ class ClientService {
 					tokens: 0,
 				},
 			);
-			client.role = undefined;
-			if (client.details) {
-				client.details['__v'] = undefined;
-				client.details['_id'] = undefined;
-				client.details['userId'] = undefined;
-			}
-
+			if (client != null) {
+				client.role = undefined;
+				if (client.details) {
+					client.details['__v'] = undefined;
+					client.details['_id'] = undefined;
+					client.details['userId'] = undefined;
+				}
+			} else throw new Error('Not found');
 			return { success: true, data: { client } };
 		} catch (error) {
 			return {
