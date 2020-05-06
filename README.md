@@ -751,3 +751,41 @@ Add a command to client commandsHistory and provider commandsQueue
     "data": {}
 }
 ```
+
+## /api/clients/addReservation
+
+### GET
+
+Add a command to client reservationsHistory and provider reservationsQueue
+
+**Request body**:
+
+-   clientId - the userId of the client
+-   providerId - the userId of the provider
+-   reservationId - `_id` of the reservation
+
+**Return codes**:
+
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:4000/api/clients/addReservation
+ 
+ Request body
+```JSON
+{
+	"clientId": "5eb16fdf4afbf654966cb68d",
+	"providerId": "5eb175094afbf654966cb690",
+	"commandId": "cccccccccccc"
+}
+```
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {}
+}
+```
