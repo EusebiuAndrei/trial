@@ -79,6 +79,58 @@ class ProviderService {
 			};
 		}
 	}
+
+	async addCommandById(payload) {
+		const { providerId, commandId } = payload;
+		try {
+			await this.db.Provider.updateOne(
+				{
+					userId: providerId,
+				},
+				{
+					$push: {
+						commandsQueue: commandId,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data: {},
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async addReservationById(payload) {
+		const { providerId, reservationId } = payload;
+		try {
+			await this.db.Provider.updateOne(
+				{
+					userId: providerId,
+				},
+				{
+					$push: {
+						reservationsQueue: reservationId,
+					},
+				},
+			);
+
+			return {
+				success: true,
+				data: {},
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
 }
 
 module.exports = ProviderService;

@@ -16,12 +16,6 @@ const ImageService = require('./ImageService');
 const ClientService = require('./ClientServices');
 const ProviderService = require('./ProviderService');
 // Create the service objects with dependencies
-const clientService = new ClientService({
-	db: {
-		User,
-	},
-	services: {},
-});
 const menuService = new MenuService({
 	db: {
 		Menu,
@@ -55,8 +49,17 @@ const imageService = new ImageService({
 const providerService = new ProviderService({
 	db: {
 		User,
+		Provider,
 	},
 	services: {},
+});
+
+const clientService = new ClientService({
+	db: {
+		User,
+		Client,
+	},
+	services: { providerService },
 });
 // Export the service object
 module.exports = {

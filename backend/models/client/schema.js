@@ -19,6 +19,7 @@ const clientSchema = mongoose.Schema({
 		required: false,
 	},
 	commandsHistory: [String],
+	reservationsHistory: [String],
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: true,

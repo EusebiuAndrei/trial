@@ -16,4 +16,18 @@ router.get('/:idClient', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.post('/addCommand', async (req, res) => {
+	const result = await clientService.addCommandById(req.body);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
+router.post('/addReservation', async (req, res) => {
+	const result = await clientService.addReservationById(req.body);
+	const statusCode = result.success ? 200 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 module.exports = router;

@@ -81,14 +81,6 @@ router.get('/:userId', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post('/:userId/addCommand', async (req, res) => {
-	const { userId } = req.params;
-	const result = await userService.addCommandById(userId, req.body);
-	const statusCode = result.success ? 200 : 400;
-
-	res.status(statusCode).json(result);
-});
-
 router.get('/test', async (req, res) => {
 	const result = await userService.getTest();
 	const statusCode = result.success ? 200 : 400;

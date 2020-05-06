@@ -68,6 +68,64 @@ class ClientService {
 			};
 		}
 	}
+
+	async addCommandById(payload) {
+		const { clientId, commandId } = payload;
+		try {
+			await this.db.Client.updateOne(
+				{
+					userId: clientId,
+				},
+				{
+					$push: {
+						commandsHistory: commandId,
+					},
+				},
+			);
+			await this.services.providerService.addCommandById(
+				payload,
+			);
+
+			return {
+				success: true,
+				data: {},
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async addReservationById(payload) {
+		const { clientId, reservationId } = payload;
+		try {
+			await this.db.Client.updateOne(
+				{
+					userId: clientId,
+				},
+				{
+					$push: {
+						reservationsHistory: reservationId,
+					},
+				},
+			);
+			await this.services.providerService.addReservationById(
+				payload,
+			);
+
+			return {
+				success: true,
+				data: {},
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
 }
 
 module.exports = ClientService;
