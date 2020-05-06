@@ -4,7 +4,7 @@ const app = Router();
 
 // Import all the routers
 const userRouter = require('./routes/userRouter');
-const menuRouter = require('./routes/menuRouter');
+const menuRouter = require('./routes/courseRouter');
 const clientRouter = require('./routes/clientRoute');
 const providerRouter = require('./routes/providerRouter');
 
