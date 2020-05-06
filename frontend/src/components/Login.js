@@ -28,6 +28,7 @@ class Login extends React.Component{
 			newAccountEmail:"",
 			newAccountPassword:"",
 			newAccountConfirmPassword:"",
+			username:"",
 			infoTextRegister:"",
 			alert:"",
 			success:"",
@@ -36,6 +37,7 @@ class Login extends React.Component{
 			error:"",
 			fieldsError:"",
 			option:2,
+			accountType:"",
 		}
 
 		this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -45,6 +47,8 @@ class Login extends React.Component{
 		this.handleChangeNewEmail = this.handleChangeNewEmail.bind(this);
 		this.handleChangeNewPassword = this.handleChangeNewPassword.bind(this);
 		this.handleChangeNewPasswordConfirm = this.handleChangeNewPasswordConfirm.bind(this);
+		this.handleChangeUsername = this.handleChangeUsername.bind(this);
+
 	}
 
 
@@ -75,6 +79,7 @@ class Login extends React.Component{
 	}
 
 	async handleRegisterClick(){
+		console.log(JSON.stringify(this.state,null,'...'))
 
 		this.setState({success:""})
 		if(this.state.newAccountEmail === ""){
@@ -85,12 +90,14 @@ class Login extends React.Component{
 			this.setState({fieldsError:"confirm password"});
 		} else if(this.state.newAccountConfirmPassword !== this.state.newAccountPassword){
 			this.setState({fieldsError:"Parolele trebuie sa coincida!"})
+		} else if(this.state.accountType === ""){
+			this.setState({fieldsError:"Selecteaza tipul de cont!"})
 		} else {
 			this.setState({fieldsError:""});
 
 			try{
 				this.setState({loading:true})
-				let answer = await api.login(this.state.email,this.state.password);
+				let answer = await api.register(this.state.username,this.state.accountType,this.state.email,this.state.newAccountPassword);
 				if(answer.success === true){
 					this.setState({loading:false,userData:answer.user,success:true})
 				} else {
@@ -119,6 +126,10 @@ class Login extends React.Component{
 	handleChangeNewPasswordConfirm(event){
 		this.setState({newAccountConfirmPassword: event.target.value});
 	}
+	handleChangeUsername(event){
+		this.setState({username: event.target.value});
+	}
+	
 
 	infoTextRegister = () => {
 		
@@ -138,8 +149,8 @@ class Login extends React.Component{
 
 	fieldsErrorText = (error) => {	
 		if(error !== ""){
-			if(error === "Parolele trebuie sa coincida!") 			
-				return <p style={{color:'#F80505'}}>Parolele trebuie sa coincida!</p>
+			if(error === "Parolele trebuie sa coincida!" || error === "Selecteaza tipul de cont!") 			
+				return <p style={{color:'#F80505'}}>{error}</p>
 			else return <p style={{color:'#F80505'}}>Te rog completeaza campul {error} !</p>
 		}
 	}
@@ -224,10 +235,12 @@ class Login extends React.Component{
 								<p style={{fontSize:25,fontWeight:'bold',marginTop:'0%',marginBottom:'3%'}}>Create account</p>
 
 								<div style={{flexDirection:'row',display:'flex',width:'65%',justifyContent:'space-around',marginBottom:'3%'}}>
-									<Button variant="outline-danger" onClick={this.handleRegisterClick} >
+									<Button variant="outline-danger" onClick={()=>{this.setState({accountType:"client"})}}
+										style={{backgroundColor:this.state.accountType === "client" ? "red" : "white",color:this.state.accountType === "client" ? "white" : "red"}}>
 										Client
 									</Button>
-									<Button variant="outline-danger" onClick={this.handleRegisterClick} >
+									<Button variant="outline-danger" onClick={()=>{this.setState({accountType:"provider"})}}
+										style={{backgroundColor:this.state.accountType === "provider" ? "red" : "white",color:this.state.accountType === "provider" ? "white" : "red"}}>
 										Provider
 									</Button>
 								</div>
@@ -239,7 +252,7 @@ class Login extends React.Component{
 											placeholder="username"
 											aria-label="Username"
 											aria-describedby="basic-addon1"
-											onChange={this.handleChangeNewEmail}
+											onChange={this.handleChangeUsername}
 										/>
 										<InputGroup.Prepend>
 											<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0}} id="basic-addon1">
