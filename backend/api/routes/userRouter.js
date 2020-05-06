@@ -149,29 +149,6 @@ router.get('/confirm:token', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-<<<<<<< HEAD
-=======
-router.post(
-	'/login',
-	celebrate({
-		body: userValidationSchema,
-	}),
-	async function (req, res) {
-		console.log('salut');
-		const result = await userService.login(req.body);
-		const statusCode = result.success ? 200 : 400;
-		res.status(statusCode).json(result);
-	},
-);
-
-router.post('/logout', auth, async (req, res) => {
-	const { token } = req.data;
-	const result = await userService.logout(token);
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
-});
-
->>>>>>> task_addCommand
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
 	const statusCode = result.success ? 200 : 400;
