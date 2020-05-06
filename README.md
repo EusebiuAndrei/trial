@@ -670,12 +670,12 @@ Get the all the menus from the db.
 
 Get a specific course by its id.
 
-**URL parameter**:
+**Query paremeters**:
 
-The ID of the course should be specified in the URL:  
-`.../api/courses/5eb17a5c6f436666294bc421`  
-This ID should be the 24-character hex-string corresponding to the
-course `_id`, living under menu: {courses: [here is a course]}
+-   price - a number representing the price of the course
+-   sortkey - a string representing the field courses should be ordered by
+-   limit - a number representing how many courses to get in response
+-   special - a food category(also formerly found as tag and now as special in providers routes)
 
 **Return codes**:
 
@@ -683,34 +683,37 @@ course `_id`, living under menu: {courses: [here is a course]}
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:4000/api/courses/5eb17a5c6f436666294bc421
+ `http://localhost:4000/api/courses?price=30&sortkey=price&limit=3&special=pasta
 
 **Returned data example**:
 
 ```JSON
 {
     "success": true,
-    "data": [
-        {
-            "_id": "5eb17a5c6f436666294bc421",
-            "category": [
-                "pasta"
-            ],
-            "price": 25,
-            "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg",
-            "ingredients": [
-                "onion",
-                "salami",
-                "tomatoes",
-                "eggs",
-                "cheese"
-            ],
-            "allergenes": [
-                "eggs",
-                "milk"
-            ]
-        }
-    ]
+    "data": {
+        "coursesFiltred": [
+            {
+                "category": [
+                    "pasta"
+                ],
+                "ingredients": [
+                    "onion",
+                    "salami",
+                    "tomatoes",
+                    "eggs",
+                    "cheese"
+                ],
+                "allergenes": [
+                    "eggs",
+                    "milk"
+                ],
+                "_id": "5eb17a5c6f436666294bc421",
+                "name": "house pasta",
+                "price": 25,
+                "image": "https://img.favpng.com/7/18/21/shashlik-pizza-dish-main-course-restaurant-png-favpng-6qHVKG4NM94QxrdHUWzwj75y5.jpg"
+            }
+        ]
+    }
 }
 ```
 
