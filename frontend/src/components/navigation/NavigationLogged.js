@@ -4,39 +4,86 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
-import {ListGroup} from 'react-bootstrap';
+import { ListGroup } from "react-bootstrap";
 
-import Profile from '../Profile';
-
+import Login from "../Login";
+import Home from "../Home";
+import Register from "../Register";
+import Profile from "../Profile";
 
 class NavigationLogged extends React.Component {
-  render(){
+  render() {
     return (
-        <Router>
+      <Router>
+        <Redirect to="/profile" />
+        {/* Seteaza ruta initiala a router-ului */}
 
-            <div style={{width:this.props.width, height:this.props.height}}>
-                <Redirect to="/profile"/> 
-                {/* Seteaza ruta initiala a router-ului */}
+        <div
+          style={{
+            width: this.props.width,
+            height: this.props.height,
+            backgroundColor: "#FBF3E6",
+          }}
+        >
+          <ListGroup
+            horizontal
+            style={{
+              height: "7%",
+              width: this.props.width,
+              justifyContent: "flex-end",
+              display: "flex",
+            }}
+          >
+            <ListGroup.Item
+              style={{ backgroundColor: "#FBF3E6", borderWidth: 0 }}
+            >
+              <Link to="/" style={{ color: "#D9054F", fontWeight: "bold" }}>
+                Home
+              </Link>
+            </ListGroup.Item>
 
-                <ListGroup horizontal>
-                    <ListGroup.Item><Link to="/profile">Profile</Link></ListGroup.Item>
-                </ListGroup>
-        
-        
-                <Switch>
+            <ListGroup.Item
+              style={{ backgroundColor: "#FBF3E6", borderWidth: 0 }}
+            >
+              <Link
+                to="/profile"
+                style={{ color: "#D9054F", fontWeight: "bold" }}
+              >
+                Profile
+              </Link>
+            </ListGroup.Item>
 
-                <Route exact path="/profile">
-                    <Profile />
-                </Route>
+            <ListGroup.Item
+              style={{ backgroundColor: "#FBF3E6", borderWidth: 0 }}
+            >
+              <Link
+                to="/login"
+                style={{ color: "#D9054F", fontWeight: "bold" }}
+              >
+                Log out
+              </Link>
+            </ListGroup.Item>
+          </ListGroup>
 
-                </Switch>
-            </div>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
 
-        </Router>
-      );
+            <Route path="/profile">
+              <Profile />
+            </Route>
+
+            <Route path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
   }
 }
 

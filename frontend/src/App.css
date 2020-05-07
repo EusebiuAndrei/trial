@@ -42,7 +42,6 @@
 }
 
 .providerForm{
-	margin: 20%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -69,6 +68,170 @@
 	align-items: flex-start;
 }
 
-.cardEdit{
-	flex:none;
+
+.menu_element_profile.list-group-item:hover{
+background-color: #fee6ef;
+border-left:solid #D9054F;
+}
+
+.menu_element_profile.list-group-item{
+	border: 0px;
+	align-self: flex-start;
+	width: 100%;
+	height: auto;
+	background-color: transparent;
+	text-align:left;
+}
+
+.menu_link{
+	align-self: flex-start;
+	color: grey;
+	height: auto;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.menu_link:hover, .menu_link:active{
+	color: #D9054F;
+}
+.menu_link:focus, .menu_link:hover, .menu_link:visited, .menu_link:link, .menu_link:active {
+    text-decoration: none;
+}
+
+.main_div_profile{
+	height: auto;
+    background-color: #FBF3E6;
+    width: 100%;
+	display: flex;
+	flex-direction: row;
+	margin-top: 3%;
+}
+
+.user_profile{
+	width: 25%;
+    height: fit-content;
+	padding: 5px;
+	margin-left: 2%;
+    display: flex;
+	flex-direction: column;
+	background-color: white;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
+	border-radius: 10px 10px 10px 10px;
+}
+
+.email_profile{
+	align-self: center; 
+	color: #D9054F; 
+}
+
+.username_profile{
+	align-self: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: black;
+}
+
+.menu_profile.list-group{
+	width: 100%;
+	justify-content: flex-start;
+	display: flex;
+}
+
+.profile_form{
+	margin-left: 2%;
+	margin-bottom: 10%;
+	width: 55%;
+	height: auto;
+	background-color: white;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
+	border-radius: 10px 10px 10px 10px;
+	align-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.profile_title{
+	text-align: left;
+	padding: 10px;
+}
+
+.profile_title >h2{
+	padding: 20px;
+	padding-bottom: 3px;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: "31px";
+	letter-spacing: 1.6px;
+	word-spacing: 2px;
+	font-weight: normal;
+	font-variant: normal;
+	color: black;
+}
+
+.profile_element{
+	text-align: left;
+	padding: 10px;
+}
+
+.profile_element>h5{
+	padding: 20px;
+	padding-bottom: 0px;
+	padding-top: 10px;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: "31px";
+	letter-spacing: 1.6px;
+	word-spacing: 2px;
+	font-weight: normal;
+	font-variant: normal;
+	color: #D9054F;
+}
+
+.profile_explanations{
+	padding-left: 20px;
+	letter-spacing: 1.3px;
+	word-spacing: 1.5px;
+	color: grey;
+}
+
+.provider_adress{
+	padding-left: 20px;
+	letter-spacing: 1.6px;
+	word-spacing: 2px;
+	color: grey;
+	text-align: center;
+}
+
+.adress_profile_element{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.form-label{
+	padding-bottom: 3px;
+	font-family: Impact, Charcoal, sans-serif;
+	letter-spacing: 1.6px;
+	word-spacing: 2px;
+	font-weight: normal;
+	font-variant: normal;
+	color: black;	
+}
+
+.form-control:active{
+	border: 3px solid #D9054F;
+}
+
+.form-control:hover{
+	border: 3px solid #D9054F;
+}
+
+.avertisment{
+	color: #D9054F;
+}
+
+.account_settings_elements{
+	text-align: left;
+	padding: 20px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
 }
