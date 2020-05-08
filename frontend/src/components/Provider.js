@@ -2,10 +2,19 @@ import React, { useState } from "react";
 
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import { WithContext as ReactTags } from "react-tag-input";
-import { FormControl, FormGroup, FormLabel, Form } from "react-bootstrap";
+import * as api from "../api";
+
+import {
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Form,
+  Button,
+} from "react-bootstrap";
+import UploadImage from "./ImageUpload";
 
 const Provider = ({ data }) => {
-  const totalNumberOfFields = 14;
+  const totalNumberOfFields = 16;
   const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -46,7 +55,39 @@ const Provider = ({ data }) => {
     data.priceCategory ? data.priceCategory : ""
   );
   const [CUI, setCUI] = useState(data.CUI ? data.CUI : "");
+  const [loading, setLoading] = useState(false);
 
+  const handleSaveDate = async () => {
+    const userData = {
+      location: {
+        latitude,
+        longitude,
+        adress,
+      },
+      specials,
+      //description
+      priceCategory,
+      capacity,
+      type,
+    };
+    setLoading(true);
+    try {
+      let answer = await api.profile(userData);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+      console.log(answer);
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: err,
+        loading: false,
+        success: false,
+      });
+    }
+  };
   const [succesCUI, setSuccesCUI] = useState(true);
   const [succesLatitude, setSuccesLatitude] = useState(true);
   const [succesLongitude, setSuccesLongitude] = useState(true);
@@ -65,7 +106,7 @@ const Provider = ({ data }) => {
         : []
     );
   };
-  console.log(specialsTagItems);
+
   const handleAddTag = (tag) => {
     setSpecialTagItems((specialsTagItems) => (specialsTagItems) => [
       ...specialsTagItems.tags,
@@ -247,7 +288,6 @@ const Provider = ({ data }) => {
               </FormGroup>
             </div>
           </div>
-
           <div className="profile_element">
             <h5>Location Type</h5>
             <p className="profile_explanations">
@@ -331,6 +371,19 @@ const Provider = ({ data }) => {
               </FormGroup>
             </div>
           </div>
+          <div className="profile_element">
+            <h5>Photos</h5>
+            <p className="profile_explanations">
+              <small>Upload some photos</small>
+            </p>
+            <UploadImage />
+          </div>
+          <Button
+            as="input"
+            type="submit"
+            value="Save"
+            onClick={handleSaveDate}
+          />{" "}
         </Form>
       </div>
       <div className="progress_circle">
