@@ -140,11 +140,8 @@ border-left:solid #D9054F;
 .profile_form{
 	margin-left: 2%;
 	margin-bottom: 10%;
-	width: 55%;
+	width: 70%;
 	height: auto;
-	background-color: white;
-	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
-	border-radius: 10px 10px 10px 10px;
 	align-content: center;
 	display: flex;
 	flex-direction: column;
@@ -192,8 +189,51 @@ border-left:solid #D9054F;
 	color: grey;
 }
 
-.provider_adress{
-	padding-left: 20px;
+.progress_circle{
+	margin: 2%;
+	width: 13%;
+	height: 13%;
+}
+
+.profile_provider, .profile_client{
+	margin-left: 2%;
+	margin-bottom: 10%;
+	width: 100%;
+	height: auto;
+	align-content: center;
+	display: flex;
+	flex-direction: row;
+}
+
+.provider_form, .client_form{
+	margin-left: 2%;
+	height: auto;
+	width: 75%;
+	background-color: white;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
+	border-radius: 10px 10px 10px 10px;
+	align-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+
+
+.account_settings_form{
+	margin-left: 2%;
+	height: auto;
+	width: 75%;
+	background-color: white;
+	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
+	border-radius: 10px 10px 10px 10px;
+	align-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.align_left_profile_input{
+	padding-left: 30px;
+	padding-right: 30px;
 	letter-spacing: 1.6px;
 	word-spacing: 2px;
 	color: grey;
@@ -234,4 +274,43 @@ border-left:solid #D9054F;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	box-shadow: 64px 10px 106px -51px rgba(0,0,0,0.49);
+}
+
+div.ReactTags__tags {
+    position: relative;
+}
+
+div.ReactTags__tagInput {
+    width: 200px;
+	margin: 20px;
+	border-radius: 2px;
+	display: inline-block;
+	border: 1px solid #FBF3E6;
+}
+div.ReactTags__tagInput input.ReactTags__tagInputField,
+div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+    height: 31px;
+    margin: 0;
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid #FBF3E6;
+    padding: 0 4px;
+}
+
+div.ReactTags__selected span.ReactTags__tag {
+	border: 2px solid #D9054F;
+	color: #D9054F;
+    background: #FBF3E6;
+	font-size: 16px;
+	font-weight: 400;
+    padding: 10px;
+	margin: 0 10px;
+    cursor: move;
+    border-radius: 10px;
+}
+
+div.ReactTags__selected a.ReactTags__remove {
+    color: black;
+    margin-left: 5px;
+    cursor: pointer;
 }

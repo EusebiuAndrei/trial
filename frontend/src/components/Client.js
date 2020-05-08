@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import {
   FormControl,
   Container,
@@ -12,10 +13,13 @@ import {
   FormGroup,
   FormLabel,
 } from "react-bootstrap";
-import ProfileImg from "./../assets/profile.jpg";
-import FormFileLabel from "react-bootstrap/FormFileLabel";
 
 const Client = ({ data }) => {
+  console.log(Object.keys(data).length);
+  const percentage = data
+    ? parseInt(((Object.keys(data).length + 2) * 100) / 6)
+    : 0;
+
   const [toInputLocation, setToInputLocation] = useState(false);
   const [toInputPreferences, setToInputPreferences] = useState(false);
   const [toInputAllergies, setToInputAllergies] = useState(false);
@@ -56,10 +60,10 @@ const Client = ({ data }) => {
   };
 
   const [latitude, setLatitude] = useState(
-    data.location.latitude ? data.location.latitude : 0
+    data.location ? (data.location.latitude ? data.location.latitude : 0) : 0
   );
   const [longitude, setLongitude] = useState(
-    data.location.longitude ? data.location.longitude : 0
+    data.location ? (data.location.longitude ? data.location.longitude : 0) : 0
   );
   const [succesLatitude, setSuccesLatitude] = useState(true);
   const [succesLongitude, setSuccesLongitude] = useState(true);
@@ -95,7 +99,7 @@ const Client = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className="profile_client">
       <Form className="client_form">
         <div className="profile_title">
           <h2>PROFILE</h2>
@@ -142,6 +146,35 @@ const Client = ({ data }) => {
           </div>
         </div>
       </Form>
+      <div className="progress_circle">
+        <CircularProgressbarWithChildren
+          classes
+          value={percentage}
+          styles={{
+            path: {
+              stroke: `rgb(217, 5, 79, ${percentage / 100})`,
+              strokeLinecap: "butt",
+              transition: "stroke-dashoffset 0.5s ease 0s",
+              transform: "rotate(0.25turn)",
+              transformOrigin: "center center",
+            },
+            trail: {
+              stroke: "grey",
+              strokeLinecap: "butt",
+              transform: "rotate(0.25turn)",
+              transformOrigin: "center center",
+            },
+            text: {
+              fill: "rgb(217, 5, 79)",
+              fontSize: "16px",
+            },
+          }}
+        >
+          <div style={{ fontSize: 25, marginTop: -5 }}>
+            <strong>{percentage}</strong>
+          </div>
+        </CircularProgressbarWithChildren>
+      </div>
     </div>
   );
 };

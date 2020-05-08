@@ -46,29 +46,31 @@ const User = ({ data }) => {
 
   const listPhotos = () => {
     let photoList = [];
-    if (data.details.images !== []) {
-      for (const [index, value] of data.details.images.entries()) {
-        var image = value;
-        photoList.push(
-          <Carousel.Item key={index}>
-            <Image
-              alt={value}
-              className="providerImage"
-              src={require(`../assets/${image}`)}
-              roundedCircle
-              style={{
-                width: "200px",
-                height: "200px",
-                margin: "5px",
-                alignSelf: "center",
-              }}
-            />
-          </Carousel.Item>
-        );
+    if (data["details"]) {
+      if (data.details["images"]) {
+        for (const [index, value] of data.details.images.entries()) {
+          var image = value;
+          photoList.push(
+            <Carousel.Item key={index}>
+              <Image
+                alt={value}
+                className="providerImage"
+                src={require(`../assets/${image}`)}
+                roundedCircle
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  margin: "5px",
+                  alignSelf: "center",
+                }}
+              />
+            </Carousel.Item>
+          );
+        }
+        return photoList;
       }
-      return photoList;
     } else {
-      return (
+      photoList.push(
         <Carousel.Item key="1">
           <Image
             alt="avatar"
@@ -83,24 +85,27 @@ const User = ({ data }) => {
           />
         </Carousel.Item>
       );
+      return photoList;
     }
   };
 
   const avatarExist = () => {
-    if (data.details.avatar) {
-      return (
-        <Image
-          alt="avatar"
-          src={require(`../assets/${data.details.avatar}`)}
-          roundedCircle
-          style={{
-            width: "200px",
-            height: "200px",
-            margin: "5px",
-            alignSelf: "center",
-          }}
-        />
-      );
+    if (data.details) {
+      if (data.details.avatar) {
+        return (
+          <Image
+            alt="avatar"
+            src={require(`../assets/${data.details.avatar}`)}
+            roundedCircle
+            style={{
+              width: "200px",
+              height: "200px",
+              margin: "5px",
+              alignSelf: "center",
+            }}
+          />
+        );
+      }
     } else
       return (
         <Image
@@ -108,8 +113,8 @@ const User = ({ data }) => {
           src={require("../assets/placeholder.jpg")}
           roundedCircle
           style={{
-            width: "200px",
-            height: "200px",
+            width: "150px",
+            height: "150px",
             margin: "5px",
             alignSelf: "center",
           }}
