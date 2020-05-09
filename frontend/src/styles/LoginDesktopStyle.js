@@ -1,9 +1,9 @@
 const style ={
     container:{
-        width:'100%',height:'93%',flexDirection:'row',display:'flex'
+        width:'100%',height:'100%',flexDirection:'row',display:'flex',backgroundColor:'#FBF3E6',
     },
     leftContainer:{
-        width:'40%',height:'100%',alignItems:'center',justifyContent:'center',display:'flex'
+        width:'40%',height:'100%',alignItems:'center',justifyContent:'center',display:'flex',marginTop:20
     },
     rightContainer:{
         width:'60%',height:'100%'
@@ -50,7 +50,7 @@ const style ={
     chefImg:{
         width:'100%',height:'100%'
     }
-
+    
 }
 
 export default style;

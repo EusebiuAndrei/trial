@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react';
 import {Button ,InputGroup,FormControl,Alert,Popover,OverlayTrigger,Spinner} from 'react-bootstrap';
 import * as api from '../api';
-import style from '../styles/LoginStyle';
+import style from '../styles/LoginDesktopStyle';
 import {
 	Link,
   } from "react-router-dom";
   
 import { IoIosMail,IoIosLock,IoLogoFacebook,IoIosPerson} from "react-icons/io";
 import { fadeIn } from 'react-animations';
+import { useMediaQuery } from 'react-responsive'
 
-const popover = (
-	<Popover id="popover-basic">
-	  <Popover.Title as="h3">Popover right</Popover.Title>
-	  <Popover.Content>
-		And here's some <strong>amazing</strong> content. It's very engaging.
-		right?
-	  </Popover.Content>
-	</Popover>
-  );
-  
+const Desktop = ({ children }) => {
+	const isDesktop = useMediaQuery({ minWidth: 992 })
+	return isDesktop ? children : null
+  }
+
+const Mobile = ({ children }) => {
+	const isMobile = useMediaQuery({ maxWidth: 767 })
+	return isMobile ? children : null
+}
+
 
 class Login extends React.Component{
 	constructor(){
@@ -115,25 +116,25 @@ class Login extends React.Component{
 	handleChangeEmail(event){
 		this.setState({email: event.target.value});
 	}
+
 	handleChangePassword(event){
 		this.setState({password: event.target.value});
 	}
+
 	handleChangeNewEmail(event){
 		this.setState({newAccountEmail: event.target.value});
 	}
+
 	handleChangeNewPassword(event){
 		this.setState({newAccountPassword: event.target.value});
 	}
+
 	handleChangeNewPasswordConfirm(event){
 		this.setState({newAccountConfirmPassword: event.target.value});
 	}
+
 	handleChangeUsername(event){
 		this.setState({username: event.target.value});
-	}
-	
-
-	infoTextRegister = () => {
-		
 	}
 
 	infoText = (success) =>{
@@ -147,7 +148,7 @@ class Login extends React.Component{
 			return <p style={{color:'#1FF01B'}}>Te-ai logat cu succes !</p>
 		}
 	}
-
+	
 	fieldsErrorText = (error) => {	
 		if(error !== ""){
 			if(error === "Parolele trebuie sa coincida!" || error === "Selecteaza tipul de cont!") 			
@@ -156,196 +157,111 @@ class Login extends React.Component{
 		}
 	}
 
+	renderInputfield = (topText,placeHolder,inputFunction,type) => {
+		return(
+			<div style={style.inputContainer}>
+			<p style={style.inputText}>{topText}</p>
+			<InputGroup className="mb-3" style={style.inputGroup}>
+				<FormControl
+					placeholder={placeHolder}
+					aria-label="Username"
+					aria-describedby="basic-addon1"
+					onChange={inputFunction}
+					type={type}
+				/>
+				<InputGroup.Prepend>
+					<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
+						<IoIosMail size={22} color={'#D9054F'}/>
+					</InputGroup.Text>
+				</InputGroup.Prepend>
+			</InputGroup>
+		</div>
+		);
+	}
+
+
+	renderRoleButton = (text,role) => {
+		return(
+			<Button variant="outline-danger" onClick={()=>{this.setState({accountType:role})}}
+				style={{backgroundColor:this.state.accountType === role ? "red" : "white",color:this.state.accountType === role ? "white" : "red"}}>
+				{text}
+			</Button>
+		);
+	}
+
 	render(){
 		return (
-			<div style={style.container}>
-				<div style={style.leftContainer}>
-					{
-						this.state.option === 1 ? 
-						<div className="shadow p-3 mb-5 bg-white rounded" style={style.loginContainer}>
+			<div>
+				<Desktop>
+					<div style={style.container}>
+					<div style={style.leftContainer}>
+						{
+							this.state.option === 1 ? 
+							<div className="shadow p-3 mb-5 bg-white rounded" style={style.loginContainer}>
 
-							<p style={style.loginText}>Log in to your account</p>
+								<p style={style.loginText}>Log in to your account</p>
 
-							<div style={style.inputContainer}>
-								<p style={style.inputText}>Email address</p>
-								<InputGroup className="mb-3" style={style.inputGroup}>
-									<FormControl
-										placeholder="example@mail.com"
-										aria-label="Username"
-										aria-describedby="basic-addon1"
-										onChange={this.handleChangeEmail}
-									/>
-									<InputGroup.Prepend>
-										<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-											<IoIosMail size={22} color={'#D9054F'}/>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-								</InputGroup>
-							</div>
+								{this.renderInputfield("Email address","example@mail.com",this.handleChangeEmail)}
+								{this.renderInputfield("Passsword","●●●●●●●●●",this.handleChangePassword,"password")}
 
-							<div style={style.inputContainer}>
-
-							 	<p style={style.inputText}>Password</p>
-								 <InputGroup className="mb-3" style={style.inputGroup}>
-									<FormControl
-									placeholder="●●●●●●●●●"
-									aria-label="Username"
-									aria-describedby="basic-addon1"
-									type="password"
-									onChange={this.handleChangePassword}
-									/>
-									<InputGroup.Prepend >
-									<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-											<IoIosLock size={22} color={'#D9054F'}/>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-								</InputGroup>
-
-							</div>
-
-							<Button variant="danger" style={style.logInButton} onClick={this.handleLoginClick} >
-								Log in
-							</Button>
-
-
-							<OverlayTrigger trigger="click" placement="right" overlay={popover}>
-								<Button variant="outline-danger" style={style.logInFacebook}>
-										<IoLogoFacebook size={25} style={style.facebookLogo} color={'#D9054F'}/>
-										Log in with Facebook
+								<Button variant="danger" style={style.logInButton} onClick={this.handleLoginClick}>
+									Log in
 								</Button>
-							</OverlayTrigger>
 
-							<button style={style.dontHaveAccount}
-							onClick={()=>{this.setState({option:2,fieldsError:"",success:""})}}>
-								Don't have an account? Create one
-							</button>
+								<Button variant="outline-danger" style={style.logInFacebook}>
+									<IoLogoFacebook size={25} style={style.facebookLogo} color={'#D9054F'}/>
+									 Log in with Facebook
+								</Button>
 
-							{
-								this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>
-							}
+								<button style={style.dontHaveAccount} onClick={()=>{this.setState({option:2,fieldsError:"",success:""})}}>
+									Don't have an account? Create one
+								</button>
 
-							{
-								this.infoText(this.state.success)
-							}
+								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+								{this.infoText(this.state.success)}
+								{this.fieldsErrorText(this.state.fieldsError)}
 
-							{
-								this.fieldsErrorText(this.state.fieldsError)
-							}
+							</div> 
 
-						</div> 
-
-						: <div className="shadow p-3 mb-5 bg-white rounded" style={style.loginContainer}>
+							: <div className="shadow p-3 mb-5 bg-white rounded" style={style.loginContainer}>
 								<p style={style.createAccountText}>Create account</p>
 
 								<div style={style.roleContainer}>
-									<Button variant="outline-danger" onClick={()=>{this.setState({accountType:"client"})}}
-										style={{backgroundColor:this.state.accountType === "client" ? "red" : "white",color:this.state.accountType === "client" ? "white" : "red"}}>
-										Client
-									</Button>
-									<Button variant="outline-danger" onClick={()=>{this.setState({accountType:"provider"})}}
-										style={{backgroundColor:this.state.accountType === "provider" ? "red" : "white",color:this.state.accountType === "provider" ? "white" : "red"}}>
-										Provider
-									</Button>
+									{this.renderRoleButton("Client","client")}
+									{this.renderRoleButton("Provider","provider")}
 								</div>
 
-								<div style={style.inputContainer}>
-									<p style={style.inputText}>Username</p>
-									<InputGroup className="mb-3" style={style.inputGroup}>
-										<FormControl
-											placeholder="username"
-											aria-label="Username"
-											aria-describedby="basic-addon1"
-											onChange={this.handleChangeUsername}
-										/>
-										<InputGroup.Prepend>
-										<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-												<IoIosPerson size={22} color={'#D9054F'}/>
-											</InputGroup.Text>
-										</InputGroup.Prepend>
-									</InputGroup>
-								</div>
+								{this.renderInputfield("Username","username",this.handleChangeUsername)}
+								{this.renderInputfield("Email address","example@mail.com",this.handleChangeNewEmail)}
+								{this.renderInputfield("Password","●●●●●●●●●",this.handleChangeNewPassword,"password")}
+								{this.renderInputfield("Confirm password","●●●●●●●●●",this.handleChangeNewPasswordConfirm,"password")}
 
-								<div style={style.inputContainer}>
-									<p style={style.inputText}>Email address</p>
-									<InputGroup className="mb-3" style={style.inputGroup}>
-										<FormControl
-											placeholder="example@mail.com"
-											aria-label="Username"
-											aria-describedby="basic-addon1"
-											onChange={this.handleChangeNewEmail}
-										/>
-										<InputGroup.Prepend>
-										<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-												<IoIosMail size={22} color={'#D9054F'}/>
-											</InputGroup.Text>
-										</InputGroup.Prepend>
-									</InputGroup>
-								</div>
-	
-								<div style={style.inputContainer}>
-									<p style={style.inputText}>Password</p>
-									<InputGroup className="mb-3" style={style.inputGroup}>
-										<FormControl
-										placeholder="●●●●●●●●●"
-										aria-label="Username"
-										aria-describedby="basic-addon1"
-										type="password"
-										onChange={this.handleChangeNewPassword}
-										/>
-										<InputGroup.Prepend >
-										<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-												<IoIosLock size={22} color={'#D9054F'}/>
-											</InputGroup.Text>
-										</InputGroup.Prepend>
-									</InputGroup>
+								<Button variant="danger" style={style.logInButton} onClick={this.handleRegisterClick} >
+									Register
+								</Button>
+								
+								<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,fieldsError:"",success:""})}}>
+									Already have an account? Log in 
+								</button>
+
+								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+								{this.infoText(this.state.success)}
+								{this.fieldsErrorText(this.state.fieldsError)}
+
 							</div>
-
-							<div style={style.inputContainer}>
-									<p style={style.inputText}>Confirm password</p>
-									<InputGroup className="mb-3" style={style.inputGroup}>
-										<FormControl
-										placeholder="●●●●●●●●●"
-										aria-label="Username"
-										aria-describedby="basic-addon1"
-										type="password"
-										onChange={this.handleChangeNewPasswordConfirm}
-										/>
-										<InputGroup.Prepend >
-										<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-												<IoIosLock size={22} color={'#D9054F'}/>
-											</InputGroup.Text>
-										</InputGroup.Prepend>
-									</InputGroup>
-							</div>
-
-							<Button variant="danger" style={style.logInButton} onClick={this.handleRegisterClick} >
-								Register
-							</Button>
-							
-							<button style={style.alreadyHaveAccount}
-							onClick={()=>{this.setState({option:1,fieldsError:"",success:""})}}>
-								Already have an account? Log in 
-							</button>
-
-							{
-								this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>
-							}
-
-							{
-								this.infoText(this.state.success)
-							}
-
-							{
-								this.fieldsErrorText(this.state.fieldsError)
-							}
-
-						 </div>
-					}
+						}
+					</div>
+					<div style={style.rightContainer}>
+					<img src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg" alt="Logo" style={style.chefImg} />;
+					</div>
+		
 				</div>
-				<div style={style.rightContainer}>
-				   <img src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg" alt="Logo" style={style.chefImg} />;
-				</div>
-	
+			</Desktop>
+				<Mobile>
+					<div>
+						<p>Hello</p>
+					</div>
+				</Mobile>
 			</div>
 		);
 	}
