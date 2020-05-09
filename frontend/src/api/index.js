@@ -87,7 +87,7 @@ const getAllUsers = async () => {
   }
 };
 
-const uploadPhoto = async (file) => {
+const uploadSingle = async (file) => {
   try {
     const formData = new FormData();
     formData.append("myImage", file);
@@ -98,7 +98,7 @@ const uploadPhoto = async (file) => {
       },
     };
     await axios
-      .post("http://localhost:4000/api/users/uploadCozma", formData, config)
+      .post("http://localhost:4000/api/upload/uploadSingle", formData, config)
       .then((response) => {
         alert("The file is successfully uploaded");
       })
@@ -110,23 +110,24 @@ const uploadPhoto = async (file) => {
   }
 };
 
-const uploadMultiple = async (buffers) => {
+const uploadMultiple = async (file) => {
   try {
-    const token = localStorage.getItem("userToken");
-    const { _id } = jwt.decode(token);
-    setAuthorizationToken(token);
+    const formData = new FormData();
+    formData.append("myImage", file);
 
-    const {
-      data: { name },
-    } = await axios({
-      method: "post",
-      url: `http://localhost:4000/api/users/uploadMultiple`,
-      data: {
-        buffers,
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
       },
-    });
+    };
+    await axios
+      .post("http://localhost:4000/api/upload/uploadMultiple", formData, config)
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {});
 
-    return { success: true, name };
+    return { success: true };
   } catch (error) {
     return { success: false, errorMessage: error.message };
   }
@@ -157,7 +158,7 @@ export {
   login,
   getUser,
   getAllUsers,
-  uploadPhoto,
+  uploadSingle,
   uploadMultiple,
   profile,
 };

@@ -47,6 +47,10 @@ const userService = new UserService({
 });
 
 const imageService = new ImageService({
+	db: {
+		Client,
+		Provider,
+	},
 	services: {},
 });
 // Export the service object

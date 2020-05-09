@@ -2,7 +2,8 @@ const path = require('path');
 const Resize = require('./Resize');
 
 class ImageService {
-	constructor({ services }) {
+	constructor({ db, services }) {
+		this.db = db;
 		this.services = services;
 	}
 
@@ -17,6 +18,7 @@ class ImageService {
 				'images',
 				filename,
 			);
+
 			return { success: true, name: { newPath } };
 		} catch (error) {
 			return {

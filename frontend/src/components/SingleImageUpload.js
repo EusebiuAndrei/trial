@@ -2,7 +2,7 @@ import React from "react";
 import * as api from "../api";
 import { Form } from "react-bootstrap";
 
-class UploadImage extends React.Component {
+class SingleImageUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,7 @@ class UploadImage extends React.Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    api.uploadPhoto(this.state.file);
+    api.uploadSingle(this.state.file);
   }
 
   onChange(e) {
@@ -34,4 +34,4 @@ class UploadImage extends React.Component {
   }
 }
 
-export default UploadImage;
+export default SingleImageUpload;

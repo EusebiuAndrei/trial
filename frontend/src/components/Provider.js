@@ -11,7 +11,7 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import UploadImage from "./ImageUpload";
+import MultipleImageUpload from "./MultipleImageUpload";
 
 const Provider = ({ data }) => {
   const totalNumberOfFields = 16;
@@ -376,7 +376,7 @@ const Provider = ({ data }) => {
             <p className="profile_explanations">
               <small>Upload some photos</small>
             </p>
-            <UploadImage />
+            <MultipleImageUpload />
           </div>
           <Button
             as="input"
