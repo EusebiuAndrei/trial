@@ -50,6 +50,7 @@ router.post(
 	'/uploadMultiple',
 	upload.array('myImage', 5),
 	async (req, res) => {
+		console.log(req.files);
 		const result = await imageService.uploadMultipleImages(
 			req.files,
 			req.headers.host,

@@ -110,10 +110,13 @@ const uploadSingle = async (file) => {
   }
 };
 
-const uploadMultiple = async (file) => {
+const uploadMultiple = async (files) => {
   try {
     const formData = new FormData();
-    formData.append("myImage", file);
+    let { length } = files;
+    for (let i = 0; i < length; i++) {
+      formData.append("myImage", files[i]);
+    }
 
     const config = {
       headers: {

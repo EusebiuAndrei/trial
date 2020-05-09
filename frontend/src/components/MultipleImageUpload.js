@@ -18,7 +18,7 @@ class MultipleImageUpload extends React.Component {
   }
 
   onChange(e) {
-    this.setState({ file: e.target.files[0] });
+    this.setState({ file: e.target.files });
   }
 
   render() {
