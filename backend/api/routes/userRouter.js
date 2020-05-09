@@ -91,7 +91,7 @@ router.get('/test', async (req, res) => {
 router.post(
 	'/register',
 	celebrate({
-		body: userValidationSchema,
+		body: userValidationSchema.register,
 	}),
 	async function (req, res) {
 		const result = await userService.register(req.body);
@@ -104,7 +104,7 @@ router.post(
 router.post(
 	'/login',
 	celebrate({
-		body: userValidationSchema,
+		body: userValidationSchema.login,
 	}),
 	async function (req, res) {
 		const result = await userService.login(req.body);

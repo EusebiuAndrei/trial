@@ -55,8 +55,8 @@ class UserService {
 	}
 
 	async register(payload) {
-		const { email, password } = payload;
-		const userData = { email, password };
+		const { email, password, role, name } = payload;
+		const userData = { email, password, role, name };
 		const user = new this.db.User(userData);
 
 		try {

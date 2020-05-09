@@ -4,7 +4,7 @@ const { Joi } = require('celebrate');
 // // add joi-objectId to Joi
 // Joi.objectId = joiObjectId(Joi);
 
-const schema = Joi.object().keys({
+const register = Joi.object().keys({
 	email: Joi.string()
 		.email()
 		.required()
@@ -21,4 +21,19 @@ const schema = Joi.object().keys({
 	name: Joi.string().min(4).max(20).required(),
 });
 
-module.exports = schema;
+const login = Joi.object().keys({
+	email: Joi.string()
+		.email()
+		.required()
+		.error(new Error('Email required')),
+	password: Joi.string()
+		.min(6)
+		.required()
+		.error(
+			new Error(
+				'Password must consist of minimum 6 characters',
+			),
+		),
+});
+
+module.exports = { register, login };
