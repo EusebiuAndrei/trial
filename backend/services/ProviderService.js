@@ -27,6 +27,8 @@ class ProviderService {
 				await providers.push(info);
 			}
 
+			if (providers.length == 0) throw new Error('Not found');
+
 			return { success: true, data: { providers } };
 		} catch (error) {
 			return {
@@ -42,6 +44,8 @@ class ProviderService {
 				role: 'Provider',
 				_id: id,
 			});
+
+			if (provider == null) throw new Error('Not found');
 
 			return { success: true, data: { provider } };
 		} catch (error) {
