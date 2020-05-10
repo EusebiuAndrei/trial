@@ -25,8 +25,8 @@ class Login extends React.Component{
 	constructor(){
 		super();
 		this.state ={
-			email:"danR@g2mail.com",
-			password:"abc12345",
+			email:"",
+			password:"",
 			newAccountEmail:"",
 			newAccountPassword:"",
 			newAccountConfirmPassword:"",
@@ -37,10 +37,14 @@ class Login extends React.Component{
 			userData:{},
 			loading:false,
 			error:"",
-			fieldsError:"",
-			option:2,
+			option:1,
 			accountType:"",
 			alertVisible:true,
+			alertEmail:'#DCDCDC',
+			alertPassword:'#DCDCDC',
+			alertNewPassword:'#DCDCDC',
+			alertUsername:'#DCDCDC',
+			alertRoleType:'#DCDCDC',
 		}
 		this.handleChangeEmail = this.handleChangeEmail.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -57,24 +61,26 @@ class Login extends React.Component{
 		console.log(JSON.stringify(this.state,null,'...'))
 		this.setState({success:""})
 		if(this.state.email === ""){
-			this.setState({fieldsError:'email'})
+			this.setState({alertEmail:'red'})
 		} else if(this.state.password === ""){
-			this.setState({fieldsError:'password'})
+			this.setState({alertPassword:'red'})
 		} else {
-			this.setState({fieldsError:""});
 
 			try{
 				this.setState({loading:true})
 				let answer = await api.login(this.state.email,this.state.password);
 				if(answer.success === true){
 					this.setState({loading:false,userData:answer.user,success:true})
+					alert("Te-ai logat cu succes!");
 				} else {
 					this.setState({loading:false,success:false,error:answer.errorMessage})
+					alert("Error " + answer.errorMessage);
 				}
-				console.log(answer)
+				
 			} catch(err){
 				console.log(err);
 				this.setState({error:err,loading:false,success:false})
+				alert("error " + err);
 			}
 		}
 	}
@@ -83,57 +89,65 @@ class Login extends React.Component{
 		console.log(JSON.stringify(this.state,null,'...'))
 
 		this.setState({success:""})
-		if(this.state.newAccountEmail === ""){
-			this.setState({fieldsError:'email'})
+		if(this.state.username === ""){
+			this.setState({alertUsername:'red'})
+		} else if(this.state.newAccountEmail === "" ){
+			this.setState({alertEmail:'red'})
 		} else if(this.state.newAccountPassword === ""){
-			this.setState({fieldsError:'password'})
+			this.setState({alertPassword:'red'})
 		} else if(this.state.newAccountConfirmPassword === ""){
-			this.setState({fieldsError:"confirm password"});
+			this.setState({alertNewPassword:"red"});
 		} else if(this.state.newAccountConfirmPassword !== this.state.newAccountPassword){
 			this.setState({fieldsError:"Parolele trebuie sa coincida!"})
+			alert("Parolele nu coincid!")
 		} else if(this.state.accountType === ""){
 			this.setState({fieldsError:"Selecteaza tipul de cont!"})
-		} else {
-			this.setState({fieldsError:""});
+			alert("Selecteaza tipul de cont!")
+		} else if(this.state.newAccountPassword.length < 5){
+			alert("Parola trebuie sa contina minim 5 caractere!")
+		} else{
 
 			try{
 				this.setState({loading:true})
 				let answer = await api.register(this.state.username,this.state.accountType,this.state.email,this.state.newAccountPassword);
 				if(answer.success === true){
 					this.setState({loading:false,userData:answer.user,success:true})
+					alert("Te-ai inregistrat cu succes!")
 				} else {
 					this.setState({loading:false,success:false,error:answer.errorMessage})
+					alert("error " + answer.errorMessage)
 				}
 				console.log(answer)
 			} catch(err){
 				console.log(err);
+				alert("eroare ! " + err);
 				this.setState({error:err,loading:false,success:false})
 			}
 		}
 	}
 
 	handleChangeEmail(event){
-		this.setState({email: event.target.value});
+		this.setState({email: event.target.value,alertEmail:'#DCDCDC'});
 	}
 
 	handleChangePassword(event){
-		this.setState({password: event.target.value});
+		this.setState({password: event.target.value,alertPassword:'#DCDCDC'});
 	}
 
 	handleChangeNewEmail(event){
-		this.setState({newAccountEmail: event.target.value});
+		this.setState({newAccountEmail: event.target.value,alertEmail:'#DCDCDC'});
 	}
 
 	handleChangeNewPassword(event){
-		this.setState({newAccountPassword: event.target.value});
+		this.setState({newAccountPassword: event.target.value,alertPassword:'#DCDCDC'});
 	}
 
 	handleChangeNewPasswordConfirm(event){
-		this.setState({newAccountConfirmPassword: event.target.value});
+		this.setState({newAccountConfirmPassword: event.target.value,alertNewPassword:'#DCDCDC'});
 	}
 
 	handleChangeUsername(event){
-		this.setState({username: event.target.value});
+		this.setState({username: event.target.value,alertUsername:'#DCDCDC'});
 	}
 
 	infoText = (success) =>{
@@ -148,15 +162,8 @@ class Login extends React.Component{
 		}
 	}
 	
-	fieldsErrorText = (error) => {	
-		if(error !== ""){
-			if(error === "Parolele trebuie sa coincida!" || error === "Selecteaza tipul de cont!") 			
-				return <p style={{color:'#F80505'}}>{error}</p>
-			else return <p style={{color:'#F80505'}}>Te rog completeaza campul {error} !</p>
-		}
-	}
 
-	renderInputfield = (topText,placeHolder,inputFunction,type) => {
+	renderInputfield = (topText,placeHolder,inputFunction,type,alert,value) => {
 		return(
 			<div style={style.inputContainer}>
 			<p style={style.inputText}>{topText}</p>
@@ -167,9 +174,11 @@ class Login extends React.Component{
 					aria-describedby="basic-addon1"
 					onChange={inputFunction}
 					type={type}
+					value={value}
+					style={{borderColor:alert}}
 				/>
 				<InputGroup.Prepend>
-					<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
+					<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0,borderColor:alert}} id="basic-addon1">
 						{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
 						{topText === "Email address" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
 						{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}
@@ -180,7 +189,7 @@ class Login extends React.Component{
 		);
 	}
 
-	renderInputFieldPhone = (topText,placeHolder,inputFunction,type) =>{
+	renderInputFieldPhone = (topText,placeHolder,inputFunction,type,alert,value) =>{
 		return(
 				<InputGroup className="mb-3" style={{width:'100%',marginBottom:0,borderWidth:0}}>
 					<FormControl
@@ -189,9 +198,11 @@ class Login extends React.Component{
 						aria-describedby="basic-addon1"
 						onChange={inputFunction}
 						type={type}
+						style={{borderColor:alert}}
+						value={value}
 					/>
 					<InputGroup.Prepend>
-						<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0}} id="basic-addon1">
+						<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0,borderColor:alert}} id="basic-addon1">
 							{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
 							{topText === "Email address" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
 							{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}					
@@ -223,8 +234,8 @@ class Login extends React.Component{
 
 								<p style={style.loginText}>Log in to your account</p>
 
-								{this.renderInputfield("Email address","example@mail.com",this.handleChangeEmail)}
-								{this.renderInputfield("Password","●●●●●●●●●",this.handleChangePassword,"password")}
+								{this.renderInputfield("Email address","YourEmail@mail.com",this.handleChangeEmail,"email",this.state.alertEmail,this.state.email)}
+								{this.renderInputfield("Password","Password",this.handleChangePassword,"password",this.state.alertPassword,this.state.password)}
 
 								<Button variant="danger" style={style.logInButton} onClick={this.handleLoginClick}>
 									Log in
@@ -235,13 +246,11 @@ class Login extends React.Component{
 									 Log in with Facebook
 								</Button>
 
-								<button style={style.dontHaveAccount} onClick={()=>{this.setState({option:2,fieldsError:"",success:""})}}>
+								<button style={style.dontHaveAccount} onClick={()=>{this.setState({option:2,success:""})}}>
 									Don't have an account? Create one
 								</button>
 
 								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
-								{this.infoText(this.state.success)}
-								{this.fieldsErrorText(this.state.fieldsError)}
 
 							</div> 
 
@@ -253,22 +262,20 @@ class Login extends React.Component{
 									{this.renderRoleButton("Provider","provider")}
 								</div>
 
-								{this.renderInputfield("Username","username",this.handleChangeUsername)}
-								{this.renderInputfield("Email address","example@mail.com",this.handleChangeNewEmail)}
-								{this.renderInputfield("Password","●●●●●●●●●",this.handleChangeNewPassword,"password")}
-								{this.renderInputfield("Confirm password","●●●●●●●●●",this.handleChangeNewPasswordConfirm,"password")}
+								{this.renderInputfield("Username","username",this.handleChangeUsername,"text",this.state.alertUsername,this.state.username)}
+								{this.renderInputfield("Email address","example@mail.com",this.handleChangeNewEmail,"text",this.state.alertEmail,this.state.newAccountEmail)}
+								{this.renderInputfield("Password","●●●●●●●●●",this.handleChangeNewPassword,"password",this.state.alertPassword,this.state.newAccountPassword)}
+								{this.renderInputfield("Confirm password","●●●●●●●●●",this.handleChangeNewPasswordConfirm,"password",this.state.alertNewPassword,this.state.newAccountConfirmPassword)}
 
 								<Button variant="danger" style={style.logInButton} onClick={this.handleRegisterClick} >
 									Register
 								</Button>
 								
-								<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,fieldsError:"",success:""})}}>
+								<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,success:""})}}>
 									Already have an account? Log in 
 								</button>
 
 								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
-								{this.infoText(this.state.success)}
-								{this.fieldsErrorText(this.state.fieldsError)}
 
 							</div>
 						}
@@ -289,8 +296,8 @@ class Login extends React.Component{
 								this.state.option === 1 ? 
 								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
 									<p style={{fontSize:22,fontWeight:'bold',marginBottom:'10%'}}>Log in to your account</p>
-									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeEmail)}
-									{this.renderInputFieldPhone("Password","Password",this.handleChangePassword,"password")}
+									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeEmail,"email",this.state.alertEmail,this.state.email)}
+									{this.renderInputFieldPhone("Password","Password",this.handleChangePassword,"password",this.state.alertPassword,this.state.password)}
 
 									<Button variant="danger" style={{width:220,marginBottom:'5%',marginTop:'5%'}} onClick={this.handleLoginClick}>
 										Log in
@@ -301,13 +308,11 @@ class Login extends React.Component{
 										Log in with Facebook
 									</Button>
 
-									<button style={{color:'#858585',fontSize:11,marginTop:'1%',backgroundColor:'transparent',borderWidth:0}} onClick={()=>{this.setState({option:2,fieldsError:"",success:""})}}>
+									<button style={{color:'#858585',fontSize:11,marginTop:'1%',backgroundColor:'transparent',borderWidth:0}} onClick={()=>{this.setState({option:2,success:"",alertEmail:'#DCDCDC',alertPassword:'#DCDCDC',email:"",password:""})}}>
 										Don't have an account? Create one
 									</button>
 
 									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
-									{this.infoText(this.state.success)}
-									{this.fieldsErrorText(this.state.fieldsError)}
 								</div>
 								:
 								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
@@ -317,22 +322,20 @@ class Login extends React.Component{
 										{this.renderRoleButton("Provider","provider")}
 									</div>
 
-									{this.renderInputFieldPhone("Username","Username",this.handleChangeUsername)} 
-									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeNewEmail)}
-									{this.renderInputFieldPhone("Password","Password",this.handleChangeNewPassword,"password")}
-									{this.renderInputFieldPhone("Confirm password","Confirm password",this.handleChangeNewPasswordConfirm,"password")}
+									{this.renderInputFieldPhone("Username","username",this.handleChangeUsername,"text",this.state.alertUsername,this.state.username)}
+									{this.renderInputFieldPhone("Email address","example@mail.com",this.handleChangeNewEmail,"text",this.state.alertEmail,this.state.newAccountEmail)}
+									{this.renderInputFieldPhone("Password","●●●●●●●●●",this.handleChangeNewPassword,"password",this.state.alertPassword,this.state.newAccountPassword)}
+									{this.renderInputFieldPhone("Confirm password","●●●●●●●●●",this.handleChangeNewPasswordConfirm,"password",this.state.alertNewPassword,this.state.newAccountConfirmPassword)}
 
 									<Button variant="danger" style={{width:220,marginBottom:'1%',marginTop:'5%'}} onClick={this.handleRegisterClick}>
 										Register
 									</Button>
 
-									<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,fieldsError:"",success:""})}}>
+									<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,success:"",alertEmail:'#DCDCDC',alertPassword:'#DCDCDC',email:"",password:""})}}>
 										Already have an account? Log in 
 									</button>
 
 									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
-									{this.infoText(this.state.success)}
-									{this.fieldsErrorText(this.state.fieldsError)}
 
 								</div>
 							}
