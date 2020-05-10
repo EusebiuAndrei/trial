@@ -26,7 +26,7 @@ class NavigationNotLogged extends React.Component {
             </Route>
 
             <Route path="/login">
-              <Login />
+              <Login width={this.props.width} height={this.props.height} />
             </Route>
 
             <Route path="/register">

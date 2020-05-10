@@ -11,7 +11,7 @@ import { fadeIn } from 'react-animations';
 import { useMediaQuery } from 'react-responsive'
 
 const Desktop = ({ children }) => {
-	const isDesktop = useMediaQuery({ minWidth: 992 })
+	const isDesktop = useMediaQuery({ minWidth: 767 })
 	return isDesktop ? children : null
   }
 
@@ -40,8 +40,8 @@ class Login extends React.Component{
 			fieldsError:"",
 			option:2,
 			accountType:"",
+			alertVisible:true,
 		}
-
 		this.handleChangeEmail = this.handleChangeEmail.bind(this);
 		this.handleChangePassword = this.handleChangePassword.bind(this);
 		this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -52,7 +52,6 @@ class Login extends React.Component{
 		this.handleChangeUsername = this.handleChangeUsername.bind(this);
 
 	}
-
 
 	async handleLoginClick(){
 		console.log(JSON.stringify(this.state,null,'...'))
@@ -171,11 +170,34 @@ class Login extends React.Component{
 				/>
 				<InputGroup.Prepend>
 					<InputGroup.Text style={style.inputGroupText} id="basic-addon1">
-						<IoIosMail size={22} color={'#D9054F'}/>
+						{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
+						{topText === "Email address" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
+						{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}
 					</InputGroup.Text>
 				</InputGroup.Prepend>
 			</InputGroup>
 		</div>
+		);
+	}
+
+	renderInputFieldPhone = (topText,placeHolder,inputFunction,type) =>{
+		return(
+				<InputGroup className="mb-3" style={{width:'100%',marginBottom:0,borderWidth:0}}>
+					<FormControl
+						placeholder={placeHolder}
+						aria-label="Username"
+						aria-describedby="basic-addon1"
+						onChange={inputFunction}
+						type={type}
+					/>
+					<InputGroup.Prepend>
+						<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0}} id="basic-addon1">
+							{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
+							{topText === "Email address" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
+							{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}					
+						</InputGroup.Text>
+					</InputGroup.Prepend>
+				</InputGroup>
 		);
 	}
 
@@ -202,7 +224,7 @@ class Login extends React.Component{
 								<p style={style.loginText}>Log in to your account</p>
 
 								{this.renderInputfield("Email address","example@mail.com",this.handleChangeEmail)}
-								{this.renderInputfield("Passsword","●●●●●●●●●",this.handleChangePassword,"password")}
+								{this.renderInputfield("Password","●●●●●●●●●",this.handleChangePassword,"password")}
 
 								<Button variant="danger" style={style.logInButton} onClick={this.handleLoginClick}>
 									Log in
@@ -258,8 +280,63 @@ class Login extends React.Component{
 				</div>
 			</Desktop>
 				<Mobile>
-					<div>
-						<p>Hello</p>
+					<div style={{flexDirection:'column',width:this.props.width,height:this.props.height}}>
+						<div style={{width:'100%',height:'35%',backgroundColor:'#FBF3E6'}}>
+							<img src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg" alt="Logo" style={{width:300,height:'100%',resizeMode: 'contain'}} />;
+						</div>
+						<div style={{width:'100%',height:'65%',backgroundColor:'#FBF3E6',display:'flex',justifyContent:'center'}}>
+							{
+								this.state.option === 1 ? 
+								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
+									<p style={{fontSize:22,fontWeight:'bold',marginBottom:'10%'}}>Log in to your account</p>
+									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeEmail)}
+									{this.renderInputFieldPhone("Password","Password",this.handleChangePassword,"password")}
+
+									<Button variant="danger" style={{width:220,marginBottom:'5%',marginTop:'5%'}} onClick={this.handleLoginClick}>
+										Log in
+									</Button>
+
+									<Button variant="outline-danger" style={{width:220}}>
+										<IoLogoFacebook size={25} style={{}} color={'#D9054F'}/>
+										Log in with Facebook
+									</Button>
+
+									<button style={{color:'#858585',fontSize:11,marginTop:'1%',backgroundColor:'transparent',borderWidth:0}} onClick={()=>{this.setState({option:2,fieldsError:"",success:""})}}>
+										Don't have an account? Create one
+									</button>
+
+									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+									{this.infoText(this.state.success)}
+									{this.fieldsErrorText(this.state.fieldsError)}
+								</div>
+								:
+								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
+									<div style={{flexDirection:'row',width:'100%',display:'flex',height:'50%',alignItems:'center',justifyContent:'center',marginBottom:'5%'}}>
+										{this.renderRoleButton("Client","client")}
+										<p style={{fontSize:20,fontWeight:'bold',marginLeft:15,marginRight:15,marginTop:10,display:'block'}}>Create account</p>
+										{this.renderRoleButton("Provider","provider")}
+									</div>
+
+									{this.renderInputFieldPhone("Username","Username",this.handleChangeUsername)} 
+									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeNewEmail)}
+									{this.renderInputFieldPhone("Password","Password",this.handleChangeNewPassword,"password")}
+									{this.renderInputFieldPhone("Confirm password","Confirm password",this.handleChangeNewPasswordConfirm,"password")}
+
+									<Button variant="danger" style={{width:220,marginBottom:'1%',marginTop:'5%'}} onClick={this.handleRegisterClick}>
+										Register
+									</Button>
+
+									<button style={style.alreadyHaveAccount} onClick={()=>{this.setState({option:1,fieldsError:"",success:""})}}>
+										Already have an account? Log in 
+									</button>
+
+									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+									{this.infoText(this.state.success)}
+									{this.fieldsErrorText(this.state.fieldsError)}
+
+								</div>
+							}
+						</div>
 					</div>
 				</Mobile>
 			</div>
