@@ -152,6 +152,26 @@ const profile = async (userData) => {
   }
 };
 
+const accountSettings = async (userData) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "post",
+      url: `http://localhost:4000/api/users/profile/settings`,
+      data: userData,
+    });
+    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 export {
   register,
   login,
@@ -160,4 +180,5 @@ export {
   uploadPhoto,
   uploadMultiple,
   profile,
+  accountSettings,
 };

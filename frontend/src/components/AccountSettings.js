@@ -1,10 +1,46 @@
 import React, { useState } from "react";
-import { FormGroup, FormLabel, FormControl, Form } from "react-bootstrap";
+import * as api from "../api";
+import {
+  FormGroup,
+  FormLabel,
+  FormControl,
+  Form,
+  Button,
+} from "react-bootstrap";
 
 const AccountSettings = ({ data }) => {
+  console.log(data.name);
   const [email, setEmail] = useState(data.email ? data.email : "");
-  const [username, setUsername] = useState(data.name ? data.name : "");
+  const [name, setUsername] = useState(data.name ? data.name : "");
+  const [succesUsername, setSuccesUsername] = useState(true);
+  const [password, setPassword] = useState(data.password ? data.password : "");
   const [succesEmail, setSuccesEmail] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleSaveDate = async () => {
+    const userData = {
+      email,
+      password,
+      name,
+    };
+    setLoading(true);
+    try {
+      let answer = await api.profile(userData);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+      console.log(answer);
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: err,
+        loading: false,
+        success: false,
+      });
+    }
+  };
 
   const advertisationMessage = (correct, message) => {
     if (correct) {
@@ -52,8 +88,8 @@ const AccountSettings = ({ data }) => {
           <div className="account_settings_elements">
             <FormGroup>
               <FormControl
-                placeholder={username}
-                value={username}
+                placeholder={name}
+                value={name}
                 type="text"
                 onChange={handleChangeUsername}
               ></FormControl>
@@ -104,6 +140,12 @@ const AccountSettings = ({ data }) => {
             </FormGroup>
           </div>
         </div>
+        <Button
+          as="input"
+          type="submit"
+          value="Save"
+          onClick={handleSaveDate}
+        />{" "}
       </Form>
     </div>
   );

@@ -261,7 +261,7 @@ const Provider = ({ data }) => {
             </div>
             <div className="align_left_profile_input">
               <FormGroup>
-                <FormLabel>Adrees</FormLabel>
+                <FormLabel>Adress</FormLabel>
                 <FormControl
                   placeholder={adress}
                   value={adress}
