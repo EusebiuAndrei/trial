@@ -25,23 +25,8 @@ class Profile extends Component {
         error: answer.errorMessage,
       });
     }
-    console.log(answer);
   }
 
-  // state = {
-  //   email: "user1@gmail.com",
-  //   name: "User1",
-  //   role: "Client",
-  //   details: {
-  //     location: {
-  //       latitude: "4000",
-  //       longitute: "4000",
-  //     },
-  //     preferences: ["lapte", "oua"],
-  //     avatar: "profile.jpg",
-  //     allergies: ["gluten", "polen", "alte chestii"],
-  //   },
-  // };
   render() {
     return this.state.loading === false ? (
       <User data={this.state.userData} />

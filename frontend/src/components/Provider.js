@@ -14,7 +14,6 @@ import {
 import UploadImage from "./ImageUpload";
 
 const Provider = ({ data }) => {
-  const totalNumberOfFields = 16;
   const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -32,13 +31,6 @@ const Provider = ({ data }) => {
       : []
   );
 
-  const [numberOfCompletedFields, setNumberOdCompletedFileds] = useState(
-    Object.keys(data).length + Object.keys(data.location).length
-  );
-  const percentage = (
-    (numberOfCompletedFields * 100) /
-    totalNumberOfFields
-  ).toFixed(1);
   const [capacity, setCapacity] = useState(data.capacity ? data.capacity : 0);
   const [type, setType] = useState(data.type ? data.type : 0);
   const [latitude, setLatitude] = useState(
@@ -55,7 +47,38 @@ const Provider = ({ data }) => {
     data.priceCategory ? data.priceCategory : ""
   );
   const [CUI, setCUI] = useState(data.CUI ? data.CUI : "");
+  const [description, setDescription] = useState(
+    data.description ? data.description : ""
+  );
+
+  const [numberOfCompletedFields, setNumberOdCompletedFileds] = useState(
+    Object.keys(data).length + Object.keys(data.location).length
+  );
+  const totalNumberOfFields = 8;
+  const [completedInputs, setCompletedImputs] = useState(
+    [
+      capacity,
+      latitude,
+      longitude,
+      adress,
+      CUI,
+      description,
+      priceCategory,
+      type,
+    ].filter((value) => {
+      console.log(value);
+      if (value === 0 || value === "") return false;
+      else return true;
+    }).length
+  );
+  const percentage = ((completedInputs * 100) / totalNumberOfFields).toFixed(1);
+
   const [loading, setLoading] = useState(false);
+  const [succesCUI, setSuccesCUI] = useState(true);
+  const [succesLatitude, setSuccesLatitude] = useState(true);
+  const [succesLongitude, setSuccesLongitude] = useState(true);
+  const [succesCapacity, setSuccesCapacity] = useState(true);
+  const [failureSave, setFailureSave] = useState(true);
 
   const handleSaveDate = async () => {
     const userData = {
@@ -65,7 +88,8 @@ const Provider = ({ data }) => {
         adress,
       },
       specials,
-      //description
+      CUI,
+      description,
       priceCategory,
       capacity,
       type,
@@ -74,11 +98,12 @@ const Provider = ({ data }) => {
     try {
       let answer = await api.profile(userData);
       if (answer.success === true) {
+        setFailureSave(false);
         setLoading(false);
       } else {
+        setFailureSave(true);
         setLoading(false);
       }
-      console.log(answer);
     } catch (err) {
       console.log(err);
       this.setState({
@@ -88,48 +113,23 @@ const Provider = ({ data }) => {
       });
     }
   };
-  const [succesCUI, setSuccesCUI] = useState(true);
-  const [succesLatitude, setSuccesLatitude] = useState(true);
-  const [succesLongitude, setSuccesLongitude] = useState(true);
-  const [succesCapacity, setSuccesCapacity] = useState(true);
 
   const handleDeleteTags = (tagIndex) => {
-    setSpecials(specials.filter((index) => index != tagIndex));
+    console.log(specials);
+    setSpecials(specials.filter((value, index) => index != tagIndex));
+
     setSpecialTagItems(
-      data.specials
-        ? specials.map((element) => {
-            let rObj = {};
-            rObj["id"] = element;
-            rObj["text"] = element;
-            return rObj;
-          })
-        : []
+      specialsTagItems.filter((tag, index) => index !== tagIndex)
     );
   };
 
   const handleAddTag = (tag) => {
-    setSpecialTagItems((specialsTagItems) => (specialsTagItems) => [
-      ...specialsTagItems.tags,
-      tag,
-    ]);
+    setSpecials([...specials, tag.text]);
+    setSpecialTagItems([...specialsTagItems, tag]);
   };
 
-  const handleDragTag = (tag, currPos, newPos) => {
-    const tags = [...specials];
-    const newTags = tags.slice();
-    newTags.slice(currPos, 1);
-    newTags.slice(newPos, 0, tag);
-    setSpecials(newTags);
-    setSpecialTagItems(
-      data.specials
-        ? specials.map((element) => {
-            let rObj = {};
-            rObj["id"] = element;
-            rObj["text"] = element;
-            return rObj;
-          })
-        : []
-    );
+  const handleChangeDescription = (event) => {
+    setDescription(event.target.value);
   };
 
   const handleChangeCUI = (event) => {
@@ -191,23 +191,6 @@ const Provider = ({ data }) => {
     setCapacity(event.target.value);
   };
 
-  const handleInputAdress = (event) => {
-    if (numberOfCompletedFields < totalNumberOfFields)
-      setNumberOdCompletedFileds(numberOfCompletedFields + 1);
-  };
-
-  const handleInputLongitude = (event) => {
-    if (succesLongitude)
-      if (numberOfCompletedFields < totalNumberOfFields)
-        setNumberOdCompletedFileds(numberOfCompletedFields + 1);
-  };
-
-  const handleInputLatitude = (event) => {
-    if (succesLatitude)
-      if (numberOfCompletedFields < totalNumberOfFields)
-        setNumberOdCompletedFileds(numberOfCompletedFields + 1);
-  };
-
   const isValidCUI = (CUI) => {
     if (/^C[.]?U[.]?I[.]?[ ]?R?O?[ ]?[0-9]{6,8}/.test(CUI)) return true;
     return false;
@@ -233,7 +216,6 @@ const Provider = ({ data }) => {
                   value={longitude}
                   type="number"
                   onChange={handleChangeLongitude}
-                  onBlur={handleInputLongitude}
                 ></FormControl>
                 <div>
                   {advertisationMessage(
@@ -249,7 +231,6 @@ const Provider = ({ data }) => {
                   value={latitude}
                   type="number"
                   onChange={handleChangeLatitude}
-                  onBlur={handleInputLatitude}
                 ></FormControl>
                 <div>
                   {advertisationMessage(
@@ -267,7 +248,6 @@ const Provider = ({ data }) => {
                   value={adress}
                   type="text"
                   onChange={handleChangeAdress}
-                  onBlur={handleInputAdress}
                 ></FormControl>
               </FormGroup>
             </div>
@@ -364,10 +344,29 @@ const Provider = ({ data }) => {
                     tags={specialsTagItems}
                     handleDelete={handleDeleteTags}
                     handleAddition={handleAddTag}
-                    handleDrag={handleDragTag}
                     delimiters={delimiters}
                   />
                 </div>
+              </FormGroup>
+            </div>
+          </div>
+          <div className="profile_element">
+            <h5>Description</h5>
+            <p className="profile_explanations">
+              <small>
+                Use your Menu Descriptions to tell a story to your customers,
+                paint a good picture in their heads, that leaves them salivating
+                and ordering for more
+              </small>
+            </p>
+            <div className="align_left_profile_input">
+              <FormGroup>
+                <FormControl
+                  placeholder={description}
+                  value={description}
+                  as="textarea"
+                  onChange={handleChangeDescription}
+                ></FormControl>
               </FormGroup>
             </div>
           </div>
@@ -378,18 +377,23 @@ const Provider = ({ data }) => {
             </p>
             <UploadImage />
           </div>
-          <Button
-            as="input"
-            type="submit"
-            value="Save"
-            onClick={handleSaveDate}
-          />{" "}
+          <div className="submit_button">
+            <Button className="actual_button" onClick={handleSaveDate}>
+              Save
+            </Button>
+            <div>
+              {advertisationMessage(
+                failureSave,
+                "Congratulation! You just updated you're profile"
+              )}
+            </div>
+          </div>
         </Form>
       </div>
       <div className="progress_circle">
         <CircularProgressbarWithChildren
           classes
-          value={percentage}
+          value={percentage.toString + "%"}
           styles={{
             path: {
               stroke: `rgb(217, 5, 79, ${percentage / 100})`,
