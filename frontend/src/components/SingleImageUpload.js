@@ -1,6 +1,5 @@
 import React from "react";
 import * as api from "../api";
-import { Form } from "react-bootstrap";
 
 class SingleImageUpload extends React.Component {
   constructor(props) {

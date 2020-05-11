@@ -73,7 +73,7 @@ router.post(
 	}),
 	async function (req, res) {
 		const result = await userService.login(req.body);
-		const statusCode = result.success ? 200 : 400;
+		const statusCode = result.success ? 200 : 401;
 		res.status(statusCode).json(result);
 	},
 );
@@ -81,7 +81,7 @@ router.post(
 router.post('/logout', auth, async (req, res) => {
 	const { token } = req.data;
 	const result = await userService.logout(token);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? 200 : 403;
 	res.status(statusCode).json(result);
 });
 
@@ -98,7 +98,7 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 		req.data,
 		req.content,
 	);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? 200 : 403;
 	res.status(statusCode).json(result);
 });
 module.exports = router;

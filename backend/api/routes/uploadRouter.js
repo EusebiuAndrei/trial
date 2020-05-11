@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const { upload } = require('../middlewares/index');
 const { imageService } = require('../../services/index');
-const multer = require('multer');
 const path = require('path');
 const { auth } = require('../middlewares/index');
 
