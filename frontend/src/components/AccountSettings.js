@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { FormGroup, FormLabel, FormControl, Form } from "react-bootstrap";
+import "../assets/btnStyle.css";
+import {
+  Button,
+  FormGroup,
+  FormLabel,
+  FormControl,
+  Form,
+} from "react-bootstrap";
+import * as api from "../api";
 
 const AccountSettings = ({ data }) => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(data.email ? data.email : "");
   const [username, setUsername] = useState(data.name ? data.name : "");
+  const [password, setPassword] = useState(data.password ? data.password : "");
   const [succesEmail, setSuccesEmail] = useState(true);
 
   const advertisationMessage = (correct, message) => {
@@ -15,6 +25,31 @@ const AccountSettings = ({ data }) => {
           <small>{message}</small>
         </p>
       );
+    }
+  };
+
+  const handleSaveDate = async () => {
+    const userData = {
+      email,
+      username,
+      password,
+    };
+    setLoading(true);
+    try {
+      let answer = await api.profile(userData);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+      console.log(answer);
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: err,
+        loading: false,
+        success: false,
+      });
     }
   };
 
@@ -103,6 +138,16 @@ const AccountSettings = ({ data }) => {
               />
             </FormGroup>
           </div>
+        </div>
+        <hr></hr>
+        <div class="saveBtnContainer">
+          <Button
+            class="editBtn"
+            as="input"
+            type="submit"
+            value="Save"
+            onClick={handleSaveDate}
+          />{" "}
         </div>
       </Form>
     </div>
