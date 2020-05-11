@@ -7,32 +7,6 @@ const { auth } = require('../middlewares/index');
 
 const router = Router();
 
-const storage = multer.diskStorage({
-	destination: './uploads/',
-	filename: function (req, file, cb) {
-		cb(
-			null,
-			'IMAGE-' + Date.now() + path.extname(file.originalname),
-		);
-	},
-});
-
-const myUpload = multer({
-	storage: storage,
-	limits: { fileSize: 1000000 },
-}).single('myImage');
-
-router.post('/uploadCozma', function (req, res) {
-	myUpload(req, res, function (err) {
-		console.log('Request ---', req.body);
-		console.log('Request file ---', req.file);
-
-		if (!err) {
-			return res.send(200).end();
-		}
-	});
-});
-
 router.post(
 	'/uploadSingle',
 	auth,
