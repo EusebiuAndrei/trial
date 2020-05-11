@@ -7,7 +7,7 @@ class ImageService {
 		this.services = services;
 	}
 
-	async uploadOneImage(buffer, hostname) {
+	async uploadOneImage(buffer, hostname, token) {
 		try {
 			const imagePath = './public/images';
 			const fileUpload = new Resize(imagePath);
@@ -28,7 +28,7 @@ class ImageService {
 		}
 	}
 
-	async uploadMultipleImages(files, hostname) {
+	async uploadMultipleImages(files, hostname, token) {
 		try {
 			const uploadedImages = [];
 			const imagePath = './public/images';
