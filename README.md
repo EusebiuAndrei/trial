@@ -944,11 +944,118 @@ Create user new user accounts.
 		- name: a string representing the name of the course
 		- image: a path to a image of the course uploaded by the provider
 	
--     schedule
+-     schedule - contains a array of a provider schedule/per day with the following format:
+		-day: a string the day of the week the program applies to
+		-startHour: a string with the following following format: a number representing an hour and pm or am
+		-endHour:  a string with the following following format: a number representing an hour and pm or am
+		
+**Return codes**
+-   201 - Created
+-   400 - There was a problem fetching data
 
+**Usage example**:  
+ `localhost:4000/api/users/profile
+
+  Request body Client
+```JSON
+ {"location": {
+                        "latitude": 45.7,
+                        "longitude": 23.5
+                    },
+                    "preferences": [
+                        "pizza",
+                        "pasta",
+                        "brownie"
+                    ],
+                    "allergies": [
+                        "fish"
+                    ],
                   
-                  
-                    "schedule":  [
+                    "avatar": "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg"
+                }
+```
+  Request body Provider
+```JSON
+	{
+	"location": {
+                        "latitude": 89,
+                        "longitude": 178,
+                        "adress": "Strada Uzinei"
+                    },
+                    "images": [
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Frestaurant&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAD",
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2F14thlane.ro%2Fro&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAS",
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Frestaurantbritannia%2F&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAY"
+                    ],
+                    "specials": [
+                        "Pasta",
+                        "Crepes",
+                        "Buritto",
+                        "Chilli con Carne"
+                    ],
+                   
+                    "CUI": "RO123456789010",
+                    "__v": 0,
+                    "description": "However, the most important aspect of any restaurant is the quality of food and service, and we are justifiably proud of both.Our menu is based on the principles of using the high quality raw local ingredients, along with the best of ingredients imported from around the world, freshly cooked and presented by our head chef Matt Clarke and his team with care and attention.",
+                    "priceCategory": "Expensive",
+                    "rating": 10,
+                    "type": "Restaurant",
+                    "menu": {
+             
+                        "courses": [
+                            {
+                                "category": [
+                                    "Soup"
+                                ],
+                                "ingredients": [
+                                    "porcini",
+                                    "pancetta",
+                                    "garlic"
+                                ],
+                                "allergenes": [
+                                    "garlic"
+                                ],
+                                "_id": "5eb173d3d6fb9132c43218a2",
+                                "name": "Supa crema de porcini cu julien de pancetta",
+                                "price": 19,
+                                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsavoriurbane.com%2Fsupa-crema-de-legume-reteta-simpla%2F&psig=AOvVaw0MMf0dit7e7lduDbiL1v6L&ust=1588773203502000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOi8x8XvnOkCFQAAAAAdAAAAABAD"
+                            },
+                            {
+                                "category": [
+                                    "Post"
+                                ],
+                                "ingredients": [
+                                    "rosii",
+                                    "cartofi"
+                                ],
+                                "allergenes": [],
+                                "_id": "5eb173d3d6fb9132c43218a3",
+                                "name": "Bifteki de legume",
+                                "price": 25,
+                                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpetrisorcatering.ro%2Fprodus%2Fbiftec-cu-legume-la-gratar%2F&psig=AOvVaw2TY0GzNrt922WnIceR-5om&ust=1588773245671000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzytnvnOkCFQAAAAAdAAAAABAD"
+                            },
+                            {
+                                "category": [
+                                    "Greek"
+                                ],
+                                "ingredients": [
+                                    "carne pui",
+                                    "tzatziki",
+                                    "ceapa",
+                                    "rosie"
+                                ],
+                                "allergenes": [
+                                    "gluten"
+                                ],
+                                "_id": "5eb173d3d6fb9132c43218a4",
+                                "name": "Gyros pui",
+                                "price": 20,
+                                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.takeaway.com%2Fro%2Ffoodwiki%2Fgrecia%2Fgyros%2F&psig=AOvVaw1OC9z2REL3zAJcvSyPcQmz&ust=1588773312557000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjRu_nvnOkCFQAAAAAdAAAAABAD"
+                            }
+                        ]
+                    },
+                    "schedule": 
+                				 [
                             {
                                 "_id": "5eb173d3d6fb9132c43218a5",
                                 "day": "luni",
@@ -993,3 +1100,166 @@ Create user new user accounts.
                             }
                         ]
 }
+```
+**Returned data example Client**:
+```JSON
+	{
+    "success": true,
+    "data": {
+        "userDetails": {
+            "location": {
+                "latitude": 45.7,
+                "longitude": 23.5
+            },
+            "preferences": [
+                "pizza",
+                "pasta",
+                "brownie"
+            ],
+            "allergies": [
+                "fish"
+            ],
+            "commandsHistory": [],
+            "reservationsHistory": [],
+            "_id": "5ebadf7f251c5187bd97c50e",
+            "userId": "5ebacdb1eedb0a4468bb84c2",
+            "__v": 0,
+            "avatar": "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg"
+        }
+    }
+}
+```
+
+**Returned data example Provider**:
+```JSON
+	{"location": {
+                        "latitude": 89,
+                        "longitude": 178,
+                        "adress": "Strada Uzinei"
+                    },
+                    "images": [
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Frestaurant&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAD",
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2F14thlane.ro%2Fro&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAS",
+                        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Frestaurantbritannia%2F&psig=AOvVaw3B7RGSV70-raF7lw-TEiGd&ust=1588772819069000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDImY7unOkCFQAAAAAdAAAAABAY"
+                    ],
+                    "specials": [
+                        "Pasta",
+                        "Crepes",
+                        "Buritto",
+                        "Chilli con Carne"
+                    ],
+                    "_id": "5eb17156251c5187bd95ff83",
+                    "\"name\"": "Restaurant Capitol",
+                    "userId": "5eb16d673a637d28884dc226",
+                    "CUI": "RO123456789010",
+                    "__v": 0,
+                    "description": "However, the most important aspect of any restaurant is the quality of food and service, and we are justifiably proud of both.Our menu is based on the principles of using the high quality raw local ingredients, along with the best of ingredients imported from around the world, freshly cooked and presented by our head chef Matt Clarke and his team with care and attention.",
+                    "priceCategory": "Expensive",
+                    "rating": 10,
+                    "type": "Restaurant",
+                    "menu": {
+                        "_id": "5eb17156251c5187bd95fff4",
+                        "providerId": "5eb17156251c5187bd95ff83",
+                        "__v": 0,
+                        "courses": [
+                            {
+                                "category": [
+                                    "Soup"
+                                ],
+                                "ingredients": [
+                                    "porcini",
+                                    "pancetta",
+                                    "garlic"
+                                ],
+                                "allergenes": [
+                                    "garlic"
+                                ],
+                                "_id": "5eb173d3d6fb9132c43218a2",
+                                "name": "Supa crema de porcini cu julien de pancetta",
+                                "price": 19,
+                                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsavoriurbane.com%2Fsupa-crema-de-legume-reteta-simpla%2F&psig=AOvVaw0MMf0dit7e7lduDbiL1v6L&ust=1588773203502000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOi8x8XvnOkCFQAAAAAdAAAAABAD"
+                            },
+                            {
+                                "category": [
+                                    "Post"
+                                ],
+                                "ingredients": [
+                                    "rosii",
+                                    "cartofi"
+                                ],
+                                "allergenes": [],
+                                "_id": "5eb173d3d6fb9132c43218a3",
+                                "name": "Bifteki de legume",
+                                "price": 25,
+                                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpetrisorcatering.ro%2Fprodus%2Fbiftec-cu-legume-la-gratar%2F&psig=AOvVaw2TY0GzNrt922WnIceR-5om&ust=1588773245671000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzytnvnOkCFQAAAAAdAAAAABAD"
+                            },
+                            {
+                                "category": [
+                                    "Greek"
+                                ],
+                                "ingredients": [
+                                    "carne pui",
+                                    "tzatziki",
+                                    "ceapa",
+                                    "rosie"
+                                ],
+                                "allergenes": [
+                                    "gluten"
+                                ],
+                                "_id": "5eb173d3d6fb9132c43218a4",
+                                "name": "Gyros pui",
+                                "price": 20,
+                                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.takeaway.com%2Fro%2Ffoodwiki%2Fgrecia%2Fgyros%2F&psig=AOvVaw1OC9z2REL3zAJcvSyPcQmz&ust=1588773312557000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjRu_nvnOkCFQAAAAAdAAAAABAD"
+                            }
+                        ]
+                    },
+                    "schedule": {
+                        "_id": "5eb17157251c5187bd960008",
+                        "providerId": "5eb17156251c5187bd95ff83",
+                        "__v": 0,
+                        "schedule": [
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a5",
+                                "day": "luni",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a6",
+                                "day": "marti",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a7",
+                                "day": "miercuri",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a8",
+                                "day": "joi",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a9",
+                                "day": "vineri",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218aa",
+                                "day": "sambata",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218ab",
+                                "day": "duminica",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            }
+                        ]
+                    }
+```
