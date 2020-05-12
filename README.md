@@ -819,3 +819,53 @@ Add a command to client reservationsHistory and provider reservationsQueue
     "data": {}
 }
 ```
+
+## api/users/register
+
+### POST
+
+Create user new user accounts.
+
+**Request Body**:
+
+-    email - new user email
+-    name - new user name
+-    role - new user type (Provider/Client)
+-    password - a password for the new use account, it should be at least 6 letter long
+
+**Return codes**
+-   201 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:4000/api/users/register
+ 
+  Request body
+```JSON
+{
+	"email": "clientExemplu@gmail.com",
+	"name": "ClientExemplu",
+	"role": "Client",
+	"password": "abc123"
+}
+```
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "user": {
+            "role": "Client",
+            "confirmed": true,
+            "_id": "5ebacdb1eedb0a4468bb84c2",
+            "email": "clientExemplu@gmail.com",
+            "__v": 0,
+            "emailToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhY2RiMWVlZGIwYTQ0NjhiYjg0YzIiLCJpYXQiOjE1ODkzMDA2NTh9.Pr8GG5yQWGZuWDw-KxkHx5Rut39tSWGZCWMS3vDpLY0",
+            "details": null,
+            "id": "5ebacdb1eedb0a4468bb84c2"
+        }
+    }
+}
+...
