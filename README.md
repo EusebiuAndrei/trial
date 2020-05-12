@@ -885,7 +885,7 @@ Create user new user accounts.
 
 
 **Usage example**:  
- `localhost:4000/api/users/register
+ `localhost:4000/api/users/login
  
   Request body
 ```JSON
