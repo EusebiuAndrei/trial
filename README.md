@@ -943,7 +943,6 @@ Create user new user accounts.
 		- allergenes: an array of strings representing possible allergenes 
 		- name: a string representing the name of the course
 		- image: a path to a image of the course uploaded by the provider
-	
 -     schedule - contains a array of a provider schedule/per day with the following format:
 		-day: a string the day of the week the program applies to
 		-startHour: a string with the following following format: a number representing an hour and pm or am
@@ -995,7 +994,6 @@ Create user new user accounts.
                     ],
                    
                     "CUI": "RO123456789010",
-                    "__v": 0,
                     "description": "However, the most important aspect of any restaurant is the quality of food and service, and we are justifiably proud of both.Our menu is based on the principles of using the high quality raw local ingredients, along with the best of ingredients imported from around the world, freshly cooked and presented by our head chef Matt Clarke and his team with care and attention.",
                     "priceCategory": "Expensive",
                     "rating": 10,
@@ -1015,7 +1013,6 @@ Create user new user accounts.
                                 "allergenes": [
                                     "garlic"
                                 ],
-                                "_id": "5eb173d3d6fb9132c43218a2",
                                 "name": "Supa crema de porcini cu julien de pancetta",
                                 "price": 19,
                                 "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsavoriurbane.com%2Fsupa-crema-de-legume-reteta-simpla%2F&psig=AOvVaw0MMf0dit7e7lduDbiL1v6L&ust=1588773203502000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOi8x8XvnOkCFQAAAAAdAAAAABAD"
@@ -1029,7 +1026,7 @@ Create user new user accounts.
                                     "cartofi"
                                 ],
                                 "allergenes": [],
-                                "_id": "5eb173d3d6fb9132c43218a3",
+                           
                                 "name": "Bifteki de legume",
                                 "price": 25,
                                 "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpetrisorcatering.ro%2Fprodus%2Fbiftec-cu-legume-la-gratar%2F&psig=AOvVaw2TY0GzNrt922WnIceR-5om&ust=1588773245671000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzytnvnOkCFQAAAAAdAAAAABAD"
@@ -1047,7 +1044,7 @@ Create user new user accounts.
                                 "allergenes": [
                                     "gluten"
                                 ],
-                                "_id": "5eb173d3d6fb9132c43218a4",
+                           
                                 "name": "Gyros pui",
                                 "price": 20,
                                 "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.takeaway.com%2Fro%2Ffoodwiki%2Fgrecia%2Fgyros%2F&psig=AOvVaw1OC9z2REL3zAJcvSyPcQmz&ust=1588773312557000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjRu_nvnOkCFQAAAAAdAAAAABAD"
@@ -1057,43 +1054,43 @@ Create user new user accounts.
                     "schedule": 
                 				 [
                             {
-                                "_id": "5eb173d3d6fb9132c43218a5",
+                               
                                 "day": "luni",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218a6",
+                              
                                 "day": "marti",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218a7",
+                               
                                 "day": "miercuri",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218a8",
+                               
                                 "day": "joi",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218a9",
+                               
                                 "day": "vineri",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218aa",
+                               
                                 "day": "sambata",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
                             },
                             {
-                                "_id": "5eb173d3d6fb9132c43218ab",
+                               
                                 "day": "duminica",
                                 "startHour": "10 am",
                                 "endHour": "5 pm"
