@@ -912,3 +912,82 @@ Create user new user accounts.
     }
 }
 ```
+
+## api/users/profile
+
+###POST
+
+**Request Body**:
+Client
+-    location.latitude - a number representing the latitude of the client's preffered location 
+-    location.longitude - a number representing the longitude of the client's preffered location
+-    prefferences - an array of strings representing a client's preffered courses
+-    allergies - an array of strings representing a client's allergies
+-    avatar -  a path to a image uploaded by the client that will be use as the client avatar
+Provider
+
+-    location.latitude - a number representing the latitude of the provider's location
+-    location.longitude - a number representing the longitude of the provider's location
+-    location.adress - a string representing the provider's actual adress (street, number, city)
+-    images - an array containing the paths to the images uploaded by the provider
+-    specials - an array of strings representing a provider tags(formerly named tag, now is special)
+-    CUI - a string like this RO#########C, where O######### is a number between 1-9 digits
+-    description - a paragraph representing the provider description
+-    priceCategory - a string that can take the following values: Affordable, Medium, Expensive
+-    type - a string thath can take the following values: Restaurant, Canteen
+-    menu - contains an courses array, an object from the course array has the following format
+	- category: a string representing a category where the course can be included
+	- ingredients: an array of strings representing the ingredients used for the course
+	- allergenes: an array of strings representing possible allergenes 
+	- name: a string representing the name of the course
+	- image: a path to a image of the course uploaded by the provider
+	
+-     schedule
+
+                  
+                  
+                    "schedule":  [
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a5",
+                                "day": "luni",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a6",
+                                "day": "marti",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a7",
+                                "day": "miercuri",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a8",
+                                "day": "joi",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218a9",
+                                "day": "vineri",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218aa",
+                                "day": "sambata",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            },
+                            {
+                                "_id": "5eb173d3d6fb9132c43218ab",
+                                "day": "duminica",
+                                "startHour": "10 am",
+                                "endHour": "5 pm"
+                            }
+                        ]
+}
