@@ -883,6 +883,10 @@ Create user new user accounts.
 -   200 - OK
 -   400 - There was a problem fetching data
 
+
+**Usage example**:  
+ `localhost:4000/api/users/register
+ 
   Request body
 ```JSON
 {
