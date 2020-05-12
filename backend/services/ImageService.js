@@ -3,11 +3,12 @@ const Resize = require('./Resize');
 const imagePath = './public/images';
 
 class ImageService {
-	constructor({ services }) {
+	constructor({ db, services }) {
+		this.db = db;
 		this.services = services;
 	}
 
-	async uploadOneImage(buffer, hostname) {
+	async uploadOneImage(buffer, hostname, token) {
 		try {
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
@@ -17,6 +18,7 @@ class ImageService {
 				'images',
 				filename,
 			);
+
 			return { success: true, name: { newPath } };
 		} catch (error) {
 			return {
@@ -26,7 +28,7 @@ class ImageService {
 		}
 	}
 
-	async uploadMultipleImages(files, hostname) {
+	async uploadMultipleImages(files, hostname, token) {
 		try {
 			const uploadedImages = [];
 			const fileUpload = new Resize(imagePath);

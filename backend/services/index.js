@@ -44,6 +44,11 @@ const userService = new UserService({
 });
 
 const imageService = new ImageService({
+	db: {
+		User,
+		Client,
+		Provider,
+	},
 	services: {},
 });
 

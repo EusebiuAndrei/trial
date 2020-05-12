@@ -2,68 +2,11 @@ const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { dynamicCelebrate } = require('../middlewares/index');
-const { auth, upload } = require('../middlewares/index');
-const { imageService } = require('../../services/index');
+const { auth } = require('../middlewares/index');
 const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
 const router = Router();
-const path = require('path');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-	destination: './uploads/',
-	filename: function (req, file, cb) {
-		cb(
-			null,
-			'IMAGE-' + Date.now() + path.extname(file.originalname),
-		);
-	},
-});
-
-const myUpload = multer({
-	storage: storage,
-	limits: { fileSize: 1000000 },
-}).single('myImage');
-
-router.post('/uploadCozma', function (req, res) {
-	myUpload(req, res, function (err) {
-		console.log('Request ---', req.body);
-		console.log('Request file ---', req.file);
-
-		if (!err) {
-			return res.send(200).end();
-		}
-	});
-});
-
-router.post(
-	'/uploadSingle',
-	upload.single('image'),
-	async (req, res) => {
-		const result = await imageService.uploadOneImage(
-			req.file.buffer,
-			req.headers.host,
-		);
-		const statusCode = result.success ? 200 : 400;
-		console.log(result);
-		res.status(statusCode).json(result);
-	},
-);
-
-router.post(
-	'/uploadMultiple',
-	upload.array('image', 2),
-	async (req, res) => {
-		const result = await imageService.uploadMultipleImages(
-			req.files,
-			req.headers.host,
-		);
-		const statusCode = result.success ? 200 : 400;
-		console.log(result);
-		res.status(statusCode).json(result);
-	},
-);
 
 // Here we have all the controllers
 router.get('/', async (req, res) => {
@@ -142,11 +85,12 @@ router.delete('/all', async (req, res) => {
 });
 
 router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
+	console.log(req.content);
 	const result = await userService.configureUser(
 		req.data,
 		req.content,
 	);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? 200 : 403;
 	res.status(statusCode).json(result);
 });
 

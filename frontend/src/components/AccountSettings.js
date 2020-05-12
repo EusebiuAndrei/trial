@@ -39,8 +39,8 @@ const AccountSettings = ({ data }) => {
   };
 
   return (
-    <div>
-      <Form className="client_form">
+    <div className="account_settings_form">
+      <Form>
         <div className="profile_title">
           <h2>Account Settings</h2>
         </div>
