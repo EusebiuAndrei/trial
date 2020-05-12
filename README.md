@@ -924,8 +924,9 @@ Client
 -    prefferences - an array of strings representing a client's preffered courses
 -    allergies - an array of strings representing a client's allergies
 -    avatar -  a path to a image uploaded by the client that will be use as the client avatar
-Provider
 
+<a/>
+Provider
 -    location.latitude - a number representing the latitude of the provider's location
 -    location.longitude - a number representing the longitude of the provider's location
 -    location.adress - a string representing the provider's actual adress (street, number, city)
