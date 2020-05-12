@@ -943,7 +943,7 @@ Create user new user accounts.
 		- allergenes: an array of strings representing possible allergenes 
 		- name: a string representing the name of the course
 		- image: a path to a image of the course uploaded by the provider
--schedule - contains a array of a provider schedule/per day with the following format
+-    schedule - contains a array of a provider schedule/per day with the following format
 		-day: a string the day of the week the program applies to
 		-startHour: a string with the following following format: a number representing an hour and pm or am
 		-endHour:  a string with the following following format: a number representing an hour and pm or am
