@@ -1,10 +1,13 @@
 const { Router } = require('express');
 const { upload } = require('../middlewares/index');
 const { imageService } = require('../../services/index');
-const path = require('path');
 const { auth } = require('../middlewares/index');
 
 const router = Router();
+
+function setResponseStatus(successCode, failureCode, ok) {
+	return ok ? successCode : failureCode;
+}
 
 router.post(
 	'/uploadSingle/:userId',
@@ -34,7 +37,9 @@ router.post(
 			userId,
 		);
 		console.log(result);
-		res.status(result.success ? 201 : 400).json(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
 	},
 );
 

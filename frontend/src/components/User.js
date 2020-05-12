@@ -55,7 +55,7 @@ const User = ({ data }) => {
               <Image
                 alt={value}
                 className="providerImage"
-                src={require(`../assets/${image}`)}
+                src={image}
                 roundedCircle
                 style={{
                   width: "200px",
