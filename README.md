@@ -851,7 +851,6 @@ Create user new user accounts.
 ```
 
 **Returned data example**:
-
 ```JSON
 {
     "success": true,
@@ -869,3 +868,7 @@ Create user new user accounts.
     }
 }
 ...
+
+## api/users/login
+
+### POST
