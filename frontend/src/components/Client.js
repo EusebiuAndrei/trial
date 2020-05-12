@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../assets/btnStyle.css";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import {
   FormControl,
@@ -13,6 +14,7 @@ import {
   FormGroup,
   FormLabel,
 } from "react-bootstrap";
+import * as api from "../api";
 
 const Client = ({ data }) => {
   console.log(Object.keys(data).length);
@@ -23,6 +25,49 @@ const Client = ({ data }) => {
   const [toInputLocation, setToInputLocation] = useState(false);
   const [toInputPreferences, setToInputPreferences] = useState(false);
   const [toInputAllergies, setToInputAllergies] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [preferences, setPreferences] = useState(
+    data.preferences ? data.preferences : ""
+  );
+  const [allergies, setAllergies] = useState(
+    data.allergies ? data.allergies : ""
+  );
+
+  const [adress, setAdress] = useState(
+    data.location ? (data.location.adress ? data.location.adress : "") : ""
+  );
+
+  const handleSaveDate = async () => {
+    const userData = {
+      location: {
+        latitude,
+        longitude,
+      },
+      allergies,
+      preferences,
+    };
+    setLoading(true);
+    try {
+      let answer = await api.profile(userData);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+      console.log(answer);
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: err,
+        loading: false,
+        success: false,
+      });
+    }
+  };
+
+  const handleChangeAdress = (event) => {
+    setAdress(event.target.value);
+  };
 
   const handleEditLocationButton = () => {
     setToInputLocation(!toInputLocation);
@@ -144,6 +189,66 @@ const Client = ({ data }) => {
               </div>
             </FormGroup>
           </div>
+          <div className="align_left_profile_input">
+            <FormGroup>
+              <FormLabel>Preferences</FormLabel>
+              <div style={listStyle}>
+                <ListGroup>
+                  {!toInputPreferences && listPreferences()}
+                  {toInputPreferences && (
+                    <FormControl
+                      type="text"
+                      placeholder="Preference"
+                      onChange={(e) => handleInput(e, "preferences")}
+                    ></FormControl>
+                  )}
+                </ListGroup>
+                <Button
+                  className="editBtn"
+                  variant="primary"
+                  onClick={handleEditPreferencesButton}
+                >
+                  {!toInputPreferences && "Add preference"}
+                  {toInputPreferences && "Done"}
+                </Button>
+              </div>
+            </FormGroup>
+          </div>
+          <div className="align_left_profile_input">
+            <FormGroup>
+              <FormLabel>Allergies</FormLabel>
+              <div style={listStyle}>
+                <ListGroup>
+                  {!toInputAllergies && listAllergies()}
+                  {toInputAllergies && (
+                    <FormControl
+                      type="text"
+                      placeholder="add allergy..."
+                      onChange={(e) => handleInput(e, "allergies")}
+                    ></FormControl>
+                  )}
+                </ListGroup>
+                <Button
+                  className="editBtn"
+                  variant="primary"
+                  onClick={handleEditAllergiesButton}
+                >
+                  {!toInputAllergies && "Add allergy"}
+                  {toInputAllergies && "Done"}
+                </Button>
+              </div>
+            </FormGroup>
+          </div>
+          <hr></hr>
+          <div class="saveBtnContainer">
+            <Button
+              class="saveBtn"
+              as="input"
+              type="submit"
+              value="Save"
+              onClick={handleSaveDate}
+            />{" "}
+          </div>
         </div>
       </Form>
       <div className="progress_circle">
@@ -179,4 +284,7 @@ const Client = ({ data }) => {
   );
 };
 
+const listStyle = {
+  display: "inline",
+};
 export default Client;
