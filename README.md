@@ -834,7 +834,7 @@ Create user new user accounts.
 -    password - a password for the new use account, it should be at least 6 letter long
 
 **Return codes**
--   201 - OK
+-   201 - Created
 -   400 - There was a problem fetching data
 
 **Usage example**:  
@@ -849,6 +849,7 @@ Create user new user accounts.
 	"password": "abc123"
 }
 ```
+
 
 **Returned data example**:
 ```JSON
@@ -867,8 +868,43 @@ Create user new user accounts.
         }
     }
 }
-...
+```
 
 ## api/users/login
 
-### POST
+###POST
+
+**Request Body**:
+
+-    email - email address of existing user
+-    password - password associated with the email account provided
+
+**Return codes**
+-   200 - OK
+-   400 - There was a problem fetching data
+
+  Request body
+```JSON
+{
+	"email": "clientExemplu@gmail.com",
+	"password": "abc123"
+}
+```
+
+**Returned data example**:
+```JSON
+	{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhY2RiMWVlZGIwYTQ0NjhiYjg0YzIiLCJpYXQiOjE1ODkzMDI3ODZ9.OyE8cAPx0lvgSc9BRHb0B_HbXrcap5n-9hlKr2fcioQ",
+    "user": {
+        "role": "Client",
+        "confirmed": true,
+        "_id": "5ebacdb1eedb0a4468bb84c2",
+        "email": "clientExemplu@gmail.com",
+        "__v": 2,
+        "emailToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhY2RiMWVlZGIwYTQ0NjhiYjg0YzIiLCJpYXQiOjE1ODkzMDA2NTh9.Pr8GG5yQWGZuWDw-KxkHx5Rut39tSWGZCWMS3vDpLY0",
+        "details": null,
+        "id": "5ebacdb1eedb0a4468bb84c2"
+    }
+}
+```
