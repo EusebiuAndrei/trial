@@ -938,11 +938,11 @@ Create user new user accounts.
 -    priceCategory - a string that can take the following values: Affordable, Medium, Expensive
 -    type - a string thath can take the following values: Restaurant, Canteen
 -    menu - contains an courses array, an object from the course array has the following format:
-	- category: a string representing a category where the course can be included
-	- ingredients: an array of strings representing the ingredients used for the course
-	- allergenes: an array of strings representing possible allergenes 
-	- name: a string representing the name of the course
-	- image: a path to a image of the course uploaded by the provider
+		- category: a string representing a category where the course can be included
+		- ingredients: an array of strings representing the ingredients used for the course
+		- allergenes: an array of strings representing possible allergenes 
+		- name: a string representing the name of the course
+		- image: a path to a image of the course uploaded by the provider
 	
 -     schedule
 
