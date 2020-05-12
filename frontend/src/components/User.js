@@ -6,7 +6,6 @@ import AccountSettings from "./AccountSettings";
 import { Link } from "react-router-dom";
 
 const User = ({ data }) => {
-  console.log(data);
   const [index, setIndex] = useState(0);
   const [openSetting, setOpenSettings] = useState(false);
   const [openProfile, setOpenProfile] = useState(true);
