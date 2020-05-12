@@ -918,7 +918,7 @@ Create user new user accounts.
 ###POST
 
 **Request Body**:
-Client
+**Client**
 -    location.latitude - a number representing the latitude of the client's preffered location 
 -    location.longitude - a number representing the longitude of the client's preffered location
 -    prefferences - an array of strings representing a client's preffered courses
@@ -926,7 +926,7 @@ Client
 -    avatar -  a path to a image uploaded by the client that will be use as the client avatar
 
 <a/>
-Provider
+**Provider**
 -    location.latitude - a number representing the latitude of the provider's location
 -    location.longitude - a number representing the longitude of the provider's location
 -    location.adress - a string representing the provider's actual adress (street, number, city)
