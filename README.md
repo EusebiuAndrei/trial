@@ -996,7 +996,6 @@ Create user new user accounts.
                     "CUI": "RO123456789010",
                     "description": "However, the most important aspect of any restaurant is the quality of food and service, and we are justifiably proud of both.Our menu is based on the principles of using the high quality raw local ingredients, along with the best of ingredients imported from around the world, freshly cooked and presented by our head chef Matt Clarke and his team with care and attention.",
                     "priceCategory": "Expensive",
-                    "rating": 10,
                     "type": "Restaurant",
                     "menu": {
              
