@@ -7,36 +7,34 @@ const { auth } = require('../middlewares/index');
 const router = Router();
 
 router.post(
-	'/uploadSingle',
+	'/uploadSingle/:userId',
 	auth,
 	upload.single('myImage'),
 	async (req, res) => {
-		const { token } = req.data;
+		const { userId } = req.params;
 		const result = await imageService.uploadOneImage(
 			req.file.buffer,
 			req.headers.host,
-			token,
+			userId,
 		);
-		const statusCode = result.success ? 200 : 400;
 		console.log(result);
-		res.status(statusCode).json(result);
+		res.status(result.success ? 201 : 400).json(result);
 	},
 );
 
 router.post(
-	'/uploadMultiple',
+	'/uploadMultiple/:userId',
 	auth,
 	upload.array('myImage', 5),
 	async (req, res) => {
-		const { token } = req.data;
+		const { userId } = req.params;
 		const result = await imageService.uploadMultipleImages(
 			req.files,
 			req.headers.host,
-			token,
+			userId,
 		);
-		const statusCode = result.success ? 200 : 400;
 		console.log(result);
-		res.status(statusCode).json(result);
+		res.status(result.success ? 201 : 400).json(result);
 	},
 );
 

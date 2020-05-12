@@ -8,7 +8,7 @@ class ImageService {
 		this.services = services;
 	}
 
-	async uploadOneImage(buffer, hostname, token) {
+	async uploadOneImage(buffer, hostname, userId) {
 		try {
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
@@ -28,7 +28,7 @@ class ImageService {
 		}
 	}
 
-	async uploadMultipleImages(files, hostname, token) {
+	async uploadMultipleImages(files, hostname, userId) {
 		try {
 			const uploadedImages = [];
 			const fileUpload = new Resize(imagePath);

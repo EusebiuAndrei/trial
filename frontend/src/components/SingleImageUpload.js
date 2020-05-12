@@ -4,7 +4,9 @@ import * as api from "../api";
 class SingleImageUpload extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.userId);
     this.state = {
+      userId: props.userId,
       file: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -13,7 +15,7 @@ class SingleImageUpload extends React.Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    api.uploadSingle(this.state.file);
+    api.uploadSingle(this.state);
   }
 
   onChange(e) {

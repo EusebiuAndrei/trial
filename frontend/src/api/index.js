@@ -87,18 +87,21 @@ const getAllUsers = async () => {
   }
 };
 
-const uploadSingle = async (file) => {
+const uploadSingle = async (data) => {
   try {
     const formData = new FormData();
-    formData.append("myImage", file);
-
+    formData.append("myImage", data.file);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
     await axios
-      .post("http://localhost:4000/api/upload/uploadSingle", formData, config)
+      .post(
+        `http://localhost:4000/api/upload/uploadSingle/${data.userId}`,
+        formData,
+        config
+      )
       .then((response) => {
         alert("The file is successfully uploaded");
       })
@@ -110,12 +113,12 @@ const uploadSingle = async (file) => {
   }
 };
 
-const uploadMultiple = async (files) => {
+const uploadMultiple = async (data) => {
   try {
     const formData = new FormData();
-    let { length } = files;
+    let { length } = data.file;
     for (let i = 0; i < length; i++) {
-      formData.append("myImage", files[i]);
+      formData.append("myImage", data.file[i]);
     }
 
     const config = {
@@ -124,7 +127,11 @@ const uploadMultiple = async (files) => {
       },
     };
     await axios
-      .post("http://localhost:4000/api/upload/uploadMultiple", formData, config)
+      .post(
+        `http://localhost:4000/api/upload/uploadMultiple/${data.userId}`,
+        formData,
+        config
+      )
       .then((response) => {
         alert("The file is successfully uploaded");
       })

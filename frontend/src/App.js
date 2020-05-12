@@ -7,7 +7,7 @@ import Navigation from "./components/navigation/Navigation";
 function App() {
   return (
     <div className="App">
-      <Navigation logged={false} />
+      <Navigation logged={true} data={"app"} />
       {/* Daca vrei sa accesezi router logged schimba true->false pe viitor va fi optiune daca are un token valid*/}
     </div>
   );
