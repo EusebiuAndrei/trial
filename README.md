@@ -937,7 +937,7 @@ Create user new user accounts.
 -    description - a paragraph representing the provider description
 -    priceCategory - a string that can take the following values: Affordable, Medium, Expensive
 -    type - a string thath can take the following values: Restaurant, Canteen
--    menu - contains an courses array, an object from the course array has the following format
+-    menu - contains an courses array, an object from the course array has the following format:
 	- category: a string representing a category where the course can be included
 	- ingredients: an array of strings representing the ingredients used for the course
 	- allergenes: an array of strings representing possible allergenes 
