@@ -9,25 +9,6 @@ class UserService {
 		this.services = services;
 	}
 
-	async getTest() {
-		try {
-			const client = await this.db.Client.find({
-				_id: '5e8f52dddcdbbe3a702b4130',
-			});
-
-			const user = await this.db.User.find({
-				_id: '5e87b028ed2e6d4073748270',
-			});
-
-			return { success: true, data: { user, client } };
-		} catch (error) {
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
 	async getUserById(id) {
 		try {
 			const user = await this.db.User.findOne({ _id: id });

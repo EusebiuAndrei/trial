@@ -81,13 +81,6 @@ router.get('/:userId', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/test', async (req, res) => {
-	const result = await userService.getTest();
-	const statusCode = result.success ? 200 : 400;
-
-	res.status(statusCode).json(result);
-});
-
 router.post(
 	'/register',
 	celebrate({
