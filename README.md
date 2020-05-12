@@ -925,7 +925,8 @@ Create user new user accounts.
 -    allergies - an array of strings representing a client's allergies
 -    avatar -  a path to a image uploaded by the client that will be use as the client avatar
 
-<a/>
+
+**Request Body**:
 **Provider**
 -    location.latitude - a number representing the latitude of the provider's location
 -    location.longitude - a number representing the longitude of the provider's location
