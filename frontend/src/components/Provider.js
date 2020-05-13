@@ -66,7 +66,6 @@ const Provider = ({ data }) => {
       priceCategory,
       type,
     ].filter((value) => {
-      console.log(value);
       if (value === 0 || value === "") return false;
       else return true;
     }).length
@@ -106,16 +105,11 @@ const Provider = ({ data }) => {
       }
     } catch (err) {
       console.log(err);
-      this.setState({
-        error: err,
-        loading: false,
-        success: false,
-      });
+      setLoading(false);
     }
   };
 
   const handleDeleteTags = (tagIndex) => {
-    console.log(specials);
     setSpecials(specials.filter((value, index) => index != tagIndex));
 
     setSpecialTagItems(

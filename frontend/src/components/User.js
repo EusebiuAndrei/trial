@@ -4,6 +4,8 @@ import Client from "./Client";
 import Provider from "./Provider";
 import AccountSettings from "./AccountSettings";
 import { Link } from "react-router-dom";
+import Statistics from "./Statistics";
+import Menu from "./Menu";
 
 const User = ({ data }) => {
   const [index, setIndex] = useState(0);
@@ -11,8 +13,18 @@ const User = ({ data }) => {
   const [openProfile, setOpenProfile] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
   const [openSchedule, setOpenSchedule] = useState(false);
+  const [openStatistics, setOpenStatistics] = useState(false);
+
+  const handleOpenStatistics = () => {
+    setOpenStatistics(true);
+    setOpenMenu(false);
+    setOpenProfile(false);
+    setOpenSettings(false);
+    setOpenSchedule(false);
+  };
 
   const handleOpenSchedule = () => {
+    setOpenStatistics(false);
     setOpenMenu(false);
     setOpenProfile(false);
     setOpenSchedule(true);
@@ -20,6 +32,7 @@ const User = ({ data }) => {
   };
 
   const handleOpenMenu = () => {
+    setOpenStatistics(false);
     setOpenMenu(true);
     setOpenProfile(false);
     setOpenSchedule(false);
@@ -27,6 +40,7 @@ const User = ({ data }) => {
   };
 
   const handleOpenAccountSettings = () => {
+    setOpenStatistics(false);
     setOpenMenu(false);
     setOpenSchedule(false);
     setOpenSettings(true);
@@ -34,6 +48,7 @@ const User = ({ data }) => {
   };
 
   const handleOpenProfile = () => {
+    setOpenStatistics(false);
     setOpenMenu(false);
     setOpenSchedule(false);
     setOpenProfile(true);
@@ -55,7 +70,7 @@ const User = ({ data }) => {
               <Image
                 alt={value}
                 className="providerImage"
-                src={require(`../assets/${image}`)}
+                src={image}
                 roundedCircle
                 style={{
                   width: "200px",
@@ -95,7 +110,7 @@ const User = ({ data }) => {
         return (
           <Image
             alt="avatar"
-            src={require(`../assets/${data.details.avatar}`)}
+            src={data.details.avatar}
             roundedCircle
             style={{
               width: "200px",
@@ -160,6 +175,11 @@ const User = ({ data }) => {
           ) : (
             <ListGroup className="menu_profile">
               <ListGroup.Item className="menu_element_profile">
+                <Link className="menu_link" onClick={handleOpenStatistics}>
+                  Statistics
+                </Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="menu_element_profile">
                 <Link className="menu_link" onClick={handleOpenProfile}>
                   Profile
                 </Link>
@@ -196,8 +216,11 @@ const User = ({ data }) => {
         {openProfile && data.role === "Provider" && (
           <Provider data={data.details}></Provider>
         )}
-        {openMenu && data.role === "Provider" && <p>MENU</p>}
+        {openMenu && data.role === "Provider" && (
+          <Menu data={data.details.menu} />
+        )}
         {openSchedule && data.role === "Provider" && <p>SCHEDULE</p>}
+        {openStatistics && data.role === "Provider" && <Statistics />}
       </div>
     </div>
   );

@@ -1,91 +1,81 @@
-import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-const Menu = (props) => {
-	return (
-		<div>
-			<Modal
-				show={props.openMenu}
-				onHide={props.handleOpenMenu}
-			>
-				<Modal.Header closeButton>
-					<Modal.Title>Add a course</Modal.Title>
-				</Modal.Header>
+import React, { useState } from "react";
+import {
+  FormLabel,
+  FormControl,
+  FormGroup,
+  Card,
+  Button,
+  Accordion,
+  Form,
+} from "react-bootstrap";
+const Menu = ({ data }) => {
+  const [courses, setCourses] = useState(data.courses ? data.courses : []);
+  const [currentCourse, setCurrentCourse] = useState(0);
+  const [name, setName] = useState(courses[currentCourse].name);
 
-				<Modal.Body>
-					<div className="menuForm">
-						<Form>
-							<Form.Group controlId="formGridCity">
-								<Form.Label>Course Name</Form.Label>
-								<Form.Control />
-							</Form.Group>
-							<Form.Group controlId="formGridCity">
-								<Form.Label>Price</Form.Label>
-								<Form.Control />
-							</Form.Group>
-							<Form.Group controlId="formGridState">
-								<Form.Label>Category</Form.Label>
-								<Form.Control
-									as="select"
-									value="Choose..."
-								>
-									<option>Pasta</option>
-									<option>Pizza</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="formGridState">
-								<Form.Label>Allergenes</Form.Label>
-								<Form.Control
-									as="select"
-									value="Choose..."
-								>
-									<option>Affordable</option>
-									<option>Medium</option>
-									<option>Expensive</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="exampleForm.ControlSelect2">
-								<Form.Label>Ingredients</Form.Label>
-								<Form.Control as="select" multiple>
-									<option>Carrots</option>
-									<option>Tomato</option>
-									<option>Garlic</option>
-									<option>Onion</option>
-									<option>Potatoes</option>
-									<option>Chicken breast</option>
-									<option>Pork</option>
-									<option>Cow</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="exampleForm.ControlSelect2">
-								<Form.Label>Allergenes</Form.Label>
-								<Form.Control as="select" multiple>
-									<option>Gluten</option>
-									<option>Milk</option>
-									<option>Hazelnuts</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>Course photos</Form.Label>
-								<Form.Control
-									id="courseFile"
-									type="file"
-									multiple
-									label="Course Photo"
-								/>
-							</Form.Group>
-						</Form>
-					</div>
-				</Modal.Body>
+  const handleChangeName = (event) => {
+    const newCourses = courses;
+    newCourses[currentCourse] = event.target.value;
+    setCourses(newCourses);
+    console.log(courses);
+    setName(courses[currentCourse]);
+  };
 
-				<Modal.Footer>
-					<Button variant="secondary">Close</Button>
-					<Button variant="primary" type="submit">
-						Add course
-					</Button>
-				</Modal.Footer>
-			</Modal>
-		</div>
-	);
+  const formMenu = (value, index) => {
+    return (
+      <div className="profile_element">
+        <h5>NAME</h5>
+        <div className="align_left_profile_input">
+          <FormGroup>
+            <FormControl
+              placeholder={value.name}
+              value={value.name}
+              type="text"
+              onChange={handleChangeName}
+            ></FormControl>
+          </FormGroup>
+        </div>
+      </div>
+    );
+  };
+
+  const handlerClickAccordion = (event) => {
+    setCurrentCourse(event.target.id);
+    setName(courses[event.target.id].name);
+  };
+
+  const listMenu = () => {
+    const menu = [];
+    for (const [index, value] of courses.entries()) {
+      console.log(value);
+      menu.push(
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle
+              as={Button}
+              eventKey={index}
+              id={index}
+              onClick={handlerClickAccordion}
+            >
+              {value.name}
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey={index}>
+            <Card.Body>{formMenu(value, index)}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      );
+    }
+    return menu;
+  };
+
+  return (
+    <div className="menu_provider">
+      <Form>
+        <Accordion>{listMenu()}</Accordion>
+      </Form>
+    </div>
+  );
 };
 
 export default Menu;

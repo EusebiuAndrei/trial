@@ -23,8 +23,13 @@ class MultipleImageUpload extends React.Component {
   render() {
     return (
       <form onSubmit={this.onFormSubmit}>
-        <p>Upload a photo</p>
-        <input type="file" name="myImage" multiple onChange={this.onChange} />
+        <input
+          type="file"
+          name="myImage"
+          className="input_photo"
+          multiple
+          onChange={this.onChange}
+        />
         <button type="submit" class="btn btn-outline-primary">
           Upload
         </button>
