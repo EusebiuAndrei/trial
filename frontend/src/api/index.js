@@ -120,7 +120,7 @@ const uploadMultiple = async (data) => {
     for (let i = 0; i < length; i++) {
       formData.append("myImage", data.file[i]);
     }
-
+    console.log(data.userId);
     const config = {
       headers: {
         "content-type": "multipart/form-data",

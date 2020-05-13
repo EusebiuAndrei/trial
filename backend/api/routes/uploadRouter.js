@@ -33,6 +33,7 @@ router.post(
 	upload.array('myImage', 5),
 	async (req, res) => {
 		const { userId } = req.params;
+		console.log(userId);
 		const result = await imageService.uploadMultipleImages(
 			req.files,
 			req.headers.host,

@@ -375,7 +375,7 @@ const Provider = ({ data }) => {
             <p className="profile_explanations">
               <small>Upload some photos</small>
             </p>
-            <MultipleImageUpload data={data.userId} />
+            <MultipleImageUpload userId={data.userId} />
           </div>
           <div className="submit_button">
             <Button className="actual_button" onClick={handleSaveDate}>
