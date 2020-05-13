@@ -163,6 +163,33 @@ const profile = async (userData) => {
   }
 };
 
+const uploadMenuPhoto = async (data) => {
+  try {
+    const formData = new FormData();
+    console.log(data);
+    formData.append("myImage", data.file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    await axios
+      .post(
+        `http://localhost:4000/api/upload/uploadMenuPhoto/${data.providerId}/${data.courseId}`,
+        formData,
+        config
+      )
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {});
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 export {
   register,
   login,
@@ -170,5 +197,6 @@ export {
   getAllUsers,
   uploadSingle,
   uploadMultiple,
+  uploadMenuPhoto,
   profile,
 };

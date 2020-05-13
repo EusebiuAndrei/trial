@@ -1,5 +1,6 @@
 const Resize = require('./Resize');
 const imagePath = './public/images';
+const mongoose = require('mongoose');
 
 class ImageService {
 	constructor({ db, services }) {
@@ -13,7 +14,7 @@ class ImageService {
 			const filename = await fileUpload.save(buffer);
 			const newPath = `http://${hostname}/images/${filename}`;
 
-			await this.db.Provider.updateOne(
+			await this.db.Client.updateOne(
 				{ userId },
 				{ $set: { avatar: uploadedImages } },
 			);
@@ -46,11 +47,27 @@ class ImageService {
 				{ $push: { images: uploadedImages } },
 			);
 
-			console.log(await this.db.Provider.find({ userId }));
 			return {
 				success: true,
 				name: JSON.stringify(uploadedImages),
 			};
+		} catch (error) {
+			return {
+				success: false,
+				error: 'Please provide a valid image!',
+			};
+		}
+	}
+
+	async uploadMenuPhoto(buffer, hostname, providerId, courseId) {
+		try {
+			const fileUpload = new Resize(imagePath);
+			const filename = await fileUpload.save(buffer);
+			const newPath = `http://${hostname}/images/${filename}`;
+
+			//trebuie salvat in baza de date de la manu poza
+
+			return { success: true, name: { newPath } };
 		} catch (error) {
 			return {
 				success: false,

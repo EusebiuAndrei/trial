@@ -1,12 +1,13 @@
 import React from "react";
 import * as api from "../api";
 
-class SingleImageUpload extends React.Component {
+class UploadMenuPhoto extends React.Component {
   constructor(props) {
     super(props);
     console.log(props.userId);
     this.state = {
-      userId: props.userId,
+      courseId: "5eb5704c341f5a1988b126a1", //course id
+      providerId: "5eb17156251c5187bd95ff83", // provider id
       file: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -35,4 +36,4 @@ class SingleImageUpload extends React.Component {
   }
 }
 
-export default SingleImageUpload;
+export default UploadMenuPhoto;

@@ -21,7 +21,9 @@ router.post(
 			userId,
 		);
 		console.log(result);
-		res.status(result.success ? 201 : 400).json(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
 	},
 );
 
@@ -36,7 +38,26 @@ router.post(
 			req.headers.host,
 			userId,
 		);
-		console.log(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
+	},
+);
+
+router.post(
+	'/uploadMenuPhoto/:providerId/:courseId',
+	auth,
+	upload.single('myImage'),
+	async (req, res) => {
+		const { providerId, courseId } = req.params;
+		console.log(providerId);
+		//console.log(req.file);
+		const result = await imageService.uploadMenuPhoto(
+			req.file.buffer,
+			req.headers.host,
+			providerId,
+			courseId,
+		);
 		res.status(setResponseStatus(201, 400, result.success)).json(
 			result,
 		);
