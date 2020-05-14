@@ -136,6 +136,46 @@ const uploadMultiple = async (files) => {
   }
 };
 
+const changePassword = async (userData) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "post",
+      url: `http://localhost:4000/api/users/changePassword`,
+      data: userData,
+    });
+    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+const changeEmail = async (userData) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "post",
+      url: `http://localhost:4000/api/users/changeEmail`,
+      data: userData,
+    });
+    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 const profile = async (userData) => {
   try {
     const token = localStorage.getItem("userToken");
@@ -163,5 +203,7 @@ export {
   getAllUsers,
   uploadSingle,
   uploadMultiple,
+  changePassword,
+  changeEmail,
   profile,
 };
