@@ -23,6 +23,23 @@ const login = async (email, password) => {
   }
 };
 
+const lostPassword = async (email) => {
+  console.log("trimit" + email)
+  try {
+      await axios({
+      method: "post",
+      url: "http://localhost:4000/api/users/lostpassword",
+      data: {
+        email
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 const register = async (username, role, email, password) => {
   try {
     const {
@@ -164,4 +181,5 @@ export {
   uploadSingle,
   uploadMultiple,
   profile,
+  lostPassword
 };

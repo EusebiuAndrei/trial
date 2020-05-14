@@ -59,7 +59,7 @@ router.post('/logout', auth, async (req, res) => {
 router.post('/lostpassword', async function (req, res) {
 	const result = await userService.lostPassword(req.body);
 	const statusCode = result.success ? 201 : 400;
-
+	
 	res.status(statusCode).json(result);
 });
 
