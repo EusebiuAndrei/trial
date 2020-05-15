@@ -5,10 +5,10 @@ import style from '../styles/LoginDesktopStyle';
 import {
 	Link,
   } from "react-router-dom";
-  
 import { IoIosMail,IoIosLock,IoLogoFacebook,IoIosPerson} from "react-icons/io";
 import { fadeIn } from 'react-animations';
 import { useMediaQuery } from 'react-responsive'
+import ButtonFacebookLogin from './buttons/ButtonFacebookLogin';
 
 const Desktop = ({ children }) => {
 	const isDesktop = useMediaQuery({ minWidth: 767 })
@@ -61,6 +61,10 @@ class Login extends React.Component{
 		this.handleLostPasswordClick = this.handleLostPasswordClick.bind(this);
 
 	}
+
+	 responseFacebook = (response) => {
+		console.log(response);
+	  }
 
 	async handleLoginClick(){
 		console.log(JSON.stringify(this.state,null,'...'))
@@ -236,6 +240,28 @@ class Login extends React.Component{
 		);
 	}
 
+	modalLostPassword = () => {
+		return (
+		<Modal show={this.state.modalVisible} onHide={()=>{this.setState({modalVisible:false})}}>
+			<Modal.Header closeButton>
+				<Modal.Title>Lost password</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<p>Type here your email address and we will sent you a new one</p>
+				{this.renderInputfield("","YourEmail@mail.com",this.handleEmailLostPassword,"email",this.state.alertLostPassword,this.state.emailLostPassword)}
+			</Modal.Body>
+			<Modal.Footer>
+				<Button style={{backgroundColor:'#D9054F'}} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
+					Close
+				</Button>
+				<Button style={{backgroundColor:'#079604'}} variant="primary" onClick={this.handleLostPasswordClick}>
+					Send
+				</Button>
+			</Modal.Footer>
+		</Modal>
+		);
+	}
+
 
 	renderRoleButton = (text,role) => {
 		return(
@@ -256,26 +282,9 @@ class Login extends React.Component{
 							this.state.option === 1 ? 
 							<div className="shadow p-3 mb-5 bg-white rounded" style={style.loginContainer}>
 
-								<Modal show={this.state.modalVisible} onHide={()=>{this.setState({modalVisible:false})}}>
-									<Modal.Header closeButton>
-										<Modal.Title>Lost password</Modal.Title>
-									</Modal.Header>
-										<Modal.Body>
-											<p>Type here your email address and we will sent you a new one</p>
-											{this.renderInputfield("","YourEmail@mail.com",this.handleEmailLostPassword,"email",this.state.alertLostPassword,this.state.emailLostPassword)}
-
-										</Modal.Body>
-									<Modal.Footer>
-										<Button style={{backgroundColor:'#D9054F'}} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
-											Close
-										</Button>
-										<Button style={{backgroundColor:'#079604'}} variant="primary" onClick={this.handleLostPasswordClick}>
-											Send
-										</Button>
-									</Modal.Footer>
-								</Modal>
-
 								<p style={style.loginText}>Log in to your account</p>
+
+								{this.modalLostPassword()}
 
 								{this.renderInputfield("Email address","YourEmail@mail.com",this.handleChangeEmail,"email",this.state.alertEmail,this.state.email)}
 								{this.renderInputfield("Password","Password",this.handleChangePassword,"password",this.state.alertPassword,this.state.password)}
@@ -284,10 +293,7 @@ class Login extends React.Component{
 									Log in
 								</Button>
 
-								<Button variant="outline-danger" style={style.logInFacebook}>
-									<IoLogoFacebook size={25} style={style.facebookLogo} color={'#D9054F'}/>
-									 Log in with Facebook
-								</Button>
+								<ButtonFacebookLogin/>
 
 								<button style={style.dontHaveAccount} onClick={()=>{this.setState({option:2,success:""})}}>
 									Don't have an account? Create one
@@ -346,17 +352,20 @@ class Login extends React.Component{
 									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeEmail,"email",this.state.alertEmail,this.state.email)}
 									{this.renderInputFieldPhone("Password","Password",this.handleChangePassword,"password",this.state.alertPassword,this.state.password)}
 
-									<Button variant="danger" style={{width:220,marginBottom:'5%',marginTop:'5%'}} onClick={this.handleLoginClick}>
+									{this.modalLostPassword()}
+
+									<Button variant="danger" style={{width:250,marginBottom:'1%',marginTop:'5%'}} onClick={this.handleLoginClick}>
 										Log in
 									</Button>
 
-									<Button variant="outline-danger" style={{width:220}}>
-										<IoLogoFacebook size={25} style={{}} color={'#D9054F'}/>
-										Log in with Facebook
-									</Button>
+									<ButtonFacebookLogin/>
 
 									<button style={{color:'#858585',fontSize:11,marginTop:'1%',backgroundColor:'transparent',borderWidth:0}} onClick={()=>{this.setState({option:2,success:"",alertEmail:'#DCDCDC',alertPassword:'#DCDCDC',email:"",password:""})}}>
 										Don't have an account? Create one
+									</button>
+
+									<button style={style.dontHaveAccount} onClick={()=>{this.setState({modalVisible:true})}}>
+										I forggot my password
 									</button>
 
 									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
@@ -395,3 +404,4 @@ class Login extends React.Component{
 }
 
 export default Login;
+

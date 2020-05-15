@@ -27,10 +27,10 @@ const style ={
         backgroundColor:'#F9F9F9',borderLeftWidth:0
     },
     logInButton:{
-        width:'60%',height:'8%',marginTop:'3%',backgroundColor:'#D9054F'
+        width:250,height:'8%',marginTop:'3%',backgroundColor:'#D9054F'
     },
     logInFacebook:{
-        width:'60%',height:'8%',marginTop:'2%',borderWidth:1.5,flexDirection:'row',display:'flex'
+        width: 250,marginTop:'2%',borderWidth:1.5
     },
     facebookLogo:{
         marginLeft:10,marginRight:4
