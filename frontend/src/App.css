@@ -281,7 +281,7 @@ div.ReactTags__tags {
 }
 
 div.ReactTags__tagInput {
-    width: 200px;
+    width: 150px;
 	margin: 20px;
 	border-radius: 2px;
 	display: inline-block;
@@ -300,20 +300,16 @@ div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
 div.ReactTags__selected span.ReactTags__tag {
 	border: 2px solid #D9054F;
 	color: #D9054F;
-    background: #FBF3E6;
-	font-size: 16px;
-	font-weight: 400;
-    padding: 10px;
-	margin: 0 10px;
-    cursor: move;
-    border-radius: 10px;
+	background: #fbf3e6;
+    font-size: 13px;
+    display: inline-block;
+    padding: 6px;
+    margin: 0 5px 5px 5px;
+    cursor: default !important;
+	border-radius: 2px;
+	width: auto;
 }
 
-div.ReactTags__selected a.ReactTags__remove {
-    color: black;
-    margin-left: 5px;
-    cursor: pointer;
-}
 .submit_button{
 	margin: 40px;
 	align-content: center;
@@ -443,4 +439,8 @@ iframe{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+}
+
+.add_button_list{
+	background-color: transparent;
 }

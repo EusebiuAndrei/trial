@@ -113,6 +113,7 @@ const Schedule = ({ data }) => {
     try {
       let answer = await api.profile(newData);
       if (answer.success === true) {
+        alert("Congratulations! You just updated your schedule!");
         setLoading(false);
       } else {
         setLoading(false);

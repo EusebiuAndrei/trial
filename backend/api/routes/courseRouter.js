@@ -17,4 +17,5 @@ router.get('/:idCourse', async (req, res) => {
 	const statusCode = result.success ? 200 : 400;
 	res.status(statusCode).json(result);
 });
+
 module.exports = router;

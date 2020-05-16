@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Form } from "react-bootstrap";
+import { Accordion, Form, Button } from "react-bootstrap";
 import Course from "./Course";
 
 const Menu = ({ data }) => {
@@ -16,6 +16,9 @@ const Menu = ({ data }) => {
             return <Course data={courseData}></Course>;
           })}
         </Accordion>
+        <div className="submit_button">
+          <Button className="actual_button">Add</Button>
+        </div>
       </Form>
     </div>
   );

@@ -18,6 +18,7 @@ const Provider = ({ data }) => {
     enter: 13,
   };
   const delimiters = [KeyCodes.comma, KeyCodes.enter];
+  const [newCategory, setNewCategory] = useState("");
   const [specials, setSpecials] = useState(data.specials ? data.specials : []);
   const [specialsTagItems, setSpecialTagItems] = useState(
     data.specials
@@ -76,7 +77,6 @@ const Provider = ({ data }) => {
   const [succesLatitude, setSuccesLatitude] = useState(true);
   const [succesLongitude, setSuccesLongitude] = useState(true);
   const [succesCapacity, setSuccesCapacity] = useState(true);
-  const [failureSave, setFailureSave] = useState(true);
 
   const handleSaveDate = async () => {
     const userData = {
@@ -96,10 +96,9 @@ const Provider = ({ data }) => {
     try {
       let answer = await api.profile(userData);
       if (answer.success === true) {
-        setFailureSave(false);
+        alert("Congratulation! You just updated your profile");
         setLoading(false);
       } else {
-        setFailureSave(true);
         setLoading(false);
       }
     } catch (err) {
@@ -330,9 +329,11 @@ const Provider = ({ data }) => {
             <div className="align_left_profile_input">
               <FormGroup>
                 <div className="list_of_objects">
+                  <Button className="add_button_list">Add</Button>
                   <ReactTags
                     placeholder="Add new dish"
-                    inline={false}
+                    allowDeleteFromEmptyInput={false}
+                    allowUnique={true}
                     inputFieldPosition="top"
                     tags={specialsTagItems}
                     handleDelete={handleDeleteTags}
@@ -374,12 +375,6 @@ const Provider = ({ data }) => {
             <Button className="actual_button" onClick={handleSaveDate}>
               Save
             </Button>
-            <div>
-              {advertisationMessage(
-                failureSave,
-                "Congratulation! You just updated you're profile"
-              )}
-            </div>
           </div>
         </Form>
       </div>
