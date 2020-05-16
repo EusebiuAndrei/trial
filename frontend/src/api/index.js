@@ -183,6 +183,45 @@ const profile = async (userData) => {
   }
 };
 
+const addCourse = async (idMenu) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "post",
+      url: `http://localhost:4000/api/courses/${idMenu}`,
+    });
+    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+const updateCourse = async (data) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "patch",
+      url: `http://localhost:4000/api/courses/${data.idCourse}`,
+      body: data,
+    });
+    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 export {
   register,
   login,
@@ -192,4 +231,6 @@ export {
   uploadMultiple,
   profile,
   uploadMenuPhoto,
+  addCourse,
+  updateCourse,
 };
