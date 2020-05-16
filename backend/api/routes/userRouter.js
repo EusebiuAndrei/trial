@@ -16,6 +16,13 @@ router.get('/', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/auth', auth, async (req, res) => {
+	const { token } = req.data;
+	const result = await userService.authorize(token);
+	const statusCode = result.success ? 200 : 401;
+	res.status(statusCode).json(result);
+});
+
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
 	const result = await userService.getUserById(userId);
@@ -59,7 +66,7 @@ router.post('/logout', auth, async (req, res) => {
 router.post('/lostpassword', async function (req, res) {
 	const result = await userService.lostPassword(req.body);
 	const statusCode = result.success ? 201 : 400;
-	
+
 	res.status(statusCode).json(result);
 });
 
@@ -85,7 +92,6 @@ router.delete('/all', async (req, res) => {
 });
 
 router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
-	
 	const result = await userService.configureUser(
 		req.data,
 		req.content,
