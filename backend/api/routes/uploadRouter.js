@@ -41,18 +41,21 @@ router.post(
 );
 
 router.post(
-	'/uploadMenuPhoto',
+	'/uploadMenuPhoto/:idCourse',
 	auth,
 	upload.single('myImage'),
 	async (req, res) => {
-		//console.log(req.file);
+		//console.log(req.params);
+		let { idCourse } = req.params;
+		//console.log(idCourse);
 		const result = await imageService.uploadMenuPhoto(
 			req.file.buffer,
 			req.headers.host,
+			idCourse,
 		);
-		res.status(setResponseStatus(201, 400, result.success)).json(
-			result,
-		);
+		const statusCode = result.success ? 200 : 400;
+		console.log(result);
+		res.status(statusCode).json(result);
 	},
 );
 

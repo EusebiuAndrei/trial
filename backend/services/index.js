@@ -48,6 +48,7 @@ const imageService = new ImageService({
 		User,
 		Client,
 		Provider,
+		Menu,
 	},
 	services: {},
 });

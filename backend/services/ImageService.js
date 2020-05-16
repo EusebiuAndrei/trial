@@ -56,11 +56,20 @@ class ImageService {
 			};
 		}
 	}
-	async uploadMenuPhoto(buffer, hostname) {
+	async uploadMenuPhoto(buffer, hostname, idCourse) {
 		try {
+			console.log(buffer);
+			console.log(idCourse);
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
 			const newPath = `http://${hostname}/images/${filename}`;
+
+			await this.db.Menu.updateOne(
+				{
+					'courses._id': idCourse,
+				},
+				{ $set: { 'courses.$.image': newPath } },
+			);
 
 			return { success: true, name: { newPath } };
 		} catch (error) {

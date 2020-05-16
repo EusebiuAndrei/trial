@@ -102,6 +102,59 @@ class CourseService {
 			};
 		}
 	}
+
+	async addCourse(idMenu) {
+		try {
+			const emptyCourse = {
+				name: '',
+				category: [],
+				price: 0,
+				image: '',
+				ingredients: [],
+				allergenes: [],
+			};
+			const course = await this.db.Menu.findOneAndUpdate(
+				{
+					_id: idMenu,
+				},
+				{
+					$push: { courses: emptyCourse },
+				},
+				{ useFindAndModify: false },
+			);
+
+			return { success: true, data: course };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async updateCourse(idCourse, payload) {
+		try {
+			console.log(idCourse);
+			console.log(payload);
+
+			const course = await this.db.Menu.findOneAndUpdate(
+				{
+					'courses._id': idCourse,
+				},
+				{ $set: { 'courses.$': payload } },
+				{ useFindAndModify: false },
+			);
+
+			return { success: true, data: course };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
 }
 
 module.exports = CourseService;
