@@ -5,6 +5,7 @@ class UploadMenuPhoto extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      idCourse: props.idCourse,
       file: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);

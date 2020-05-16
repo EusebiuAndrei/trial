@@ -245,7 +245,7 @@ const Course = ({ data }) => {
               </FormGroup>
             </div>
           </div>
-          <UploadMenuPhoto />
+          <UploadMenuPhoto idCourse={data.course._id} />
           <div className="submit_button">
             <Button className="actual_button" onClick={handleSaveDate}>
               Save
