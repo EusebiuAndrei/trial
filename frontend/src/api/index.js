@@ -175,7 +175,7 @@ const uploadMenuPhoto = async (data) => {
     };
     await axios
       .post(
-        `http://localhost:4000/api/upload/uploadMenuPhoto/${data.providerId}/${data.courseId}`,
+        `http://localhost:4000/api/upload/uploadMenuPhoto`,
         formData,
         config
       )

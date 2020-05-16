@@ -59,13 +59,18 @@ class ImageService {
 		}
 	}
 
-	async uploadMenuPhoto(buffer, hostname, providerId, courseId) {
+	async uploadMenuPhoto(buffer, hostname, idCourse) {
 		try {
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
 			const newPath = `http://${hostname}/images/${filename}`;
 
-			//trebuie salvat in baza de date de la manu poza
+			await this.db.Menu.updateOne(
+				{
+					'courses._id': idCourse,
+				},
+				{ $set: { 'courses.$.image': newPath } },
+			);
 
 			return { success: true, name: { newPath } };
 		} catch (error) {

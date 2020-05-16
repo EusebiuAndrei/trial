@@ -6,8 +6,6 @@ class UploadMenuPhoto extends React.Component {
     super(props);
     console.log(props.userId);
     this.state = {
-      courseId: "5eb5704c341f5a1988b126a1", //course id
-      providerId: "5eb17156251c5187bd95ff83", // provider id
       file: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);

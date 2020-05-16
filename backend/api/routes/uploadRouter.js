@@ -46,18 +46,17 @@ router.post(
 );
 
 router.post(
-	'/uploadMenuPhoto/:providerId/:courseId',
+	'/uploadMenuPhoto/:idCourse',
 	auth,
 	upload.single('myImage'),
 	async (req, res) => {
-		const { providerId, courseId } = req.params;
-		console.log(providerId);
-		//console.log(req.file);
+		console.log(req.params);
+		let { idCourse } = req.params;
+		console.log(idCourse);
 		const result = await imageService.uploadMenuPhoto(
 			req.file.buffer,
 			req.headers.host,
-			providerId,
-			courseId,
+			idCourse,
 		);
 		res.status(setResponseStatus(201, 400, result.success)).json(
 			result,
