@@ -49,7 +49,6 @@ const Course = ({ data }) => {
 
   const handleAddIngredientToList = (event) => {
     setIngredients([...ingredients, newIngredient]);
-    console.log(ingredients);
   };
 
   const handleAddAllergene = (event) => {
@@ -58,7 +57,6 @@ const Course = ({ data }) => {
 
   const handleAddAllergenesToList = (event) => {
     setAllergenes([...allergenes, newAllergen]);
-    console.log(ingredients);
   };
 
   const handleDeleteTags = (tagIndex) => {
@@ -82,24 +80,17 @@ const Course = ({ data }) => {
   };
 
   const handleSaveDate = async () => {
-    const userData = {
-      menu: {
-        courses: [
-          {
-            name,
-            price,
-            ingredients,
-            allergenes,
-            category,
-          },
-        ],
-      },
+    const courseData = {
+      name,
+      price,
+      ingredients,
+      allergenes,
+      category,
     };
     setLoading(true);
     try {
-      let answer = await api.profile(userData);
+      let answer = await api.updateCourse(data.course._id, courseData);
       if (answer.success === true) {
-        alert("The profile was updated with success!");
         setLoading(false);
       } else {
         setLoading(false);
@@ -203,7 +194,7 @@ const Course = ({ data }) => {
                     Ingredients
                   </option>
                   {ingredients.map((ingredient) => {
-                    return <option>{ingredient}</option>;
+                    return <option key={ingredient}>{ingredient}</option>;
                   })}
                 </FormControl>
               </FormGroup>
@@ -238,8 +229,8 @@ const Course = ({ data }) => {
                   >
                     Allergenes
                   </option>
-                  {allergenes.map((allergenes) => {
-                    return <option>{allergenes}</option>;
+                  {allergenes.map((allergene) => {
+                    return <option key={allergene}>{allergene}</option>;
                   })}
                 </FormControl>
               </FormGroup>

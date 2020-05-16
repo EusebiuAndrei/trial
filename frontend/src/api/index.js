@@ -113,7 +113,6 @@ const uploadSingle = async (file) => {
 const uploadMenuPhoto = async (data) => {
   try {
     const formData = new FormData();
-    console.log(data);
     formData.append("myImage", data.file);
     const config = {
       headers: {
@@ -176,7 +175,6 @@ const profile = async (userData) => {
       url: `http://localhost:4000/api/users/profile`,
       data: userData,
     });
-    console.log(userDetails);
     return { success: true, userDetails };
   } catch (error) {
     return { success: false, errorMessage: error.message };
@@ -189,20 +187,20 @@ const addCourse = async (idMenu) => {
     setAuthorizationToken(token);
     const {
       data: {
-        data: { userDetails },
+        data: { courses },
       },
     } = await axios({
       method: "post",
       url: `http://localhost:4000/api/courses/${idMenu}`,
     });
-    console.log(userDetails);
-    return { success: true, userDetails };
+
+    return { success: true, courses };
   } catch (error) {
     return { success: false, errorMessage: error.message };
   }
 };
 
-const updateCourse = async (data) => {
+const updateCourse = async (idCourse, courseData) => {
   try {
     const token = localStorage.getItem("userToken");
     setAuthorizationToken(token);
@@ -212,10 +210,9 @@ const updateCourse = async (data) => {
       },
     } = await axios({
       method: "patch",
-      url: `http://localhost:4000/api/courses/${data.idCourse}`,
-      body: data,
+      url: `http://localhost:4000/api/courses/${idCourse}`,
+      data: courseData,
     });
-    console.log(userDetails);
     return { success: true, userDetails };
   } catch (error) {
     return { success: false, errorMessage: error.message };

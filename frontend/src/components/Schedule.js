@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as api from "../api";
 import { FormGroup, FormControl, Form, Button } from "react-bootstrap";
+import { useMediaQuery } from "react-responsive";
 
 const Schedule = ({ data }) => {
   const [startMonday, setStartMonday] = useState(data.schedule[0].startHour);
@@ -113,7 +114,6 @@ const Schedule = ({ data }) => {
     try {
       let answer = await api.profile(newData);
       if (answer.success === true) {
-        alert("Congratulations! You just updated your schedule!");
         setLoading(false);
       } else {
         setLoading(false);
@@ -123,177 +123,365 @@ const Schedule = ({ data }) => {
       setLoading(false);
     }
   };
+
+  const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 767 });
+    return isDesktop ? children : null;
+  };
+
+  const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+    return isMobile ? children : null;
+    console.log(isMobile);
+  };
   return (
-    <div className="schedule_provider">
-      <div className="schedule_form">
-        <Form>
-          <div className="profile_title">
-            <h2>Schedule</h2>
+    <div>
+      <Desktop>
+        <div className="schedule_provider">
+          <div className="schedule_form">
+            <Form>
+              <div className="profile_title">
+                <h2>Schedule</h2>
+              </div>
+              <div className="schedule_columns">
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h4>DAY</h4>
+                  </div>
+                  <h4>START TIME</h4>
+                  <h4>END TIME</h4>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5> MONDAY </h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startMonday}
+                      value={startMonday}
+                      type="text"
+                      onChange={handleStartMonday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endMonday}
+                      value={endMonday}
+                      type="text"
+                      onChange={handleEndMonday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>TUESDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startTuesday}
+                      value={startTuesday}
+                      type="text"
+                      onChange={handleStartTuesday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endTuesday}
+                      value={endTuesday}
+                      type="text"
+                      onChange={handleEndTuesday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>WEDNESDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startWednesday}
+                      value={startWednesday}
+                      type="text"
+                      onChange={handleStartWednesday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endWednesday}
+                      value={endWednesday}
+                      type="text"
+                      onChange={handleEndWednesday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>THURSDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startThursday}
+                      value={startThursday}
+                      type="text"
+                      onChange={handleStartThursday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endThursday}
+                      value={endThursday}
+                      type="text"
+                      onChange={handleEndThursday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>FRIDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startFriday}
+                      value={startFriday}
+                      type="text"
+                      onChange={handleStartFriday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endFriday}
+                      value={endFriday}
+                      type="text"
+                      onChange={handleEndFriday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>SATURDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSaturday}
+                      value={startSaturday}
+                      type="text"
+                      onChange={handleStartSaturday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSaturday}
+                      value={startSaturday}
+                      type="text"
+                      onChange={handleEndSaturday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>SUNDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSunday}
+                      value={startSunday}
+                      type="text"
+                      onChange={handleStartSunday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endSunday}
+                      value={endSunday}
+                      type="text"
+                      onChange={handleEndSunday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="submit_button">
+                  <Button className="actual_button" onClick={handleSaveButton}>
+                    Save
+                  </Button>
+                  <div></div>
+                </div>
+              </div>
+            </Form>
           </div>
-          <div className="schedule_columns">
-            <div className="schedule_row">
-              <div className="day_title">
-                <h4>DAY</h4>
+        </div>
+      </Desktop>
+      <Mobile>
+        <div className="schedule_provider_phone">
+          <div className="schedule_form_phone">
+            <Form>
+              <div className="profile_title">
+                <h2>Schedule</h2>
               </div>
-              <h4>START TIME</h4>
-              <h4>END TIME</h4>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5> MONDAY </h5>
+              <div className="schedule_columns">
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h4>DAY</h4>
+                  </div>
+                  <h4>START TIME</h4>
+                  <h4>END TIME</h4>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5> MONDAY </h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startMonday}
+                      value={startMonday}
+                      type="text"
+                      onChange={handleStartMonday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endMonday}
+                      value={endMonday}
+                      type="text"
+                      onChange={handleEndMonday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>TUESDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startTuesday}
+                      value={startTuesday}
+                      type="text"
+                      onChange={handleStartTuesday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endTuesday}
+                      value={endTuesday}
+                      type="text"
+                      onChange={handleEndTuesday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>WEDNESDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startWednesday}
+                      value={startWednesday}
+                      type="text"
+                      onChange={handleStartWednesday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endWednesday}
+                      value={endWednesday}
+                      type="text"
+                      onChange={handleEndWednesday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>THURSDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startThursday}
+                      value={startThursday}
+                      type="text"
+                      onChange={handleStartThursday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endThursday}
+                      value={endThursday}
+                      type="text"
+                      onChange={handleEndThursday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>FRIDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startFriday}
+                      value={startFriday}
+                      type="text"
+                      onChange={handleStartFriday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endFriday}
+                      value={endFriday}
+                      type="text"
+                      onChange={handleEndFriday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>SATURDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSaturday}
+                      value={startSaturday}
+                      type="text"
+                      onChange={handleStartSaturday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSaturday}
+                      value={startSaturday}
+                      type="text"
+                      onChange={handleEndSaturday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="schedule_row">
+                  <div className="day_title">
+                    <h5>SUNDAY</h5>
+                  </div>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={startSunday}
+                      value={startSunday}
+                      type="text"
+                      onChange={handleStartSunday}
+                    ></FormControl>
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      placeholder={endSunday}
+                      value={endSunday}
+                      type="text"
+                      onChange={handleEndSunday}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+                <div className="submit_button">
+                  <Button className="actual_button" onClick={handleSaveButton}>
+                    Save
+                  </Button>
+                  <div></div>
+                </div>
               </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startMonday}
-                  value={startMonday}
-                  type="text"
-                  onChange={handleStartMonday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endMonday}
-                  value={endMonday}
-                  type="text"
-                  onChange={handleEndMonday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>TUESDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startTuesday}
-                  value={startTuesday}
-                  type="text"
-                  onChange={handleStartTuesday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endTuesday}
-                  value={endTuesday}
-                  type="text"
-                  onChange={handleEndTuesday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>WEDNESDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startWednesday}
-                  value={startWednesday}
-                  type="text"
-                  onChange={handleStartWednesday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endWednesday}
-                  value={endWednesday}
-                  type="text"
-                  onChange={handleEndWednesday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>THURSDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startThursday}
-                  value={startThursday}
-                  type="text"
-                  onChange={handleStartThursday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endThursday}
-                  value={endThursday}
-                  type="text"
-                  onChange={handleEndThursday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>FRIDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startFriday}
-                  value={startFriday}
-                  type="text"
-                  onChange={handleStartFriday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endFriday}
-                  value={endFriday}
-                  type="text"
-                  onChange={handleEndFriday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>SATURDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startSaturday}
-                  value={startSaturday}
-                  type="text"
-                  onChange={handleStartSaturday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={startSaturday}
-                  value={startSaturday}
-                  type="text"
-                  onChange={handleEndSaturday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="schedule_row">
-              <div className="day_title">
-                <h5>SUNDAY</h5>
-              </div>
-              <FormGroup>
-                <FormControl
-                  placeholder={startSunday}
-                  value={startSunday}
-                  type="text"
-                  onChange={handleStartSunday}
-                ></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  placeholder={endSunday}
-                  value={endSunday}
-                  type="text"
-                  onChange={handleEndSunday}
-                ></FormControl>
-              </FormGroup>
-            </div>
-            <div className="submit_button">
-              <Button className="actual_button" onClick={handleSaveButton}>
-                Save
-              </Button>
-              <div></div>
-            </div>
+            </Form>
           </div>
-        </Form>
-      </div>
+        </div>
+      </Mobile>
     </div>
   );
 };

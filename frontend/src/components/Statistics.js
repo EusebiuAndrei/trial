@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../assets/btnStyle.css";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { useMediaQuery } from "react-responsive";
 
 const Statistic = ({ data }) => {
   const token = localStorage.getItem("userToken");
@@ -42,101 +43,222 @@ const Statistic = ({ data }) => {
     setOrder(newOrder, setShowOrder(`order=${orderValue}&`));
   };
 
+  const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 767 });
+    return isDesktop ? children : null;
+  };
+
+  const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+    return isMobile ? children : null;
+    console.log(isMobile);
+  };
   return (
-    <div className="statistics_main">
-      <div className="profile_title">
-        <h2>STATISTICS</h2>
-      </div>
-      <div className="statistics_element">
-        <div className="profile_element">
-          <h5>Number of orders per hour</h5>
-          <p className="profile_explanations">
-            <small>
-              Get a visual representation on how orders are distributed through
-              the day
-            </small>
-          </p>
-        </div>
-        <iframe
-          src={ordersPerHour}
-          frameborder="0"
-          width="100%"
-          height="400"
-          scrolling="no"
-        ></iframe>
-        <div className="statistics_buttons">
-          <Button className="actual_button" onClick={handleAllRestaurants}>
-            All Restaurants
-          </Button>
-          <Button className="actual_button" onClick={handleARestaurant}>
-            Your Restaurant
-          </Button>
-        </div>
-      </div>
-      <div className="statistics_element">
-        <div className="profile_element">
-          <h5>Most popular courses</h5>
-          <p className="profile_explanations">
-            <small>See the most ordered courses.</small>
-          </p>
-        </div>
-        <iframe
-          src={coursesOrdered}
-          frameBorder="0"
-          width="99%"
-          height="300"
-          scrolling="no"
-        ></iframe>
-        <div className="statistics_buttons">
-          <Button className="actual_button" onClick={handleAllCoursesOrdered}>
-            All Restaurants
-          </Button>
-          <Button
-            className="actual_button"
-            onClick={handleARestaurantCoursesOrdered}
-          >
-            Your Restaurant
-          </Button>
-        </div>
-        <div className="statistics_buttons">
-          <div className="profile_element">
-            <h5>Limit</h5>
-            <p className="profile_explanations">
-              <small>Limit the number of courses that will appear</small>
-            </p>
-            <div className="adress_profile_element">
-              <FormGroup>
-                <FormControl
-                  min="2"
-                  max="20"
-                  placeholder={limit}
-                  value={limit}
-                  type="number"
-                  onChange={handleShowCountInput}
-                ></FormControl>
-              </FormGroup>
+    <div>
+      <Desktop>
+        <div className="statistics_main">
+          <div className="profile_title">
+            <h2>STATISTICS</h2>
+          </div>
+          <div className="statistics_element">
+            <div className="profile_element">
+              <h5>Number of orders per hour</h5>
+              <p className="profile_explanations">
+                <small>
+                  Get a visual representation on how orders are distributed
+                  through the day
+                </small>
+              </p>
+            </div>
+            <iframe
+              src={ordersPerHour}
+              frameborder="0"
+              width="100%"
+              height="400"
+              scrolling="no"
+            ></iframe>
+            <div className="statistics_buttons">
+              <Button className="actual_button" onClick={handleAllRestaurants}>
+                All Restaurants
+              </Button>
+              <Button className="actual_button" onClick={handleARestaurant}>
+                Your Restaurant
+              </Button>
             </div>
           </div>
-          <div className="profile_element">
-            <h5>Order</h5>
-            <p className="profile_explanations">
-              <small>Show the courses ordered ascending or descending</small>
-            </p>
-            <div className="adress_profile_element">
-              <FormGroup>
-                <FormControl
-                  value={order}
-                  onChange={handleOrderInput}
-                  as="select"
-                >
-                  <option>Ascending</option>
-                  <option>Descending</option>
-                </FormControl>
-              </FormGroup>
+          <div className="statistics_element">
+            <div className="profile_element">
+              <h5>Most popular courses</h5>
+              <p className="profile_explanations">
+                <small>See the most ordered courses.</small>
+              </p>
+            </div>
+            <iframe
+              src={coursesOrdered}
+              frameBorder="0"
+              width="99%"
+              height="300"
+              scrolling="no"
+            ></iframe>
+            <div className="statistics_buttons">
+              <Button
+                className="actual_button"
+                onClick={handleAllCoursesOrdered}
+              >
+                All Restaurants
+              </Button>
+              <Button
+                className="actual_button"
+                onClick={handleARestaurantCoursesOrdered}
+              >
+                Your Restaurant
+              </Button>
+            </div>
+            <div className="statistics_buttons">
+              <div className="profile_element">
+                <h5>Limit</h5>
+                <p className="profile_explanations">
+                  <small>Limit the number of courses that will appear</small>
+                </p>
+                <div className="adress_profile_element">
+                  <FormGroup>
+                    <FormControl
+                      min="2"
+                      max="20"
+                      placeholder={limit}
+                      value={limit}
+                      type="number"
+                      onChange={handleShowCountInput}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+              </div>
+              <div className="profile_element">
+                <h5>Order</h5>
+                <p className="profile_explanations">
+                  <small>
+                    Show the courses ordered ascending or descending
+                  </small>
+                </p>
+                <div className="adress_profile_element">
+                  <FormGroup>
+                    <FormControl
+                      value={order}
+                      onChange={handleOrderInput}
+                      as="select"
+                    >
+                      <option>Ascending</option>
+                      <option>Descending</option>
+                    </FormControl>
+                  </FormGroup>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Desktop>
+      <Mobile>
+        <div className="statistics_main_phone">
+          <div className="profile_title">
+            <h2>STATISTICS</h2>
+          </div>
+          <div className="statistics_element">
+            <div className="profile_element">
+              <h5>Number of orders per hour</h5>
+              <p className="profile_explanations">
+                <small>
+                  Get a visual representation on how orders are distributed
+                  through the day
+                </small>
+              </p>
+            </div>
+            <iframe
+              src={ordersPerHour}
+              frameborder="0"
+              width="100%"
+              height="400"
+              scrolling="no"
+            ></iframe>
+            <div className="statistics_buttons">
+              <Button className="actual_button" onClick={handleAllRestaurants}>
+                All Restaurants
+              </Button>
+              <Button className="actual_button" onClick={handleARestaurant}>
+                Your Restaurant
+              </Button>
+            </div>
+          </div>
+          <div className="statistics_element">
+            <div className="profile_element">
+              <h5>Most popular courses</h5>
+              <p className="profile_explanations">
+                <small>See the most ordered courses.</small>
+              </p>
+            </div>
+            <iframe
+              src={coursesOrdered}
+              frameBorder="0"
+              width="99%"
+              height="300"
+              scrolling="no"
+            ></iframe>
+            <div className="statistics_buttons">
+              <Button
+                className="actual_button"
+                onClick={handleAllCoursesOrdered}
+              >
+                All Restaurants
+              </Button>
+              <Button
+                className="actual_button"
+                onClick={handleARestaurantCoursesOrdered}
+              >
+                Your Restaurant
+              </Button>
+            </div>
+            <div className="statistics_buttons">
+              <div className="profile_element">
+                <h5>Limit</h5>
+                <p className="profile_explanations">
+                  <small>Limit the number of courses that will appear</small>
+                </p>
+                <div className="adress_profile_element">
+                  <FormGroup>
+                    <FormControl
+                      min="2"
+                      max="20"
+                      placeholder={limit}
+                      value={limit}
+                      type="number"
+                      onChange={handleShowCountInput}
+                    ></FormControl>
+                  </FormGroup>
+                </div>
+              </div>
+              <div className="profile_element">
+                <h5>Order</h5>
+                <p className="profile_explanations">
+                  <small>
+                    Show the courses ordered ascending or descending
+                  </small>
+                </p>
+                <div className="adress_profile_element">
+                  <FormGroup>
+                    <FormControl
+                      value={order}
+                      onChange={handleOrderInput}
+                      as="select"
+                    >
+                      <option>Ascending</option>
+                      <option>Descending</option>
+                    </FormControl>
+                  </FormGroup>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Mobile>
     </div>
   );
 };

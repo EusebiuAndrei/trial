@@ -85,7 +85,6 @@ router.delete('/all', async (req, res) => {
 });
 
 router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
-	console.log(req.content);
 	const result = await userService.configureUser(
 		req.data,
 		req.content,
