@@ -195,7 +195,7 @@ border-left:solid #D9054F;
 	height: 13%;
 }
 
-.profile_provider, .profile_client{
+.profile_provider, .profile_client, .schedule_provider{
 	margin-left: 2%;
 	margin-bottom: 10%;
 	width: 100%;
@@ -205,7 +205,7 @@ border-left:solid #D9054F;
 	flex-direction: row;
 }
 
-.provider_form, .client_form, .menu_provider{
+.provider_form, .client_form, .menu_provider, .schedule_form{
 	margin-left: 2%;
 	height: auto;
 	width: 75%;
@@ -321,22 +321,36 @@ div.ReactTags__selected a.ReactTags__remove {
 	justify-content: center;
 	flex-direction: column;
 }
-
-.submit_button> .actual_button{
+.add_button{
+	margin-bottom: 1rem;
+	align-content: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.submit_button> .actual_button, .add_button> .actual_button{
 	border: 2px solid #D9054F;
 	background-color: #FBF3E6;
 	color: #D9054F;
-	border-radius: 20px;
 	align-self: center;
 	text-align: center;
-	width: 100px;
+	width: 80px;
 }
 
 .submit_button>.actual_button:hover,.submit_button>.actual_button:active,.submit_button>.actual_button:focus{
 	background-color: #FBF3E6!important;
 	color: #D9054F!important;
 	border: 2px solid #D9054F!important;
-	transform: scale(1.2);
+	transform: scale(1.1);
+	cursor: pointer;
+	box-shadow: none;
+}
+
+.add_button> .actual_button:hover,.add_button> .actual_button:active,.add_button> .actual_button:focus{
+	background-color: #FBF3E6!important;
+	color: #D9054F!important;
+	border: 2px solid #D9054F!important;
+	transform: scale(1.1);
 	cursor: pointer;
 	box-shadow: none;
 }
@@ -366,16 +380,67 @@ div.ReactTags__selected a.ReactTags__remove {
 	flex-direction: column;
 }
 
-.iframe{
-	color: red;
-	margin: 0;
-	padding-left: 0
-}
-
-.statistics_per_hour{
-	align-self: start;
-	width: auto;
+iframe{
 	margin: 0;
 	padding: 0;
 }
 
+.statistics_element{
+	align-self: start;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 20px;
+}
+
+.statistics_buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.schedule_columns{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.schedule_row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	color: #D9054F;
+	align-items: center;
+	padding: 1vh;
+}
+
+.day_title{
+	width: 30%;
+	align-self: center;
+}
+.header_menu{
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+}
+.header_menu p{
+	padding-left: 10vw;
+	color: #D9054F; 
+}
+.tags_list{
+	display: flex;
+	flex-direction: row;
+}
+.header_menu p>{
+	color: #D9054F; 
+}
+.image_menu{
+	width: 60px;
+	height: 60px;
+}
+
+.add_to_list{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}

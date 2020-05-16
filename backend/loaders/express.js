@@ -8,6 +8,7 @@ const config = require('../config');
 
 // { app }: { app: express.Application }
 module.exports = (app) => {
+	app.use(express.static('public'));
 	/**
 	 * Health Check endpoints
 	 */

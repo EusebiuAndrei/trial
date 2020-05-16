@@ -5,13 +5,14 @@ import Provider from "./Provider";
 import AccountSettings from "./AccountSettings";
 import { Link } from "react-router-dom";
 import Statistics from "./Statistics";
+import Schedule from "./Schedule";
 import Menu from "./Menu";
 
 const User = ({ data }) => {
   const [index, setIndex] = useState(0);
   const [openSetting, setOpenSettings] = useState(false);
-  const [openProfile, setOpenProfile] = useState(true);
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openMenu, setOpenMenu] = useState(true);
   const [openSchedule, setOpenSchedule] = useState(false);
   const [openStatistics, setOpenStatistics] = useState(false);
 
@@ -219,8 +220,12 @@ const User = ({ data }) => {
         {openMenu && data.role === "Provider" && (
           <Menu data={data.details.menu} />
         )}
-        {openSchedule && data.role === "Provider" && <p>SCHEDULE</p>}
-        {openStatistics && data.role === "Provider" && <Statistics />}
+        {openSchedule && data.role === "Provider" && (
+          <Schedule data={data.details.schedule} />
+        )}
+        {openStatistics && data.role === "Provider" && (
+          <Statistics data={data} />
+        )}
       </div>
     </div>
   );

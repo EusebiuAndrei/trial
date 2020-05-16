@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import { WithContext as ReactTags } from "react-tag-input";
 import * as api from "../api";

@@ -56,6 +56,20 @@ class ImageService {
 			};
 		}
 	}
+	async uploadMenuPhoto(buffer, hostname) {
+		try {
+			const fileUpload = new Resize(imagePath);
+			const filename = await fileUpload.save(buffer);
+			const newPath = `http://${hostname}/images/${filename}`;
+
+			return { success: true, name: { newPath } };
+		} catch (error) {
+			return {
+				success: false,
+				error: 'Please provide a valid image!',
+			};
+		}
+	}
 }
 
 module.exports = ImageService;

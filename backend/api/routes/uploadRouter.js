@@ -40,4 +40,20 @@ router.post(
 	},
 );
 
+router.post(
+	'/uploadMenuPhoto',
+	auth,
+	upload.single('myImage'),
+	async (req, res) => {
+		//console.log(req.file);
+		const result = await imageService.uploadMenuPhoto(
+			req.file.buffer,
+			req.headers.host,
+		);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
+	},
+);
+
 module.exports = router;

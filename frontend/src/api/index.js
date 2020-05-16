@@ -110,6 +110,33 @@ const uploadSingle = async (file) => {
   }
 };
 
+const uploadMenuPhoto = async (data) => {
+  try {
+    const formData = new FormData();
+    console.log(data);
+    formData.append("myImage", data.file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    await axios
+      .post(
+        "http://localhost:4000/api/upload/uploadMenuPhoto",
+        formData,
+        config
+      )
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {});
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 const uploadMultiple = async (files) => {
   try {
     const formData = new FormData();
@@ -164,4 +191,5 @@ export {
   uploadSingle,
   uploadMultiple,
   profile,
+  uploadMenuPhoto,
 };
