@@ -1,15 +1,17 @@
 const { Router } = require('express');
 const { providerService } = require('../../services/index');
 const Logger = require('../../loaders/logger');
+const setResponseStatus = require('../../utils/utils');
 
 const router = Router();
 
 router.get('/', async (req, res) => {
 	const { limit, skip } = req.query;
 	const result = await providerService.getAllProviders(limit, skip);
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.get('/specials', async (req, res) => {
@@ -25,17 +27,19 @@ router.get('/specials', async (req, res) => {
 		skip,
 		tags,
 	);
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
 	const result = await providerService.getProviderById(userId);
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 module.exports = router;
