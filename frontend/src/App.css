@@ -376,13 +376,22 @@ div.ReactTags__selected a.ReactTags__remove {
 	justify-content: center;
 	flex-direction: column;
 }
-.submit_button> .actual_button, .add_button> .actual_button{
-	border: 2px solid #D9054F;
+.add_button> .actual_button{
+	border: 1px solid #D9054F;
 	background-color: #FBF3E6;
 	color: #D9054F;
 	align-self: center;
 	text-align: center;
-	width: 80px;
+	width: auto;
+}
+.submit_button> .actual_button{
+	border: 3px solid #D9054F;
+	background-color: rgb(251, 240, 230);
+	color: #D9054F;
+	font-weight: 200;
+	align-self: center;
+	text-align: center;
+	width: auto;
 }
 
 .submit_button>.actual_button:hover,.submit_button>.actual_button:active,.submit_button>.actual_button:focus{

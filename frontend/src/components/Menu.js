@@ -46,7 +46,7 @@ const Menu = ({ data }) => {
       </Accordion>
       <div className="submit_button">
         <Button className="actual_button" onClick={handleAddCourse}>
-          Add
+          New Course
         </Button>
       </div>
     </div>

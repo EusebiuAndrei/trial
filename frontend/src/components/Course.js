@@ -43,6 +43,31 @@ const Course = ({ data }) => {
 
   const [newIngredient, setNewIngredient] = useState("");
   const [newAllergen, setNewAllergen] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [selectedAllergene, setSelectedAllergene] = useState("");
+  const handleRemoveIngredient = (event) => {
+    setSelectedIngredient(event.target.value);
+  };
+
+  const handleRemoveIngredientsList = (event) => {
+    setIngredients(
+      ingredients.filter((value) => {
+        return value !== selectedIngredient;
+      })
+    );
+  };
+
+  const handleRemoveAllergene = (event) => {
+    setSelectedAllergene(event.target.value);
+  };
+
+  const handleRemoveAllergenesList = (event) => {
+    setAllergenes(
+      allergenes.filter((value) => {
+        return value !== selectedAllergene;
+      })
+    );
+  };
   const handleAddIngredient = (event) => {
     setNewIngredient(event.target.value);
   };
@@ -118,6 +143,11 @@ const Course = ({ data }) => {
         <Card.Body>
           <div className="profile_element">
             <h5>Name</h5>
+            <p className="profile_explanations">
+              <small>
+                Add a suggestive, but also interesting name for your course!
+              </small>
+            </p>
             <div className="align_left_profile_input">
               <FormGroup>
                 <FormControl
@@ -132,6 +162,9 @@ const Course = ({ data }) => {
 
           <div className="profile_element">
             <h5>Price</h5>
+            <p className="profile_explanations">
+              <small>The price with TVA and expressed in lei.</small>
+            </p>
             <div className="align_left_profile_input">
               <FormGroup>
                 <FormControl
@@ -149,6 +182,7 @@ const Course = ({ data }) => {
               <FormGroup>
                 <div className="list_of_objects">
                   <ReactTags
+                    allowDeleteFromEmptyInput={false}
                     placeholder="Add new category"
                     inputFieldPosition="top"
                     tags={categoryTagItems}
@@ -162,12 +196,18 @@ const Course = ({ data }) => {
           </div>
           <div className="profile_element">
             <h5>Ingredients</h5>
+            <p className="profile_explanations">
+              <small>
+                List there the main ingredients used in your course.
+              </small>
+            </p>
             <div className="align_left_profile_input">
               <div className="add_to_list">
                 <FormGroup>
                   <FormControl
                     type="text"
                     value={newIngredient}
+                    placeholder="Enter ingredient"
                     onChange={handleAddIngredient}
                   ></FormControl>
                 </FormGroup>
@@ -181,7 +221,7 @@ const Course = ({ data }) => {
                 </div>
               </div>
               <FormGroup>
-                <FormControl as="select">
+                <FormControl as="select" onChange={handleRemoveIngredient}>
                   <option
                     style={{ display: "none" }}
                     selected="selected"
@@ -190,9 +230,21 @@ const Course = ({ data }) => {
                     Ingredients
                   </option>
                   {ingredients.map((ingredient) => {
-                    return <option key={ingredient}>{ingredient}</option>;
+                    return (
+                      <option value={ingredient} key={ingredient}>
+                        {ingredient}
+                      </option>
+                    );
                   })}
                 </FormControl>
+                <div className="add_button">
+                  <Button
+                    className="actual_button"
+                    onClick={handleRemoveIngredientsList}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </FormGroup>
             </div>
           </div>
@@ -211,6 +263,7 @@ const Course = ({ data }) => {
                     type="text"
                     value={newAllergen}
                     onChange={handleAddAllergene}
+                    placeholder="Enter allergene"
                   ></FormControl>
                 </FormGroup>
                 <div className="add_button">
@@ -223,7 +276,11 @@ const Course = ({ data }) => {
                 </div>
               </div>
               <FormGroup>
-                <FormControl value="Allergenes" as="select">
+                <FormControl
+                  value="Allergenes"
+                  as="select"
+                  onChange={handleRemoveAllergene}
+                >
                   <option
                     style={{ display: "none" }}
                     selected="selected"
@@ -232,9 +289,21 @@ const Course = ({ data }) => {
                     Allergenes
                   </option>
                   {allergenes.map((allergene) => {
-                    return <option key={allergene}>{allergene}</option>;
+                    return (
+                      <option key={allergene} value={allergene}>
+                        {allergene}
+                      </option>
+                    );
                   })}
                 </FormControl>
+                <div className="add_button">
+                  <Button
+                    className="actual_button"
+                    onClick={handleRemoveAllergenesList}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </FormGroup>
             </div>
           </div>
