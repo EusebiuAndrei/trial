@@ -136,8 +136,9 @@ const uploadMultiple = async (files) => {
   }
 };
 
-const changePassword = async (userData) => {
+const changeEmail = async (userData) => {
   try {
+    console.log("api" + userData);
     const token = localStorage.getItem("userToken");
     setAuthorizationToken(token);
     const {
@@ -146,18 +147,18 @@ const changePassword = async (userData) => {
       },
     } = await axios({
       method: "post",
-      url: `http://localhost:4000/api/users/changePassword`,
+      url: `http://localhost:4000/api/users/changeemail`,
       data: userData,
     });
-    console.log(userDetails);
     return { success: true, userDetails };
   } catch (error) {
     return { success: false, errorMessage: error.message };
   }
 };
 
-const changeEmail = async (userData) => {
+const changeName = async (userData) => {
   try {
+    console.log("api" + userData);
     const token = localStorage.getItem("userToken");
     setAuthorizationToken(token);
     const {
@@ -166,10 +167,29 @@ const changeEmail = async (userData) => {
       },
     } = await axios({
       method: "post",
-      url: `http://localhost:4000/api/users/changeEmail`,
+      url: `http://localhost:4000/api/users/changename`,
       data: userData,
     });
-    console.log(userDetails);
+    return { success: true, userDetails };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+const changePassword = async (userData) => {
+  try {
+    console.log("api" + userData);
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { userDetails },
+      },
+    } = await axios({
+      method: "post",
+      url: `http://localhost:4000/api/users/changepassword`,
+      data: userData,
+    });
     return { success: true, userDetails };
   } catch (error) {
     return { success: false, errorMessage: error.message };
@@ -204,6 +224,7 @@ export {
   uploadSingle,
   uploadMultiple,
   changePassword,
+  changeName,
   changeEmail,
   profile,
 };

@@ -124,17 +124,51 @@ class UserService {
 		}
 	}
 
-	async changeEmail(payload) {
-		const { email, newEmail } = payload;
+	async changeEmail(payload, userData) {
+		const { user } = userData;
+		const { _id: userId } = user[0];
+		const { email } = payload;
+
+		//console.log(userId + ' ' + email);
 
 		try {
 			await this.db.User.updateOne(
 				{
-					email: email,
+					_id: userId,
 				},
 				{
 					$set: {
-						email: newEmail,
+						email: email,
+					},
+				},
+			);
+			return {
+				success: true,
+				data: "You've successfully changed your email!",
+			};
+		} catch (error) {
+			return {
+				succes: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async changeName(payload, userData) {
+		const { user } = userData;
+		const { _id: userId } = user[0];
+		const { username } = payload;
+
+		//console.log(userId + ' ' + email);
+
+		try {
+			await this.db.User.updateOne(
+				{
+					_id: userId,
+				},
+				{
+					$set: {
+						name: username,
 					},
 				},
 			);
@@ -157,6 +191,7 @@ class UserService {
 			newPass,
 			confirmNewPass,
 		} = payload;
+
 		try {
 			const user = await this.db.User.findByEmail(email);
 			await user.changePassword(
@@ -219,6 +254,33 @@ class UserService {
 	isRegistrationConfirmed(userData) {
 		const { confirmed } = userData[0];
 		return confirmed;
+	}
+
+	async configureAccount(userData, payload) {
+		const { user } = userData;
+		const { _id: userId } = user[0];
+		try {
+			const data = { ...payload };
+
+			const condition = { userId };
+			const options = {
+				upsert: true,
+				new: true,
+				useFindAndModify: false,
+			};
+			let userDetails = await this.db[role].findOneAndUpdate(
+				condition,
+				data,
+				options,
+			);
+
+			return { success: true, data: { userDetails } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async configureUser(userData, payload) {
