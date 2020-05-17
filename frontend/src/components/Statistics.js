@@ -10,11 +10,11 @@ const Statistic = ({ data }) => {
   const [limit, setLimit] = useState(2);
   const [order, setOrder] = useState("");
   const ordersPerHourAll =
-    "http://159.65.247.164/recommendations/stats/orders_per_hour?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA";
-  const ordersPerHourRestaurant = `http://159.65.247.164/recommendations/stats/orders_per_hour/${token}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
-  const coursesOrderedAll = `http://159.65.247.164/recommendations/stats/food_all_restaurants?${showCount}${showOrder}token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
+    "http://159.65.247.164/recommendations/stats/orders-per-hour?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA";
+  const ordersPerHourRestaurant = `http://159.65.247.164/recommendations/stats/orders-per-hour/${token}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
+  const coursesOrderedAll = `http://159.65.247.164/recommendations/stats/food-all-restaurants?${showCount}${showOrder}token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
 
-  const coursesOrderedResturant = `http://159.65.247.164/recommendations/stats/food_per_restaurant/${token}?${showCount}${showOrder}token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
+  const coursesOrderedResturant = `http://159.65.247.164/recommendations/stats/food-per-restaurant/${token}?${showCount}${showOrder}token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFhOTQ2ODMwYThmMTI5OGQ0ZmMyZjgiLCJpYXQiOjE1ODgyMzc0NTZ9.Ll2HDuN79KKWr5OoQTiZVWBemyDqdo3kDz74Bvi6lOA`;
 
   const [ordersPerHour, setOrdersPerHour] = useState(ordersPerHourAll);
   const [coursesOrdered, setCoursesOrdered] = useState(coursesOrderedAll);
@@ -43,19 +43,12 @@ const Statistic = ({ data }) => {
     setOrder(newOrder, setShowOrder(`order=${orderValue}&`));
   };
 
-  const Desktop = ({ children }) => {
-    const isDesktop = useMediaQuery({ minWidth: 767 });
-    return isDesktop ? children : null;
-  };
+  const isBigScreen = useMediaQuery({ query: "(min-device-width: 747px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 747px)" });
 
-  const Mobile = ({ children }) => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-    return isMobile ? children : null;
-    console.log(isMobile);
-  };
   return (
     <div>
-      <Desktop>
+      {isBigScreen && (
         <div className="statistics_main">
           <div className="profile_title">
             <h2>STATISTICS</h2>
@@ -156,8 +149,8 @@ const Statistic = ({ data }) => {
             </div>
           </div>
         </div>
-      </Desktop>
-      <Mobile>
+      )}{" "}
+      {isTabletOrMobile && (
         <div className="statistics_main_phone">
           <div className="profile_title">
             <h2>STATISTICS</h2>
@@ -258,7 +251,7 @@ const Statistic = ({ data }) => {
             </div>
           </div>
         </div>
-      </Mobile>
+      )}
     </div>
   );
 };

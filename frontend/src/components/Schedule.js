@@ -199,9 +199,7 @@ const Schedule = ({ data }) => {
               <div className="profile_title">
                 <h2>Schedule</h2>
                 <p className="profile_explanations">
-                  <small>
-                    Enter the start and the end hour for every day of the week.
-                  </small>
+                  <small>Let the</small>
                 </p>
               </div>
               <div className="schedule_columns">
