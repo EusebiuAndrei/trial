@@ -87,29 +87,6 @@ const getAllUsers = async () => {
   }
 };
 
-const uploadSingle = async (file) => {
-  try {
-    const formData = new FormData();
-    formData.append("myImage", file);
-
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    await axios
-      .post("http://localhost:4000/api/upload/uploadSingle", formData, config)
-      .then((response) => {
-        alert("The file is successfully uploaded");
-      })
-      .catch((error) => {});
-
-    return { success: true };
-  } catch (error) {
-    return { success: false, errorMessage: error.message };
-  }
-};
-
 const uploadMenuPhoto = async (data) => {
   try {
     const formData = new FormData();
@@ -136,21 +113,51 @@ const uploadMenuPhoto = async (data) => {
   }
 };
 
-const uploadMultiple = async (files) => {
+const uploadSingle = async (data) => {
   try {
     const formData = new FormData();
-    let { length } = files;
-    for (let i = 0; i < length; i++) {
-      formData.append("myImage", files[i]);
-    }
-
+    formData.append("myImage", data.file);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
     await axios
-      .post("http://localhost:4000/api/upload/uploadMultiple", formData, config)
+      .post(
+        `http://localhost:4000/api/upload/uploadSingle/${data.userId}`,
+        formData,
+        config
+      )
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {});
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+const uploadMultiple = async (data) => {
+  try {
+    const formData = new FormData();
+    let { length } = data.file;
+    for (let i = 0; i < length; i++) {
+      formData.append("myImage", data.file[i]);
+    }
+    console.log(data.userId);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    await axios
+      .post(
+        `http://localhost:4000/api/upload/uploadMultiple/${data.userId}`,
+        formData,
+        config
+      )
       .then((response) => {
         alert("The file is successfully uploaded");
       })

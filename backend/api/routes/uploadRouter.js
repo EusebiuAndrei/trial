@@ -1,42 +1,43 @@
 const { Router } = require('express');
 const { upload } = require('../middlewares/index');
 const { imageService } = require('../../services/index');
-const path = require('path');
 const { auth } = require('../middlewares/index');
-
+const setResponseStatus = require('../../utils/utils');
 const router = Router();
 
 router.post(
-	'/uploadSingle',
+	'/uploadSingle/:userId',
 	auth,
 	upload.single('myImage'),
 	async (req, res) => {
-		const { token } = req.data;
+		const { userId } = req.params;
 		const result = await imageService.uploadOneImage(
 			req.file.buffer,
 			req.headers.host,
-			token,
+			userId,
 		);
-		const statusCode = result.success ? 200 : 400;
 		console.log(result);
-		res.status(statusCode).json(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
 	},
 );
 
 router.post(
-	'/uploadMultiple',
+	'/uploadMultiple/:userId',
 	auth,
 	upload.array('myImage', 5),
 	async (req, res) => {
-		const { token } = req.data;
+		const { userId } = req.params;
+		console.log(userId);
 		const result = await imageService.uploadMultipleImages(
 			req.files,
 			req.headers.host,
-			token,
+			userId,
 		);
-		const statusCode = result.success ? 200 : 400;
-		console.log(result);
-		res.status(statusCode).json(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
 	},
 );
 
@@ -53,7 +54,7 @@ router.post(
 			req.headers.host,
 			idCourse,
 		);
-		const statusCode = result.success ? 200 : 400;
+		const statusCode = result.success ? 201 : 400;
 		console.log(result);
 		res.status(statusCode).json(result);
 	},

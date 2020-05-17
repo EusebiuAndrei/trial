@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const { courseService } = require('../../services/index');
+const setResponseStatus = require('../../utils/utils');
 
 const router = Router();
 
 router.get('/', async (req, res) => {
 	const result = await courseService.getCourses(req.query);
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.get('/:idCourse', async (req, res) => {
@@ -14,15 +16,17 @@ router.get('/:idCourse', async (req, res) => {
 	const result = await courseService.getCourse({
 		idCourse,
 	});
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.post('/:idMenu', async (req, res) => {
 	const { idMenu } = req.params;
 	const result = await courseService.addCourse(idMenu);
-	const statusCode = result.success ? 201 : 400;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(201, 400, result.success)).json(
+		result,
+	);
 });
 
 router.patch('/:idCourse', async (req, res) => {
@@ -31,7 +35,8 @@ router.patch('/:idCourse', async (req, res) => {
 		idCourse,
 		req.body,
 	);
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 module.exports = router;

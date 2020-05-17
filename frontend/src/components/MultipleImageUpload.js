@@ -4,7 +4,9 @@ import * as api from "../api";
 class MultipleImageUpload extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.userId);
     this.state = {
+      userId: props.userId,
       file: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -13,7 +15,8 @@ class MultipleImageUpload extends React.Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    api.uploadMultiple(this.state.file);
+    console.log(this.state);
+    api.uploadMultiple(this.state);
   }
 
   onChange(e) {
@@ -23,13 +26,8 @@ class MultipleImageUpload extends React.Component {
   render() {
     return (
       <form onSubmit={this.onFormSubmit}>
-        <input
-          type="file"
-          name="myImage"
-          className="input_photo"
-          multiple
-          onChange={this.onChange}
-        />
+        <p>Upload a photo</p>
+        <input type="file" name="myImage" multiple onChange={this.onChange} />
         <button type="submit" class="btn btn-outline-primary">
           Upload
         </button>
