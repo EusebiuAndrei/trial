@@ -41,6 +41,13 @@ class UserService {
 		const user = new this.db.User(userData);
 
 		try {
+			const existsUser = await this.db.User.exists({ email });
+			if (existsUser) {
+				throw new Error(
+					'A user with this email already exists',
+				);
+			}
+
 			await user.save();
 			await user.generateEmailToken();
 			await this.services.sendEmailService.sendConfirmEmail(
@@ -50,7 +57,7 @@ class UserService {
 
 			return { success: true, data: { user } };
 		} catch (error) {
-			Logger.error(error);
+			// Logger.error(error);
 			return {
 				success: false,
 				error: { message: error.message },
