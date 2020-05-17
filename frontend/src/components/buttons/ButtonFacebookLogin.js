@@ -27,32 +27,31 @@ class ButtonFacebookLogin extends React.Component {
 
   render() {
     return (
-		<div>
-            <FacebookLogin
-			appId="592881674673349"
-			autoLoad={false}
-			fields="name,email,picture"
-			callback={this.responseFacebook}
-			render={renderProps => (
-                <Button variant="outline-danger" style={style.logInFacebook} onClick={renderProps.onClick}>
-                    <IoLogoFacebook size={25} style={style.facebookLogo} color={'#D9054F'}/>
-                        Log in with Facebook
-                </Button>
-            )}
-            />
-             <Modal show={this.state.modalVisible}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Hello {this.state.user}</Modal.Title>
-                </Modal.Header>
-                    <Modal.Body>We're glad you're back!</Modal.Body>
-                <Modal.Footer>
-                    <Button style={{backgroundColor:'#D9054F'}} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+        <div>
+          <FacebookLogin
+              appId="592881674673349"
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={this.responseFacebook}
+              render={renderProps => (
+              <Button variant="outline-danger" style={style.logInFacebook} onClick={renderProps.onClick}>
+                  <IoLogoFacebook size={25} style={style.facebookLogo}/>
+                      Log in with Facebook
+              </Button>
+          )}
+          />
+          <Modal show={this.state.modalVisible}>
+              <Modal.Header closeButton>
+                  <Modal.Title>Hello {this.state.user}</Modal.Title>
+              </Modal.Header>
+                  <Modal.Body>We're glad you're back!</Modal.Body>
+              <Modal.Footer>
+                  <Button style={style.buttonColour} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
+                      Close
+                  </Button>
+              </Modal.Footer>
+          </Modal>
         </div>
-      // just here above the button always looks the same
     )
   }
 }

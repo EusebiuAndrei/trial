@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
-import {Button ,InputGroup,FormControl,Alert,Popover,OverlayTrigger,Spinner,Modal} from 'react-bootstrap';
+import React from 'react';
+import {Button ,InputGroup,FormControl,Spinner,Modal} from 'react-bootstrap';
 import * as api from '../api';
 import style from '../styles/LoginDesktopStyle';
-import {
-	Link,
-  } from "react-router-dom";
-import { IoIosMail,IoIosLock,IoLogoFacebook,IoIosPerson} from "react-icons/io";
-import { fadeIn } from 'react-animations';
+import styleMobile from '../styles/LoginMobileStyle';
+import { IoIosMail,IoIosLock,IoIosPerson} from "react-icons/io";
 import { useMediaQuery } from 'react-responsive'
 import ButtonFacebookLogin from './buttons/ButtonFacebookLogin';
 
@@ -37,7 +34,7 @@ class Login extends React.Component{
 			userData:{},
 			loading:false,
 			error:"",
-			option:1,
+			option:2,
 			accountType:"",
 			alertVisible:true,
 			alertEmail:'#DCDCDC',
@@ -64,7 +61,7 @@ class Login extends React.Component{
 
 	 responseFacebook = (response) => {
 		console.log(response);
-	  }
+	 }
 
 	async handleLoginClick(){
 		console.log(JSON.stringify(this.state,null,'...'))
@@ -153,7 +150,6 @@ class Login extends React.Component{
 		this.setState({emailLostPassword: event.target.value,alertLostPassword:'#DCDCDC'});
 	}
 
-
 	handleChangeEmail(event){
 		this.setState({email: event.target.value,alertEmail:'#DCDCDC'});
 	}
@@ -206,10 +202,10 @@ class Login extends React.Component{
 					style={{borderColor:alert}}
 				/>
 				<InputGroup.Prepend>
-					<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0,borderColor:alert}} id="basic-addon1">
-						{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
-						{topText === "Email address" || topText === "" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
-						{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}
+					<InputGroup.Text style={{...styleMobile.inputGroupText,borderColor:alert}} id="basic-addon1">
+						{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} style={styleMobile.iconStyle}/> : <div></div>}
+						{topText === "Email address" || topText === "" ? <IoIosMail size={22} style={styleMobile.iconStyle}/> : <div></div>}
+						{topText === "Username" ? <IoIosPerson size={22} style={styleMobile.iconStyle}/> : <div></div>}
 					</InputGroup.Text>
 				</InputGroup.Prepend>
 			</InputGroup>
@@ -219,7 +215,7 @@ class Login extends React.Component{
 
 	renderInputFieldPhone = (topText,placeHolder,inputFunction,type,alert,value) =>{
 		return(
-				<InputGroup className="mb-3" style={{width:'100%',marginBottom:0,borderWidth:0}}>
+				<InputGroup className="mb-3" style={styleMobile.fieldButton}>
 					<FormControl
 						placeholder={placeHolder}
 						aria-label="Username"
@@ -230,10 +226,10 @@ class Login extends React.Component{
 						value={value}
 					/>
 					<InputGroup.Prepend>
-						<InputGroup.Text style={{backgroundColor:'#F9F9F9',borderLeftWidth:0,borderColor:alert}} id="basic-addon1">
-							{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} color={'#D9054F'}/> : <div></div>}
-							{topText === "Email address" || topText === "" ? <IoIosMail size={22} color={'#D9054F'}/> : <div></div>}
-							{topText === "Username" ? <IoIosPerson size={22} color={'#D9054F'}/> : <div></div>}					
+						<InputGroup.Text style={{...styleMobile.inputGroupText,borderColor:alert}} id="basic-addon1">
+							{topText === "Password" || topText === "Confirm password" ?<IoIosLock size={22} style={styleMobile.iconStyle}/> : <div></div>}
+							{topText === "Email address" || topText === "" ? <IoIosMail size={22} style={styleMobile.iconStyle}/> : <div></div>}
+							{topText === "Username" ? <IoIosPerson size={22} style={styleMobile.iconStyle}/> : <div></div>}					
 						</InputGroup.Text>
 					</InputGroup.Prepend>
 				</InputGroup>
@@ -251,10 +247,10 @@ class Login extends React.Component{
 				{this.renderInputfield("","YourEmail@mail.com",this.handleEmailLostPassword,"email",this.state.alertLostPassword,this.state.emailLostPassword)}
 			</Modal.Body>
 			<Modal.Footer>
-				<Button style={{backgroundColor:'#D9054F'}} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
+				<Button style={styleMobile.closeButtonLostPassword} variant="secondary" onClick={()=>{this.setState({modalVisible:false})}}>
 					Close
 				</Button>
-				<Button style={{backgroundColor:'#079604'}} variant="primary" onClick={this.handleLostPasswordClick}>
+				<Button style={styleMobile.sendButtonLostPassword} variant="primary" onClick={this.handleLostPasswordClick}>
 					Send
 				</Button>
 			</Modal.Footer>
@@ -303,7 +299,7 @@ class Login extends React.Component{
 									I forggot my password
 								</button>
 
-								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={styleMobile.spinnerStyle} /> : <p></p>}
 
 							</div> 
 
@@ -328,7 +324,7 @@ class Login extends React.Component{
 									Already have an account? Log in 
 								</button>
 
-								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+								{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={styleMobile.spinnerStyle} /> : <p></p>}
 
 							</div>
 						}
@@ -341,26 +337,26 @@ class Login extends React.Component{
 			</Desktop>
 				<Mobile>
 					<div style={{flexDirection:'column',width:this.props.width,height:this.props.height}}>
-						<div style={{width:'100%',height:'35%',backgroundColor:'#FBF3E6'}}>
+						<div style={styleMobile.chefContainer}>
 							<img src="https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg" alt="Logo" style={{width:300,height:'100%',resizeMode: 'contain'}} />;
 						</div>
-						<div style={{width:'100%',height:'65%',backgroundColor:'#FBF3E6',display:'flex',justifyContent:'center'}}>
+						<div style={styleMobile.containerStyle}>
 							{
 								this.state.option === 1 ? 
-								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
-									<p style={{fontSize:22,fontWeight:'bold',marginBottom:'10%'}}>Log in to your account</p>
+								<div className="shadow p-3 mb-5 bg-white rounded"  style={styleMobile.whiteContainer}>
+									<p style={styleMobile.loginText}>Log in to your account</p>
 									{this.renderInputFieldPhone("Email address","YourEmail@mail.com",this.handleChangeEmail,"email",this.state.alertEmail,this.state.email)}
 									{this.renderInputFieldPhone("Password","Password",this.handleChangePassword,"password",this.state.alertPassword,this.state.password)}
 
 									{this.modalLostPassword()}
 
-									<Button variant="danger" style={{width:250,marginBottom:'1%',marginTop:'5%'}} onClick={this.handleLoginClick}>
+									<Button variant="danger" style={styleMobile.loginButton} onClick={this.handleLoginClick}>
 										Log in
 									</Button>
 
 									<ButtonFacebookLogin/>
 
-									<button style={{color:'#858585',fontSize:11,marginTop:'1%',backgroundColor:'transparent',borderWidth:0}} onClick={()=>{this.setState({option:2,success:"",alertEmail:'#DCDCDC',alertPassword:'#DCDCDC',email:"",password:""})}}>
+									<button style={styleMobile.dontHaveAccount} onClick={()=>{this.setState({option:2,success:"",alertEmail:'#DCDCDC',alertPassword:'#DCDCDC',email:"",password:""})}}>
 										Don't have an account? Create one
 									</button>
 
@@ -371,10 +367,10 @@ class Login extends React.Component{
 									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
 								</div>
 								:
-								<div className="shadow p-3 mb-5 bg-white rounded"  style={{width:'95%',height:'100%',backgroundColor:'white',borderTopRightRadius:25,borderTopLeftRadius:25,display:'flex',alignItems:'center',flexDirection:'column'}}>
-									<div style={{flexDirection:'row',width:'100%',display:'flex',height:'50%',alignItems:'center',justifyContent:'center',marginBottom:'5%'}}>
+								<div className="shadow p-3 mb-5 bg-white rounded"  style={styleMobile.whiteContainer}>
+									<div style={styleMobile.buttonsRoleContainer}>
 										{this.renderRoleButton("Client","client")}
-										<p style={{fontSize:20,fontWeight:'bold',marginLeft:15,marginRight:15,marginTop:10,display:'block'}}>Create account</p>
+										<p style={styleMobile.createAccountText}>Create account</p>
 										{this.renderRoleButton("Provider","provider")}
 									</div>
 
@@ -383,7 +379,7 @@ class Login extends React.Component{
 									{this.renderInputFieldPhone("Password","●●●●●●●●●",this.handleChangeNewPassword,"password",this.state.alertPassword,this.state.newAccountPassword)}
 									{this.renderInputFieldPhone("Confirm password","●●●●●●●●●",this.handleChangeNewPasswordConfirm,"password",this.state.alertNewPassword,this.state.newAccountConfirmPassword)}
 
-									<Button variant="danger" style={{width:220,marginBottom:'1%',marginTop:'5%'}} onClick={this.handleRegisterClick}>
+									<Button variant="danger" style={styleMobile.registerButton} onClick={this.handleRegisterClick}>
 										Register
 									</Button>
 
@@ -391,7 +387,7 @@ class Login extends React.Component{
 										Already have an account? Log in 
 									</button>
 
-									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={{marginTop:'5%'}} /> : <p></p>}
+									{this.state.loading === true ? <Spinner animation="grow" variant="danger" style={styleMobile.spinnerStyle} /> : <p></p>}
 
 								</div>
 							}

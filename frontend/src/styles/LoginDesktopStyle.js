@@ -30,10 +30,10 @@ const style ={
         width:250,height:'8%',marginTop:'3%',backgroundColor:'#D9054F'
     },
     logInFacebook:{
-        width: 250,marginTop:'2%',borderWidth:1.5
+        width: 250,marginTop:'2%',borderWidth:1.5,
     },
     facebookLogo:{
-        marginLeft:10,marginRight:4
+        marginLeft:10,marginRight:4,color:'#D9054F'
     },
     dontHaveAccount:{
         color:'#858585',fontSize:11,marginTop:'5%',backgroundColor:'transparent',borderWidth:0
@@ -49,6 +49,9 @@ const style ={
     },
     chefImg:{
         width:'100%',height:'100%'
+    },
+    buttonColour:{
+
     }
     
 }
