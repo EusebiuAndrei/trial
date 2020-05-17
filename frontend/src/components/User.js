@@ -266,7 +266,7 @@ const User = ({ data }) => {
                   </ListGroup.Item>
                 </ListGroup>
               ) : (
-                <ListGroup className="menu_profile">
+                <ListGroup className="menu_profile_phone">
                   <ListGroup.Item className="menu_element_profile">
                     <Link className="menu_link" onClick={handleOpenStatistics}>
                       Statistics

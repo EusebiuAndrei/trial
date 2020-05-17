@@ -352,11 +352,16 @@ div.ReactTags__selected span.ReactTags__tag {
     display: inline-block;
     padding: 6px;
     margin: 0 5px 5px 5px;
-    cursor: default !important;
 	border-radius: 2px;
+	cursor: move;
 	width: auto;
 }
 
+div.ReactTags__selected a.ReactTags__remove {
+    color: black;
+    margin-left: 5px;
+    cursor: pointer;
+}
 .submit_button{
 	margin: 40px;
 	align-content: center;
@@ -396,6 +401,13 @@ div.ReactTags__selected span.ReactTags__tag {
 	transform: scale(1.1);
 	cursor: pointer;
 	box-shadow: none;
+}
+.form-control:active{
+	border: 3px solid #D9054F;
+}
+
+.form-control:hover{
+	border: 3px solid #D9054F;
 }
 
 .Form-Control>textarea{

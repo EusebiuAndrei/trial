@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import { WithContext as ReactTags } from "react-tag-input";
 import { useMediaQuery } from "react-responsive";
 import * as api from "../api";
@@ -10,6 +9,7 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
+
 import MultipleImageUpload from "./MultipleImageUpload";
 
 const Provider = ({ data }) => {
@@ -19,19 +19,20 @@ const Provider = ({ data }) => {
   };
   const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-  const [newCategory, setNewCategory] = useState("");
+  const [newSpecial, setNewSpecial] = useState("");
+  const [selectedSpecial, setSelectedSpecial] = useState("");
   const [specials, setSpecials] = useState(data.specials ? data.specials : []);
+
   const [specialsTagItems, setSpecialTagItems] = useState(
     data.specials
       ? specials.map((element) => {
-          let rObj = {};
-          rObj["id"] = element;
-          rObj["text"] = element;
-          return rObj;
+          let newSpecialTag = {};
+          newSpecialTag["id"] = element;
+          newSpecialTag["text"] = element;
+          return newSpecialTag;
         })
       : []
   );
-
   const [capacity, setCapacity] = useState(data.capacity ? data.capacity : 0);
   const [type, setType] = useState(data.type ? data.type : 0);
   const [latitude, setLatitude] = useState(
@@ -52,43 +53,32 @@ const Provider = ({ data }) => {
     data.description ? data.description : ""
   );
 
-  const [numberOfCompletedFields, setNumberOdCompletedFileds] = useState(
-    Object.keys(data).length + Object.keys(data.location).length
-  );
-  const totalNumberOfFields = 8;
-  const [completedInputs, setCompletedImputs] = useState(
-    [
-      capacity,
-      latitude,
-      longitude,
-      adress,
-      CUI,
-      description,
-      priceCategory,
-      type,
-    ].filter((value) => {
-      if (value === 0 || value === "") return false;
-      else return true;
-    }).length
-  );
-  const Desktop = ({ children }) => {
-    const isDesktop = useMediaQuery({ minWidth: 767 });
-    return isDesktop ? children : null;
-  };
-
-  const Mobile = ({ children }) => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-    return isMobile ? children : null;
-    console.log(isMobile);
-  };
-
-  const percentage = ((completedInputs * 100) / totalNumberOfFields).toFixed(1);
-
   const [loading, setLoading] = useState(false);
   const [succesCUI, setSuccesCUI] = useState(true);
   const [succesLatitude, setSuccesLatitude] = useState(true);
   const [succesLongitude, setSuccesLongitude] = useState(true);
   const [succesCapacity, setSuccesCapacity] = useState(true);
+
+  const handleRemoveSpecial = (event) => {
+    setSelectedSpecial(event.target.value);
+  };
+
+  const handleRemoveSpecialsList = () => {
+    setSpecials(
+      specials.filter((value) => {
+        return value !== selectedSpecial;
+      })
+    );
+  };
+
+  const handleAddSpecial = async (event) => {
+    setNewSpecial(event.target.value);
+  };
+
+  const handleAddSpecialToList = async (event) => {
+    setSpecials([...specials, newSpecial]);
+    setNewSpecial("");
+  };
 
   const handleSaveDate = async () => {
     const userData = {
@@ -120,8 +110,7 @@ const Provider = ({ data }) => {
   };
 
   const handleDeleteTags = (tagIndex) => {
-    setSpecials(specials.filter((value, index) => index != tagIndex));
-
+    setSpecials(specials.filter((value, index) => index !== tagIndex));
     setSpecialTagItems(
       specialsTagItems.filter((tag, index) => index !== tagIndex)
     );
@@ -200,9 +189,12 @@ const Provider = ({ data }) => {
     return false;
   };
 
+  const isBigScreen = useMediaQuery({ query: "(min-device-width: 747px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 747px)" });
+
   return (
     <div>
-      <Desktop>
+      {isBigScreen && (
         <div className="profile_provider">
           <div className="provider_form">
             <Form>
@@ -348,7 +340,6 @@ const Provider = ({ data }) => {
                 <div className="align_left_profile_input">
                   <FormGroup>
                     <div className="list_of_objects">
-                      <Button className="add_button_list">Add</Button>
                       <ReactTags
                         placeholder="Add new dish"
                         allowDeleteFromEmptyInput={false}
@@ -378,6 +369,7 @@ const Provider = ({ data }) => {
                       placeholder={description}
                       value={description}
                       as="textarea"
+                      key="1"
                       onChange={handleChangeDescription}
                     ></FormControl>
                   </FormGroup>
@@ -397,38 +389,9 @@ const Provider = ({ data }) => {
               </div>
             </Form>
           </div>
-          <div className="progress_circle">
-            <CircularProgressbarWithChildren
-              classes
-              value={percentage.toString + "%"}
-              styles={{
-                path: {
-                  stroke: `rgb(217, 5, 79, ${percentage / 100})`,
-                  strokeLinecap: "butt",
-                  transition: "stroke-dashoffset 0.5s ease 0s",
-                  transform: "rotate(0.25turn)",
-                  transformOrigin: "center center",
-                },
-                trail: {
-                  stroke: "grey",
-                  strokeLinecap: "butt",
-                  transform: "rotate(0.25turn)",
-                  transformOrigin: "center center",
-                },
-                text: {
-                  fill: "rgb(217, 5, 79)",
-                  fontSize: "16px",
-                },
-              }}
-            >
-              <div style={{ fontSize: 25, marginTop: -5 }}>
-                <strong>{percentage}</strong>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
         </div>
-      </Desktop>
-      <Mobile>
+      )}
+      {isTabletOrMobile && (
         <div className="profile_provider_phone">
           <div className="provider_form_phone">
             <Form>
@@ -572,19 +535,47 @@ const Provider = ({ data }) => {
                   <small>List there your signature dishes</small>
                 </p>
                 <div className="align_left_profile_input">
+                  <div className="add_to_list">
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        value={newSpecial}
+                        onChange={handleAddSpecial}
+                      ></FormControl>
+                    </FormGroup>
+                    <div className="add_button">
+                      <Button
+                        className="actual_button"
+                        onClick={handleAddSpecialToList}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </div>
                   <FormGroup>
-                    <div className="list_of_objects">
-                      <Button className="add_button_list">Add</Button>
-                      <ReactTags
-                        placeholder="Add new dish"
-                        allowDeleteFromEmptyInput={false}
-                        allowUnique={true}
-                        inputFieldPosition="top"
-                        tags={specialsTagItems}
-                        handleDelete={handleDeleteTags}
-                        handleAddition={handleAddTag}
-                        delimiters={delimiters}
-                      />
+                    <FormControl as="select" onChange={handleRemoveSpecial}>
+                      <option
+                        style={{ display: "none" }}
+                        selected="selected"
+                        value="0"
+                      >
+                        Specialities
+                      </option>
+                      {specials.map((special) => {
+                        return (
+                          <option value={special} key={special}>
+                            {special}
+                          </option>
+                        );
+                      })}
+                    </FormControl>
+                    <div className="add_button">
+                      <Button
+                        className="actual_button"
+                        onClick={handleRemoveSpecialsList}
+                      >
+                        Remove
+                      </Button>
                     </div>
                   </FormGroup>
                 </div>
@@ -624,7 +615,7 @@ const Provider = ({ data }) => {
             </Form>
           </div>
         </div>
-      </Mobile>
+      )}
     </div>
   );
 };

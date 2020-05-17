@@ -49,6 +49,7 @@ const Course = ({ data }) => {
 
   const handleAddIngredientToList = (event) => {
     setIngredients([...ingredients, newIngredient]);
+    setNewIngredient("");
   };
 
   const handleAddAllergene = (event) => {
@@ -57,6 +58,7 @@ const Course = ({ data }) => {
 
   const handleAddAllergenesToList = (event) => {
     setAllergenes([...allergenes, newAllergen]);
+    setNewAllergen("");
   };
 
   const handleDeleteTags = (tagIndex) => {
@@ -145,21 +147,15 @@ const Course = ({ data }) => {
             <h5>Categories</h5>
             <div className="align_left_profile_input">
               <FormGroup>
-                <div className="tags_list">
-                  <div className="list_of_objects">
-                    <ReactTags
-                      placeholder="Add new category"
-                      inline={false}
-                      inputFieldPosition="top"
-                      tags={categoryTagItems}
-                      handleDelete={handleDeleteTags}
-                      handleAddition={handleAddTag}
-                      delimiters={delimiters}
-                    />
-                  </div>
-                  <div className="submit_button">
-                    <Button className="actual_button">ADD</Button>
-                  </div>
+                <div className="list_of_objects">
+                  <ReactTags
+                    placeholder="Add new category"
+                    inputFieldPosition="top"
+                    tags={categoryTagItems}
+                    handleDelete={handleDeleteTags}
+                    handleAddition={handleAddTag}
+                    delimiters={delimiters}
+                  />
                 </div>
               </FormGroup>
             </div>
@@ -202,6 +198,12 @@ const Course = ({ data }) => {
           </div>
           <div className="profile_element">
             <h5>Allergenes</h5>
+            <p className="profile_explanations">
+              <small>
+                We know you care about your clients, so let them know if this
+                product contains any allergenes!
+              </small>
+            </p>
             <div className="align_left_profile_input">
               <div className="add_to_list">
                 <FormGroup>

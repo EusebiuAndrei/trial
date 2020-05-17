@@ -26,47 +26,105 @@ const Schedule = ({ data }) => {
   const [endSaturday, setEndSaturday] = useState(data.schedule[5].endHour);
   const [endSunday, setEndSunday] = useState(data.schedule[6].endHour);
   const [loading, setLoading] = useState(false);
+
+  const [succesTime, setSuccesTime] = useState(true);
+
+  const advertisationMessage = (correct, message) => {
+    if (correct) {
+      return <p></p>;
+    } else {
+      return (
+        <p className="avertisment">
+          <small>{message}</small>
+        </p>
+      );
+    }
+  };
+
   const handleStartMonday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartMonday(event.target.value);
   };
+
   const handleEndMonday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndMonday(event.target.value);
   };
 
   const handleStartTuesday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartTuesday(event.target.value);
   };
   const handleEndTuesday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndTuesday(event.target.value);
   };
   const handleStartWednesday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartWednesday(event.target.value);
   };
   const handleEndWednesday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndWednesday(event.target.value);
   };
   const handleStartThursday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartThursday(event.target.value);
   };
   const handleEndThursday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndThursday(event.target.value);
   };
   const handleStartFriday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartFriday(event.target.value);
   };
   const handleEndFriday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndFriday(event.target.value);
   };
   const handleStartSaturday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartSaturday(event.target.value);
   };
   const handleEndSaturday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndSaturday(event.target.value);
   };
   const handleStartSunday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setStartSunday(event.target.value);
   };
   const handleEndSunday = (event) => {
+    if (!isTimeFormat(event.target.value)) {
+      setSuccesTime(false);
+    } else setSuccesTime(true);
     setEndSunday(event.target.value);
   };
 
@@ -124,19 +182,17 @@ const Schedule = ({ data }) => {
     }
   };
 
-  const Desktop = ({ children }) => {
-    const isDesktop = useMediaQuery({ minWidth: 767 });
-    return isDesktop ? children : null;
+  const isBigScreen = useMediaQuery({ query: "(min-device-width: 747px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 747px)" });
+
+  const isTimeFormat = (time) => {
+    if (/^(0?[1-9]|1[012]) [APap][mM]$/.test(time)) return true;
+    return false;
   };
 
-  const Mobile = ({ children }) => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-    return isMobile ? children : null;
-    console.log(isMobile);
-  };
   return (
     <div>
-      <Desktop>
+      {isBigScreen && (
         <div className="schedule_provider">
           <div className="schedule_form">
             <Form>
@@ -144,6 +200,12 @@ const Schedule = ({ data }) => {
                 <h2>Schedule</h2>
               </div>
               <div className="schedule_columns">
+                <div>
+                  {advertisationMessage(
+                    succesTime,
+                    "Values should be on the am/pm format"
+                  )}
+                </div>
                 <div className="schedule_row">
                   <div className="day_title">
                     <h4>DAY</h4>
@@ -308,13 +370,19 @@ const Schedule = ({ data }) => {
             </Form>
           </div>
         </div>
-      </Desktop>
-      <Mobile>
+      )}
+      {isTabletOrMobile && (
         <div className="schedule_provider_phone">
           <div className="schedule_form_phone">
             <Form>
               <div className="profile_title">
                 <h2>Schedule</h2>
+              </div>
+              <div>
+                {advertisationMessage(
+                  succesTime,
+                  "Values should be on the am/pm format"
+                )}
               </div>
               <div className="schedule_columns">
                 <div className="schedule_row">
@@ -481,7 +549,7 @@ const Schedule = ({ data }) => {
             </Form>
           </div>
         </div>
-      </Mobile>
+      )}
     </div>
   );
 };
