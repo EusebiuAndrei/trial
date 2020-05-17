@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+
+const config = require('../../config');
 const { userService } = require('../index');
 const { User } = require('../../models/index');
 
 describe('User service', () => {
 	beforeAll(async () => {
-		await mongoose.connect('mongodb://localhost:27017/ip', {
+		await mongoose.connect(config.databaseTestURL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true,
