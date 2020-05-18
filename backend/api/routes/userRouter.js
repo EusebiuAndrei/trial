@@ -89,7 +89,7 @@ router.get('/confirm:token', async (req, res) => {
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
 
-	res.status(setResponseStatus(200, 400, result.success)).json(
+	res.status(setResponseStatus(204, 400, result.success)).json(
 		result,
 	);
 });
@@ -99,7 +99,7 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 		req.data,
 		req.content,
 	);
-	res.status(setResponseStatus(200, 400, result.success)).json(
+	res.status(setResponseStatus(201, 400, result.success)).json(
 		result,
 	);
 });

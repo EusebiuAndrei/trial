@@ -45,6 +45,7 @@ const Course = ({ data }) => {
   const [newAllergen, setNewAllergen] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [selectedAllergene, setSelectedAllergene] = useState("");
+
   const handleRemoveIngredient = (event) => {
     setSelectedIngredient(event.target.value);
   };
@@ -132,7 +133,6 @@ const Course = ({ data }) => {
     try {
       setLoading(true);
       let answer = await api.deleteCourse(data.course._id);
-      console.log(answer);
       //setCourses(answer.courses);
       if (answer.success === true) {
         setLoading(false);

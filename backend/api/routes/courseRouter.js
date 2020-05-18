@@ -35,7 +35,7 @@ router.patch('/:idCourse', async (req, res) => {
 		idCourse,
 		req.body,
 	);
-	res.status(setResponseStatus(200, 400, result.success)).json(
+	res.status(setResponseStatus(204, 400, result.success)).json(
 		result,
 	);
 });
@@ -43,7 +43,7 @@ router.patch('/:idCourse', async (req, res) => {
 router.delete('/:idCourse', async (req, res) => {
 	const { idCourse } = req.params;
 	const result = await courseService.deleteCourse(idCourse);
-	res.status(setResponseStatus(200, 400, result.success)).json(
+	res.status(setResponseStatus(204, 400, result.success)).json(
 		result,
 	);
 });

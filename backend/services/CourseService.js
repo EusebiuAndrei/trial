@@ -23,6 +23,7 @@ class CourseService {
 				},
 				{
 					$group: {
+						providerId: 'providerId',
 						_id: '$courses._id',
 						name: { $first: '$courses.name' },
 						category: { $first: '$courses.category' },

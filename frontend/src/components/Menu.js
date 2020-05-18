@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Accordion, Button } from "react-bootstrap";
 import Course from "./Course";
 import * as api from "../api";
-import { useMediaQuery } from "react-responsive";
 
 const Menu = ({ data }) => {
   const [courses, setCourses] = useState(data.courses ? data.courses : []);
