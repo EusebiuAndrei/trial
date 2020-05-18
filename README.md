@@ -758,7 +758,7 @@ Add a command to client commandsHistory and provider commandsQueue
 
 **Return codes**:
 
--   200 - OK
+-   201 - Created
 -   400 - There was a problem fetching data
 
 **Usage example**:  
@@ -796,7 +796,7 @@ Add a command to client reservationsHistory and provider reservationsQueue
 
 **Return codes**:
 
--   200 - OK
+-   201 - Created
 -   400 - There was a problem fetching data
 
 **Usage example**:  
