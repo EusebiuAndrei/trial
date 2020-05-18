@@ -60,8 +60,6 @@ class ImageService {
 	}
 	async uploadMenuPhoto(buffer, hostname, idCourse) {
 		try {
-			console.log(buffer);
-			console.log(idCourse);
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
 			const newPath = `http://${hostname}/images/${filename}`;
@@ -74,6 +72,23 @@ class ImageService {
 			);
 
 			return { success: true, name: { newPath } };
+		} catch (error) {
+			return {
+				success: false,
+				error: 'Please provide a valid image!',
+			};
+		}
+	}
+
+	async uploadMenuPhoto(buffer, hostname, idPhoto) {
+		try {
+			//idPhoto unique -- search db for it and delete it
+			//depend on which database
+
+			const response = 'not implemented yet';
+			//response is gonna be deleted or inexisting file
+
+			return { success: true, name: { response } };
 		} catch (error) {
 			return {
 				success: false,
