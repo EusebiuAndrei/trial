@@ -23,6 +23,7 @@ class CourseService {
 				},
 				{
 					$group: {
+						providerId: { $first: '$providerId' },
 						_id: '$courses._id',
 						name: { $first: '$courses.name' },
 						category: { $first: '$courses.category' },
@@ -96,6 +97,92 @@ class CourseService {
 				);
 			return { success: true, data: { coursesFiltred } };
 		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async deleteCourse(idCourse) {
+		try {
+			const courses = await this.db.Menu.findOneAndUpdate(
+				{
+					'courses._id': idCourse,
+				},
+				{
+					$pull: { courses: { _id: idCourse } },
+				},
+				{ useFindAndModify: false, new: true },
+			);
+			console.log(courses);
+			return { success: true, data: courses };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async addCourse(idMenu) {
+		try {
+			const emptyCourse = {
+				name: 'New Course',
+				category: [],
+				price: 0,
+				image: '',
+				ingredients: [],
+				allergenes: [],
+			};
+			const courses = await this.db.Menu.findOneAndUpdate(
+				{
+					_id: idMenu,
+				},
+				{
+					$push: { courses: emptyCourse },
+				},
+				{ useFindAndModify: false, new: true },
+			);
+			return { success: true, data: courses };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async updateCourse(idCourse, payload) {
+		try {
+			let {
+				name,
+				category,
+				price,
+				ingredients,
+				allergenes,
+			} = payload;
+
+			const course = await this.db.Menu.findOneAndUpdate(
+				{
+					'courses._id': idCourse,
+				},
+				{
+					$set: {
+						'courses.$.name': name,
+						'courses.$.category': category,
+						'courses.$.price': price,
+						'courses.$.ingredients': ingredients,
+						'courses.$.allergenes': allergenes,
+					},
+				},
+				{ useFindAndModify: false, new: true },
+			);
+			return { success: true, data: course };
+		} catch (error) {
+			Logger.error(error);
 			return {
 				success: false,
 				error: { message: error.message },
