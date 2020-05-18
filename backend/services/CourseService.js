@@ -103,10 +103,32 @@ class CourseService {
 		}
 	}
 
+	async deleteCourse(idCourse) {
+		try {
+			const courses = await this.db.Menu.findOneAndUpdate(
+				{
+					'courses._id': idCourse,
+				},
+				{
+					$pull: { courses: { _id: idCourse } },
+				},
+				{ useFindAndModify: false, new: true },
+			);
+			console.log(courses);
+			return { success: true, data: courses };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async addCourse(idMenu) {
 		try {
 			const emptyCourse = {
-				name: '',
+				name: 'New Course',
 				category: [],
 				price: 0,
 				image: '',

@@ -199,7 +199,7 @@ const Schedule = ({ data }) => {
               <div className="profile_title">
                 <h2>Schedule</h2>
                 <p className="profile_explanations">
-                  <small>Let the</small>
+                  <small>Let the clients know your schedule!</small>
                 </p>
               </div>
               <div className="schedule_columns">

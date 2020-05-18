@@ -128,6 +128,23 @@ const Course = ({ data }) => {
     }
   };
 
+  const handleDeleteCourse = async () => {
+    try {
+      setLoading(true);
+      let answer = await api.deleteCourse(data.course._id);
+      console.log(answer);
+      //setCourses(answer.courses);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <Card>
       <Card.Header className="header_menu">
@@ -135,9 +152,21 @@ const Course = ({ data }) => {
           className="image_menu"
           src={data.course.image ? data.course.image : placeholder}
         />
-        <Accordion.Toggle as={Button} variant="link" eventKey={data.index}>
+        <Accordion.Toggle
+          as={Button}
+          variant="link"
+          className="course_name"
+          eventKey={data.index}
+        >
           <p>{name}</p>
         </Accordion.Toggle>
+        <Button
+          className="remove_button"
+          variant="danger"
+          onClick={handleDeleteCourse}
+        >
+          X
+        </Button>
       </Card.Header>
       <Accordion.Collapse eventKey={data.index}>
         <Card.Body>

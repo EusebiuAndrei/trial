@@ -226,6 +226,24 @@ const updateCourse = async (idCourse, courseData) => {
   }
 };
 
+const deleteCourse = async (idCourse) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    setAuthorizationToken(token);
+    const {
+      data: {
+        data: { courses },
+      },
+    } = await axios({
+      method: "delete",
+      url: `http://localhost:4000/api/courses/${idCourse}`,
+    });
+    return { success: true, courses };
+  } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
 export {
   register,
   login,
@@ -237,4 +255,5 @@ export {
   uploadMenuPhoto,
   addCourse,
   updateCourse,
+  deleteCourse,
 };

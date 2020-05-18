@@ -432,6 +432,15 @@ div.ReactTags__selected a.ReactTags__remove {
 	font-weight: 100;
 }
 
+.course_header {
+    border-radius: 0;
+    margin-bottom: -1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .statistics_main{
 	margin-left: 2%;
 	height: auto;
@@ -497,12 +506,15 @@ iframe{
 	align-self: center;
 }
 .header_menu{
-	display: flex;
-	flex-direction: row;
-	align-content: flex-start;
+		border-radius: 0;
+		margin-bottom: -1px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
 }
 .header_menu p{
-	padding-left: 10vw;
+
 	color: #D9054F; 
 }
 .tags_list{

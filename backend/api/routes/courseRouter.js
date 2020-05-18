@@ -39,4 +39,12 @@ router.patch('/:idCourse', async (req, res) => {
 		result,
 	);
 });
+
+router.delete('/:idCourse', async (req, res) => {
+	const { idCourse } = req.params;
+	const result = await courseService.deleteCourse(idCourse);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
+});
 module.exports = router;
