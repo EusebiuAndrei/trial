@@ -134,11 +134,27 @@ class CourseService {
 
 	async updateCourse(idCourse, payload) {
 		try {
+			let {
+				name,
+				category,
+				price,
+				ingredients,
+				allergenes,
+			} = payload;
+
 			const course = await this.db.Menu.findOneAndUpdate(
 				{
 					'courses._id': idCourse,
 				},
-				{ $set: { 'courses.$': payload } },
+				{
+					$set: {
+						'courses.$.name': name,
+						'courses.$.category': category,
+						'courses.$.price': price,
+						'courses.$.ingredients': ingredients,
+						'courses.$.allergenes': allergenes,
+					},
+				},
 				{ useFindAndModify: false, new: true },
 			);
 			return { success: true, data: course };
