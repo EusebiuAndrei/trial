@@ -131,6 +131,32 @@ class UserService {
 		}
 	}
 
+	async changeEmail(payload) {
+		const { email, newEmail } = payload;
+
+		try {
+			await this.db.User.updateOne(
+				{
+					email: email,
+				},
+				{
+					$set: {
+						email: newEmail,
+					},
+				},
+			);
+			return {
+				success: true,
+				data: "You've successfully changed your email!",
+			};
+		} catch (error) {
+			return {
+				succes: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async changePassword(payload) {
 		const {
 			email,

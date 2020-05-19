@@ -77,6 +77,13 @@ router.post('/changepassword', async function (req, res) {
 	res.status(statusCode).json(result);
 });
 
+router.post('/changeemail', async function (req, res) {
+	const result = await userService.changeEmail(req.body);
+	const statusCode = result.success ? 201 : 400;
+
+	res.status(statusCode).json(result);
+});
+
 router.get('/confirm:token', async (req, res) => {
 	const result = await userService.confirmEmail(req.params.token);
 	const statusCode = result.success ? 201 : 400;
@@ -90,6 +97,20 @@ router.delete('/all', async (req, res) => {
 
 	res.status(statusCode).json(result);
 });
+
+router.post(
+	'/accountSettings',
+	auth,
+	dynamicCelebrate,
+	async (req, res) => {
+		const result = await userService.configureUser(
+			req.data,
+			req.content,
+		);
+		const statusCode = result.success ? 200 : 403;
+		res.status(statusCode).json(result);
+	},
+);
 
 router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 	const result = await userService.configureUser(

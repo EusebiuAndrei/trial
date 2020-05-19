@@ -14,23 +14,49 @@ import {
   FormGroup,
   FormLabel,
 } from "react-bootstrap";
+import { WithContext as ReactTags } from "react-tag-input";
 import * as api from "../api";
 
 const Client = ({ data }) => {
+  const KeyCodes = {
+    comma: 188,
+    enter: 13,
+  };
+
   console.log(Object.keys(data).length);
   const percentage = data
     ? parseInt(((Object.keys(data).length + 2) * 100) / 6)
     : 0;
 
-  const [toInputLocation, setToInputLocation] = useState(false);
-  const [toInputPreferences, setToInputPreferences] = useState(false);
-  const [toInputAllergies, setToInputAllergies] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [preferences, setPreferences] = useState(
-    data.preferences ? data.preferences : ""
+    data.preferences ? data.preferences : []
   );
   const [allergies, setAllergies] = useState(
-    data.allergies ? data.allergies : ""
+    data.allergies ? data.allergies : []
+  );
+  const [loading, setLoading] = useState(false);
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+  const [preferencesTagItems, setPreferencesTagItems] = useState(
+    data.preferences
+      ? preferences.map((element) => {
+          let rObj = {};
+          rObj["id"] = element;
+          rObj["text"] = element;
+          return rObj;
+        })
+      : []
+  );
+
+  const [allergiesTagItems, setAllergiesTagItems] = useState(
+    data.allergies
+      ? allergies.map((element) => {
+          let rObj = {};
+          rObj["id"] = element;
+          rObj["text"] = element;
+          return rObj;
+        })
+      : []
   );
 
   const [adress, setAdress] = useState(
@@ -65,43 +91,30 @@ const Client = ({ data }) => {
     }
   };
 
-  const handleChangeAdress = (event) => {
-    setAdress(event.target.value);
+  const handleAddPreferencesTag = (tag) => {
+    setPreferences([...preferences, tag.text]);
+    setPreferencesTagItems([...preferencesTagItems, tag]);
   };
 
-  const handleEditLocationButton = () => {
-    setToInputLocation(!toInputLocation);
-  };
-  const handleEditPreferencesButton = () => {
-    setToInputPreferences(!toInputPreferences);
-  };
-  const handleEditAllergiesButton = () => {
-    setToInputAllergies(!toInputAllergies);
-  };
-  const handleInput = (e, type) => {
-    if (type === "longitude" || type === "latitude")
-      data.location[type] = e.target.value;
-    else if (type === "preferences") {
-      data[type].push(e.target.value);
-    } else if (type === "allergies") {
-      data[type].push(e.target.value);
-    } else data[type] = e.target.value;
+  const handleAddAllergiesTag = (tag) => {
+    setAllergies([...allergies, tag.text]);
+    setAllergiesTagItems([...allergiesTagItems, tag]);
   };
 
-  const listPreferences = () => {
-    let preferencesList = [];
-    for (const [index, value] of data.preferences.entries())
-      preferencesList.push(
-        <ListGroup.Item key={index}>{value}</ListGroup.Item>
-      );
-    return preferencesList;
+  const handleDeletePreferencesTags = (tagIndex) => {
+    setPreferences(preferences.filter((value, index) => index != tagIndex));
+
+    setPreferencesTagItems(
+      preferencesTagItems.filter((tag, index) => index !== tagIndex)
+    );
   };
 
-  const listAllergies = () => {
-    let allergiesList = [];
-    for (const [index, value] of data.allergies.entries())
-      allergiesList.push(<ListGroup.Item key={index}>{value}</ListGroup.Item>);
-    return allergiesList;
+  const handleDeleteAllergiesTags = (tagIndex) => {
+    setAllergies(allergies.filter((value, index) => index != tagIndex));
+
+    setAllergiesTagItems(
+      allergiesTagItems.filter((tag, index) => index !== tagIndex)
+    );
   };
 
   const [latitude, setLatitude] = useState(
@@ -189,55 +202,49 @@ const Client = ({ data }) => {
               </div>
             </FormGroup>
           </div>
-          <div className="align_left_profile_input">
-            <FormGroup>
-              <FormLabel>Preferences</FormLabel>
-              <div style={listStyle}>
-                <ListGroup>
-                  {!toInputPreferences && listPreferences()}
-                  {toInputPreferences && (
-                    <FormControl
-                      type="text"
-                      placeholder="Preference"
-                      onChange={(e) => handleInput(e, "preferences")}
-                    ></FormControl>
-                  )}
-                </ListGroup>
-                <Button
-                  className="editBtn"
-                  variant="primary"
-                  onClick={handleEditPreferencesButton}
-                >
-                  {!toInputPreferences && "Add preference"}
-                  {toInputPreferences && "Done"}
-                </Button>
-              </div>
-            </FormGroup>
+          <hr></hr>
+          <div className="profile_element">
+            <h5>Preferences</h5>
+            <p className="profile_explanations">
+              <small>List there your preferences</small>
+            </p>
+            <div className="align_left_profile_input">
+              <FormGroup>
+                <div className="list_of_objects">
+                  <ReactTags
+                    placeholder="Add new preference"
+                    inline={false}
+                    inputFieldPosition="top"
+                    tags={preferencesTagItems}
+                    handleDelete={handleDeletePreferencesTags}
+                    handleAddition={handleAddPreferencesTag}
+                    delimiters={delimiters}
+                  />
+                </div>
+              </FormGroup>
+            </div>
           </div>
-          <div className="align_left_profile_input">
-            <FormGroup>
-              <FormLabel>Allergies</FormLabel>
-              <div style={listStyle}>
-                <ListGroup>
-                  {!toInputAllergies && listAllergies()}
-                  {toInputAllergies && (
-                    <FormControl
-                      type="text"
-                      placeholder="add allergy..."
-                      onChange={(e) => handleInput(e, "allergies")}
-                    ></FormControl>
-                  )}
-                </ListGroup>
-                <Button
-                  className="editBtn"
-                  variant="primary"
-                  onClick={handleEditAllergiesButton}
-                >
-                  {!toInputAllergies && "Add allergy"}
-                  {toInputAllergies && "Done"}
-                </Button>
-              </div>
-            </FormGroup>
+          <hr></hr>
+          <div className="profile_element">
+            <h5>Allergies</h5>
+            <p className="profile_explanations">
+              <small>List there your allergies</small>
+            </p>
+            <div className="align_left_profile_input">
+              <FormGroup>
+                <div className="list_of_objects">
+                  <ReactTags
+                    placeholder="Add new allergy"
+                    inline={false}
+                    inputFieldPosition="top"
+                    tags={allergiesTagItems}
+                    handleDelete={handleDeleteAllergiesTags}
+                    handleAddition={handleAddAllergiesTag}
+                    delimiters={delimiters}
+                  />
+                </div>
+              </FormGroup>
+            </div>
           </div>
           <hr></hr>
           <div class="saveBtnContainer">

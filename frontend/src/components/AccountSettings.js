@@ -13,7 +13,6 @@ const AccountSettings = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(data.email ? data.email : "");
   const [username, setUsername] = useState(data.name ? data.name : "");
-  const [password, setPassword] = useState(data.password ? data.password : "");
   const [succesEmail, setSuccesEmail] = useState(true);
 
   const advertisationMessage = (correct, message) => {
@@ -31,12 +30,12 @@ const AccountSettings = ({ data }) => {
   const handleSaveDate = async () => {
     const userData = {
       email,
+      newEmail,
       username,
-      password,
     };
     setLoading(true);
     try {
-      let answer = await api.profile(userData);
+      let answer = await api.changeEmail(userData);
       if (answer.success === true) {
         setLoading(false);
       } else {
@@ -57,8 +56,8 @@ const AccountSettings = ({ data }) => {
     setUsername(event.target.value);
   };
 
-  const validEmail = (email) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+  const validEmail = (newEmail) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newEmail)) {
       return true;
     }
     return false;
@@ -107,7 +106,7 @@ const AccountSettings = ({ data }) => {
             <FormGroup>
               <FormControl
                 placeholder={email}
-                value={email}
+                value={newEmail}
                 type="email"
                 onChange={handleChangeEmail}
               ></FormControl>

@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config/index');
 const bcrypt = require('bcryptjs');
-const Crypto = require('crypto')
-
+const Crypto = require('crypto');
 
 // Create functions that will represent schema methods
 const generateAuthToken = async function () {
@@ -33,7 +32,9 @@ const generateEmailToken = async function () {
 
 const generateNewPassword = async function () {
 	const user = this;
-	const password = Crypto.randomBytes(6).toString('base64').slice(0, 6)
+	const password = Crypto.randomBytes(6)
+		.toString('base64')
+		.slice(0, 6);
 
 	user.password = password;
 	await user.save();
@@ -41,7 +42,11 @@ const generateNewPassword = async function () {
 	return password;
 };
 
-const changePassword = async function (currentPass, newPass , confirmNewPass) {
+const changePassword = async function (
+	currentPass,
+	newPass,
+	confirmNewPass,
+) {
 	const user = this;
 
 	const isMatch = await bcrypt.compare(currentPass, user.password);
@@ -50,7 +55,7 @@ const changePassword = async function (currentPass, newPass , confirmNewPass) {
 		throw new Error('Parola curenta incorecta!');
 	}
 
-	if(newPass != confirmNewPass){
+	if (newPass != confirmNewPass) {
 		throw new Error('Cele doua parole nu coincid!');
 	}
 
@@ -76,5 +81,5 @@ module.exports = {
 	generateEmailToken,
 	toJSON,
 	generateNewPassword,
-	changePassword
+	changePassword,
 };
