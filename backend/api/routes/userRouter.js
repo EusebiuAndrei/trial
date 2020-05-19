@@ -70,19 +70,51 @@ router.post('/lostpassword', async function (req, res) {
 	res.status(statusCode).json(result);
 });
 
-router.post('/changepassword', async function (req, res) {
-	const result = await userService.changePassword(req.body);
+// router.post('/changepassword', async function (req, res) {
+// 	const result = await userService.changePassword(req.body);
+// 	const statusCode = result.success ? 201 : 400;
+
+// 	res.status(statusCode).json(result);
+// });
+
+router.post('/changeemail', auth, dynamicCelebrate, async function (
+	req,
+	res,
+) {
+	const result = await userService.changeEmail(
+		req.content,
+		req.data,
+	);
 	const statusCode = result.success ? 201 : 400;
 
 	res.status(statusCode).json(result);
 });
 
-router.post('/changeemail', async function (req, res) {
-	const result = await userService.changeEmail(req.body);
+router.post('/changename', auth, dynamicCelebrate, async function (
+	req,
+	res,
+) {
+	const result = await userService.changeName(
+		req.content,
+		req.data,
+	);
 	const statusCode = result.success ? 201 : 400;
 
 	res.status(statusCode).json(result);
 });
+
+router.post(
+	'/changepassword',
+	auth,
+	dynamicCelebrate,
+	async function (req, res) {
+		console.log(req.content);
+		const result = await userService.changePassword(req.content);
+		const statusCode = result.success ? 201 : 400;
+
+		res.status(statusCode).json(result);
+	},
+);
 
 router.get('/confirm:token', async (req, res) => {
 	const result = await userService.confirmEmail(req.params.token);
@@ -103,7 +135,7 @@ router.post(
 	auth,
 	dynamicCelebrate,
 	async (req, res) => {
-		const result = await userService.configureUser(
+		const result = await userService.configureAccount(
 			req.data,
 			req.content,
 		);

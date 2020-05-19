@@ -50,7 +50,7 @@ const changePassword = async function (
 	const user = this;
 
 	const isMatch = await bcrypt.compare(currentPass, user.password);
-
+	console.log(currentPass + ' ' + user.password);
 	if (!isMatch) {
 		throw new Error('Parola curenta incorecta!');
 	}

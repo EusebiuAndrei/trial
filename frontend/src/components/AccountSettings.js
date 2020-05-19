@@ -14,6 +14,11 @@ const AccountSettings = ({ data }) => {
   const [email, setEmail] = useState(data.email ? data.email : "");
   const [username, setUsername] = useState(data.name ? data.name : "");
   const [succesEmail, setSuccesEmail] = useState(true);
+  const [currentPass, setPassword] = useState(
+    data.password ? data.password : ""
+  );
+  const [newPass, setNewPassword] = useState(true);
+  const [confirmNewPass, setConfirmPassword] = useState(true);
 
   const advertisationMessage = (correct, message) => {
     if (correct) {
@@ -30,13 +35,22 @@ const AccountSettings = ({ data }) => {
   const handleSaveDate = async () => {
     const userData = {
       email,
-      newEmail,
       username,
+      currentPass,
+      newPass,
+      confirmNewPass,
     };
     setLoading(true);
     try {
+      console.log(currentPass + " " + newPass + " " + confirmNewPass);
       let answer = await api.changeEmail(userData);
-      if (answer.success === true) {
+      let answer2 = await api.changeName(userData);
+      let answer3 = await api.changePassword(userData);
+      if (
+        answer.success === true &&
+        answer2.success === true // &&
+        // answer3.success === true
+      ) {
         setLoading(false);
       } else {
         setLoading(false);
@@ -44,11 +58,7 @@ const AccountSettings = ({ data }) => {
       console.log(answer);
     } catch (err) {
       console.log(err);
-      this.setState({
-        error: err,
-        loading: false,
-        success: false,
-      });
+      setLoading(false);
     }
   };
 
@@ -56,8 +66,20 @@ const AccountSettings = ({ data }) => {
     setUsername(event.target.value);
   };
 
-  const validEmail = (newEmail) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newEmail)) {
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleNewPassword = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleConfirmPassword = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  const validEmail = (email) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       return true;
     }
     return false;
@@ -106,7 +128,7 @@ const AccountSettings = ({ data }) => {
             <FormGroup>
               <FormControl
                 placeholder={email}
-                value={newEmail}
+                value={email}
                 type="email"
                 onChange={handleChangeEmail}
               ></FormControl>
@@ -130,10 +152,29 @@ const AccountSettings = ({ data }) => {
           <div className="account_settings_elements">
             <FormGroup>
               <FormControl
-                placeholder="●●●●●●●●●"
+                placeholder="Current password"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
                 type="password"
+                onChange={handleChangePassword}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormControl
+                placeholder="New password"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                type="password"
+                onChange={handleNewPassword}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormControl
+                placeholder="Confirm new password"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                type="password"
+                onChange={handleConfirmPassword}
               />
             </FormGroup>
           </div>

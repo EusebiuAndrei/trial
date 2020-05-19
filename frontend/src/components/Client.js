@@ -23,7 +23,6 @@ const Client = ({ data }) => {
     enter: 13,
   };
 
-  console.log(Object.keys(data).length);
   const percentage = data
     ? parseInt(((Object.keys(data).length + 2) * 100) / 6)
     : 0;
