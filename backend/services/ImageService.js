@@ -1,6 +1,6 @@
-const path = require('path');
 const Resize = require('./Resize');
 const imagePath = './public/images';
+const mongoose = require('mongoose');
 
 class ImageService {
 	constructor({ db, services }) {
@@ -8,15 +8,15 @@ class ImageService {
 		this.services = services;
 	}
 
-	async uploadOneImage(buffer, hostname, token) {
+	async uploadOneImage(buffer, hostname, userId) {
 		try {
 			const fileUpload = new Resize(imagePath);
 			const filename = await fileUpload.save(buffer);
-			const newPath = path.join(
-				hostname,
-				'public',
-				'images',
-				filename,
+			const newPath = `http://${hostname}/images/${filename}`;
+
+			await this.db.Client.updateOne(
+				{ userId },
+				{ $set: { avatar: uploadedImages } },
 			);
 
 			return { success: true, name: { newPath } };
@@ -28,7 +28,7 @@ class ImageService {
 		}
 	}
 
-	async uploadMultipleImages(files, hostname, token) {
+	async uploadMultipleImages(files, hostname, userId) {
 		try {
 			const uploadedImages = [];
 			const fileUpload = new Resize(imagePath);
@@ -36,19 +36,43 @@ class ImageService {
 				const filename = await fileUpload.save(
 					buffers.buffer,
 				);
-				const newPath = path.join(
-					hostname,
-					'public',
-					'images',
-					filename,
-				);
+				const newPath = `http://${hostname}/images/${filename}`;
 				await uploadedImages.push(newPath);
 			}
+
 			console.log(uploadedImages);
+
+			await this.db.Provider.updateOne(
+				{ userId },
+				{ $push: { images: uploadedImages } },
+			);
+
 			return {
 				success: true,
 				name: JSON.stringify(uploadedImages),
 			};
+		} catch (error) {
+			return {
+				success: false,
+				error: 'Please provide a valid image!',
+			};
+		}
+	}
+
+	async uploadMenuPhoto(buffer, hostname, idCourse) {
+		try {
+			const fileUpload = new Resize(imagePath);
+			const filename = await fileUpload.save(buffer);
+			const newPath = `http://${hostname}/images/${filename}`;
+
+			await this.db.Menu.updateOne(
+				{
+					'courses._id': idCourse,
+				},
+				{ $set: { 'courses.$.image': newPath } },
+			);
+
+			return { success: true, name: { newPath } };
 		} catch (error) {
 			return {
 				success: false,
