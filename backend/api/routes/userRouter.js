@@ -4,6 +4,7 @@ const { userService } = require('../../services/index');
 const { dynamicCelebrate } = require('../middlewares/index');
 const { auth } = require('../middlewares/index');
 const Logger = require('../../loaders/logger');
+const setResponseStatus = require('../../utils/utils');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
 const router = Router();
@@ -11,9 +12,10 @@ const router = Router();
 // Here we have all the controllers
 router.get('/', async (req, res) => {
 	const result = await userService.getAllUsers();
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.get('/auth', auth, async (req, res) => {
@@ -26,9 +28,10 @@ router.get('/auth', auth, async (req, res) => {
 router.get('/:userId', async (req, res) => {
 	const { userId } = req.params;
 	const result = await userService.getUserById(userId);
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.post(
@@ -38,9 +41,10 @@ router.post(
 	}),
 	async function (req, res) {
 		const result = await userService.register(req.body);
-		const statusCode = result.success ? 201 : 400;
 
-		res.status(statusCode).json(result);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
 	},
 );
 
@@ -51,23 +55,26 @@ router.post(
 	}),
 	async function (req, res) {
 		const result = await userService.login(req.body);
-		const statusCode = result.success ? 200 : 400;
-		res.status(statusCode).json(result);
+		res.status(setResponseStatus(200, 400, result.success)).json(
+			result,
+		);
 	},
 );
 
 router.post('/logout', auth, async (req, res) => {
 	const { token } = req.data;
 	const result = await userService.logout(token);
-	const statusCode = result.success ? 200 : 400;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(200, 400, result.success)).json(
+		result,
+	);
 });
 
 router.post('/lostpassword', async function (req, res) {
 	const result = await userService.lostPassword(req.body);
-	const statusCode = result.success ? 201 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(201, 400, result.success)).json(
+		result,
+	);
 });
 
 // router.post('/changepassword', async function (req, res) {
@@ -100,7 +107,9 @@ router.post('/changename', auth, dynamicCelebrate, async function (
 	);
 	const statusCode = result.success ? 201 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(201, 400, result.success)).json(
+		result,
+	);
 });
 
 router.post(
@@ -118,16 +127,18 @@ router.post(
 
 router.get('/confirm:token', async (req, res) => {
 	const result = await userService.confirmEmail(req.params.token);
-	const statusCode = result.success ? 201 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(201, 400, result.success)).json(
+		result,
+	);
 });
 
 router.delete('/all', async (req, res) => {
 	const result = await userService.deleteAll();
-	const statusCode = result.success ? 200 : 400;
 
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(204, 400, result.success)).json(
+		result,
+	);
 });
 
 router.post(
@@ -149,8 +160,9 @@ router.post('/profile', auth, dynamicCelebrate, async (req, res) => {
 		req.data,
 		req.content,
 	);
-	const statusCode = result.success ? 200 : 403;
-	res.status(statusCode).json(result);
+	res.status(setResponseStatus(201, 400, result.success)).json(
+		result,
+	);
 });
 
 module.exports = router;

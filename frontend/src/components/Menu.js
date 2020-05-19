@@ -1,91 +1,45 @@
-import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-const Menu = (props) => {
-	return (
-		<div>
-			<Modal
-				show={props.openMenu}
-				onHide={props.handleOpenMenu}
-			>
-				<Modal.Header closeButton>
-					<Modal.Title>Add a course</Modal.Title>
-				</Modal.Header>
+import React, { useState } from "react";
+import { Accordion, Button } from "react-bootstrap";
+import Course from "./Course";
+import * as api from "../api";
 
-				<Modal.Body>
-					<div className="menuForm">
-						<Form>
-							<Form.Group controlId="formGridCity">
-								<Form.Label>Course Name</Form.Label>
-								<Form.Control />
-							</Form.Group>
-							<Form.Group controlId="formGridCity">
-								<Form.Label>Price</Form.Label>
-								<Form.Control />
-							</Form.Group>
-							<Form.Group controlId="formGridState">
-								<Form.Label>Category</Form.Label>
-								<Form.Control
-									as="select"
-									value="Choose..."
-								>
-									<option>Pasta</option>
-									<option>Pizza</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="formGridState">
-								<Form.Label>Allergenes</Form.Label>
-								<Form.Control
-									as="select"
-									value="Choose..."
-								>
-									<option>Affordable</option>
-									<option>Medium</option>
-									<option>Expensive</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="exampleForm.ControlSelect2">
-								<Form.Label>Ingredients</Form.Label>
-								<Form.Control as="select" multiple>
-									<option>Carrots</option>
-									<option>Tomato</option>
-									<option>Garlic</option>
-									<option>Onion</option>
-									<option>Potatoes</option>
-									<option>Chicken breast</option>
-									<option>Pork</option>
-									<option>Cow</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId="exampleForm.ControlSelect2">
-								<Form.Label>Allergenes</Form.Label>
-								<Form.Control as="select" multiple>
-									<option>Gluten</option>
-									<option>Milk</option>
-									<option>Hazelnuts</option>
-								</Form.Control>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>Course photos</Form.Label>
-								<Form.Control
-									id="courseFile"
-									type="file"
-									multiple
-									label="Course Photo"
-								/>
-							</Form.Group>
-						</Form>
-					</div>
-				</Modal.Body>
+const Menu = ({ data }) => {
+  const [courses, setCourses] = useState(data.courses ? data.courses : []);
+  const [loading, setLoading] = useState(false);
 
-				<Modal.Footer>
-					<Button variant="secondary">Close</Button>
-					<Button variant="primary" type="submit">
-						Add course
-					</Button>
-				</Modal.Footer>
-			</Modal>
-		</div>
-	);
+  const handleAddCourse = async () => {
+    try {
+      setLoading(true);
+      let answer = await api.addCourse(data._id);
+      setCourses(answer.courses);
+      if (answer.success === true) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="menu_form">
+      <Accordion style={{ width: "100%" }}>
+        {courses.map((course, index) => {
+          let courseData = {};
+          courseData.course = course;
+          courseData.index = index;
+          if (course !== null) return <Course data={courseData}></Course>;
+        })}
+      </Accordion>
+      <div className="submit_button">
+        <Button className="actual_button" onClick={handleAddCourse}>
+          New Course
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default Menu;

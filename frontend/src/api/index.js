@@ -104,62 +104,6 @@ const getAllUsers = async () => {
 	}
 };
 
-const uploadSingle = async (data) => {
-	try {
-		const formData = new FormData();
-		formData.append('myImage', data.file);
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data',
-			},
-		};
-		await axios
-			.post(
-				`http://localhost:4000/api/upload/uploadSingle/${data.userId}`,
-				formData,
-				config,
-			)
-			.then((response) => {
-				alert('The file is successfully uploaded');
-			})
-			.catch((error) => {});
-
-		return { success: true };
-	} catch (error) {
-		return { success: false, errorMessage: error.message };
-	}
-};
-
-const uploadMultiple = async (data) => {
-	try {
-		const formData = new FormData();
-		let { length } = data.file;
-		for (let i = 0; i < length; i++) {
-			formData.append('myImage', data.file[i]);
-		}
-		console.log(data.userId);
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data',
-			},
-		};
-		await axios
-			.post(
-				`http://localhost:4000/api/upload/uploadMultiple/${data.userId}`,
-				formData,
-				config,
-			)
-			.then((response) => {
-				alert('The file is successfully uploaded');
-			})
-			.catch((error) => {});
-
-		return { success: true };
-	} catch (error) {
-		return { success: false, errorMessage: error.message };
-	}
-};
-
 const changeEmail = async (userData) => {
 	try {
 		console.log('api' + userData);
@@ -243,7 +187,6 @@ const profile = async (userData) => {
 const uploadMenuPhoto = async (data) => {
 	try {
 		const formData = new FormData();
-		console.log(data);
 		formData.append('myImage', data.file);
 		const config = {
 			headers: {
@@ -252,7 +195,7 @@ const uploadMenuPhoto = async (data) => {
 		};
 		await axios
 			.post(
-				`http://localhost:4000/api/upload/uploadMenuPhoto`,
+				`http://localhost:4000/api/upload/uploadMenuPhoto/${data.idCourse}`,
 				formData,
 				config,
 			)
@@ -262,6 +205,118 @@ const uploadMenuPhoto = async (data) => {
 			.catch((error) => {});
 
 		return { success: true };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+const uploadSingle = async (data) => {
+	try {
+		const formData = new FormData();
+		formData.append('myImage', data.file);
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+		await axios
+			.post(
+				`http://localhost:4000/api/upload/uploadSingle/${data.userId}`,
+				formData,
+				config,
+			)
+			.then((response) => {
+				alert('The file is successfully uploaded');
+			})
+			.catch((error) => {});
+
+		return { success: true };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+const uploadMultiple = async (data) => {
+	try {
+		const formData = new FormData();
+		let { length } = data.file;
+		for (let i = 0; i < length; i++) {
+			formData.append('myImage', data.file[i]);
+		}
+		console.log(data.userId);
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+		await axios
+			.post(
+				`http://localhost:4000/api/upload/uploadMultiple/${data.userId}`,
+				formData,
+				config,
+			)
+			.then((response) => {
+				alert('The file is successfully uploaded');
+			})
+			.catch((error) => {});
+
+		return { success: true };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+const addCourse = async (idMenu) => {
+	try {
+		const token = localStorage.getItem('userToken');
+		setAuthorizationToken(token);
+		const {
+			data: {
+				data: { courses },
+			},
+		} = await axios({
+			method: 'post',
+			url: `http://localhost:4000/api/courses/${idMenu}`,
+		});
+
+		return { success: true, courses };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+const updateCourse = async (idCourse, courseData) => {
+	try {
+		const token = localStorage.getItem('userToken');
+		setAuthorizationToken(token);
+		const {
+			data: {
+				data: { userDetails },
+			},
+		} = await axios({
+			method: 'patch',
+			url: `http://localhost:4000/api/courses/${idCourse}`,
+			data: courseData,
+		});
+		return { success: true, userDetails };
+	} catch (error) {
+		return { success: false, errorMessage: error.message };
+	}
+};
+
+const deleteCourse = async (idCourse) => {
+	try {
+		const token = localStorage.getItem('userToken');
+		setAuthorizationToken(token);
+		const {
+			data: {
+				data: { courses },
+			},
+		} = await axios({
+			method: 'delete',
+			url: `http://localhost:4000/api/courses/${idCourse}`,
+		});
+		return { success: true, courses };
 	} catch (error) {
 		return { success: false, errorMessage: error.message };
 	}
@@ -280,4 +335,7 @@ export {
 	uploadMenuPhoto,
 	profile,
 	lostPassword,
+	addCourse,
+	updateCourse,
+	deleteCourse,
 };

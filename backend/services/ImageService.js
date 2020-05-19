@@ -80,6 +80,23 @@ class ImageService {
 			};
 		}
 	}
+
+	async deleteMenuPhoto(buffer, hostname, idPhoto) {
+		try {
+			//idPhoto unique -- search db for it and delete it
+			//depend on which database
+
+			const response = 'not implemented yet';
+			//response is gonna be deleted or inexisting file
+
+			return { success: true, name: { response } };
+		} catch (error) {
+			return {
+				success: false,
+				error: 'Please provide a valid image!',
+			};
+		}
+	}
 }
 
 module.exports = ImageService;

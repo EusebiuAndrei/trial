@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { upload } = require('../middlewares/index');
 const { imageService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
-
+const setResponseStatus = require('../../utils/utils');
 const router = Router();
 
 function setResponseStatus(successCode, failureCode, ok) {
@@ -50,13 +50,31 @@ router.post(
 	auth,
 	upload.single('myImage'),
 	async (req, res) => {
-		console.log(req.params);
+		//console.log(req.params);
 		let { idCourse } = req.params;
-		console.log(idCourse);
+		//console.log(idCourse);
 		const result = await imageService.uploadMenuPhoto(
 			req.file.buffer,
 			req.headers.host,
 			idCourse,
+		);
+		res.status(setResponseStatus(201, 400, result.success)).json(
+			result,
+		);
+	},
+);
+
+router.post(
+	'/deletePhoto/:idPhoto',
+	auth,
+	upload.single('myImage'),
+	async (req, res) => {
+		//console.log(req.params);
+		let { idPhoto } = req.params;
+		const result = await imageService.deleteImage(
+			req.file.buffer,
+			req.headers.host,
+			idPhoto,
 		);
 		res.status(setResponseStatus(201, 400, result.success)).json(
 			result,
